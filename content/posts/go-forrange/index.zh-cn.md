@@ -10,7 +10,7 @@ resources:
   src: "go-forrange.png"
 
 tags: ["Golang", "Dev"]
-categories: ["Golang"]
+categories: ["Golang", "K8s"]
 
 lightgallery: true
 ---
