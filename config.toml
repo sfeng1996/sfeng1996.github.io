@@ -844,8 +844,8 @@ enableEmoji = true
       # Valine 评论系统设置 (https://github.com/xCss/Valine)
       [params.page.comment.valine]
         enable = true
-        appId = "QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI"
-        appKey = "WBmoGyJtbqUswvfLh6L8iEBr"
+        appId = "AkrUA0Rb8tfj1Va787YXLve1-gzGzoHsz"
+        appKey = "vign60lYCKnZ1JcitMLPsfBn"
         placeholder = ""
         avatar = "mp"
         meta= ""
