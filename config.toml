@@ -310,6 +310,7 @@ enableEmoji = true
         Matrix = ""
         Bilibili = "382859797?spm_id_from=333.1007.0.0"
         Email = "SFeng1996@163.com"
+        Wechat = "https://img.xiaodejiyi.com/img/wechat%20logo_500px.png"
         RSS = true
         [languages.en.params.social.Mastodon]
           id = ""
