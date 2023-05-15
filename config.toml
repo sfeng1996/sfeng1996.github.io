@@ -90,7 +90,7 @@ enableEmoji = true
         pre = "<i class='fas fa-book fa-fw'></i>"
         post = ""
         name = "Notebook"
-        url = "https://note.xiaodejiyi.com"
+        url = "https://www.sfernetes.com/"
         title = ""
         weight = 6
 
@@ -135,7 +135,7 @@ enableEmoji = true
         pre = "<i class='fas fa-comments fa-fw'></i>"
         post = ""
         name = "Message Board"
-        url = "message-board/"
+        url = "https://www.sfernetes.com/"
         title = ""
         weight = 8
         parent = "internal"
@@ -230,7 +230,7 @@ enableEmoji = true
           # Gravatar Email for preferred avatar in home page
           gravatarEmail = ""
           # URL of avatar shown in home page
-          avatarURL = "/images/sfeng.jpg"
+          avatarURL = "/LoveIt-extend/images/sfeng.jpg"
           # title shown in home page (HTML format is supported)
           title = ""
           # subtitle shown in home page
@@ -512,7 +512,7 @@ enableEmoji = true
           # Gravatar 邮箱，用于优先在主页显示的头像
           gravatarEmail = ""
           # 主页显示头像的 URL
-          avatarURL = "/images/sfeng.jpg"
+          avatarURL = "/LoveIt-extend/images/sfeng.jpg"
           # 主页显示的网站标题 (支持 HTML 格式)
           title = ""
           # 主页显示的网站副标题
