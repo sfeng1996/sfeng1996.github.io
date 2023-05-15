@@ -230,7 +230,7 @@ enableEmoji = true
           # Gravatar Email for preferred avatar in home page
           gravatarEmail = ""
           # URL of avatar shown in home page
-          avatarURL = "/LoveIt-extend/images/avatar.png"
+          avatarURL = "/static/images/sfeng.jpg"
           # title shown in home page (HTML format is supported)
           title = ""
           # subtitle shown in home page
@@ -250,13 +250,13 @@ enableEmoji = true
       [languages.en.params.social]
         GitHub = "sfeng1996"
         Linkedin = ""
-        Twitter = "xxxx"
-        Instagram = "xxxx"
-        Facebook = "xxxx"
-        Telegram = "xxxx"
+        Twitter = ""
+        Instagram = ""
+        Facebook = ""
+        Telegram = ""
         Medium = ""
         Gitlab = ""
-        Youtubelegacy = "xxxx"
+        Youtubelegacy = ""
         Youtubecustom = ""
         Youtubechannel = ""
         Tumblr = ""
@@ -308,11 +308,11 @@ enableEmoji = true
         Gitea = ""
         XMPP = ""
         Matrix = ""
-        Bilibili = ""
-        Email = "xxxx@xxxx.com"
+        Bilibili = "382859797?spm_id_from=333.1007.0.0"
+        Email = "SFeng1996@163.com"
         RSS = true
         [languages.en.params.social.Mastodon]
-          id = "@xxxx"
+          id = ""
           prefix = "https://mastodon.technology/"
 
   [languages.zh-cn]
@@ -512,11 +512,11 @@ enableEmoji = true
           # Gravatar 邮箱，用于优先在主页显示的头像
           gravatarEmail = ""
           # 主页显示头像的 URL
-          avatarURL = "/LoveIt-extend/images/avatar.png"
+          avatarURL = "/static/images/sfeng.jpg"
           # 主页显示的网站标题 (支持 HTML 格式)
           title = ""
           # 主页显示的网站副标题
-          subtitle = "这是LoveIt主题的一个demo."
+          subtitle = "一起学习云原生~"
           # 是否为副标题显示打字机动画
           typeit = true
           # 是否显示社交账号
@@ -525,7 +525,7 @@ enableEmoji = true
           disclaimer = ""
         # 主页文章列表
         [languages.zh-cn.params.home.posts]
-          enable = true
+          enable = false
           # 主页每页显示文章数量
           paginate = 6
       # 主页的社交信息设置
@@ -568,13 +568,13 @@ enableEmoji = true
         Hackernews = ""
         Kickstarter = ""
         Patreon = ""
-        Steam = "xxxx"
+        Steam = ""
         Twitch = ""
         Strava = ""
         Skype = ""
         Whatsapp = ""
-        Zhihu = "xxxx"
-        Douban = "xxxx"
+        Zhihu = ""
+        Douban = ""
         Angellist = ""
         Slidershare = ""
         Jsfiddle = ""
@@ -587,12 +587,12 @@ enableEmoji = true
         Researchgate = ""
         Mastodon = ""
         Thingiverse = ""
-        Devto = "xxxx"
+        Devto = ""
         Gitea = ""
         XMPP = ""
         Matrix = ""
-        Bilibili = "xxxx"
-        Email = "xxxx@xxxx.com"
+        Bilibili = "382859797?spm_id_from=333.1007.0.0"
+        Email = "SFeng1996@163.com"
         RSS = true
 
  [params]
@@ -632,7 +632,7 @@ enableEmoji = true
       logo = ""
       # title name
       # 标题名称
-      name = "LoveIt"
+      name = "SFeng"
       # you can add extra information before the name (HTML format is supported), such as icons
       # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
       pre = "<i class='far fa-kiss-wink-heart fa-fw'></i>"
@@ -1053,9 +1053,9 @@ enableEmoji = true
 # Author config
 # 作者配置
 [author]
-  name = "xxxx"
-  email = ""
-  link = ""
+  name = "SFeng"
+  email = "SFeng1996@163.com"
+  link = "https://space.bilibili.com/382859797?spm_id_from=333.1007.0.0"
 
 # Sitemap config
 # 网站地图配置
