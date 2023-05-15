@@ -6,7 +6,7 @@ lastmod: 2020-01-02T16:45:40+08:00
 draft: false
 author: "孙峰"
 resources:
-- name: "go-forrange"
+- name: "featured-image"
   src: "go-forrange.png"
 
 tags: ["Golang"]
