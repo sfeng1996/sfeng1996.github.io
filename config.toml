@@ -592,6 +592,7 @@ enableEmoji = true
         Gitea = ""
         XMPP = ""
         Matrix = ""
+        Wechat = "https://img.xiaodejiyi.com/img/wechat%20logo_500px.png"
         Bilibili = "382859797?spm_id_from=333.1007.0.0"
         Email = "SFeng1996@163.com"
         RSS = true
