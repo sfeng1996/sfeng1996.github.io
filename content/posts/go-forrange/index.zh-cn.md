@@ -1,7 +1,7 @@
 ---
 weight: 1
 title: "golang for-range 使用"
-date: 2020-1-02T21:57:40+08:00
+date: 2020-01-02T21:57:40+08:00
 lastmod: 2020-01-02T16:45:40+08:00
 draft: false
 author: "孙峰"
@@ -9,8 +9,8 @@ resources:
 - name: "featured-image"
   src: "go-forrange.png"
 
-tags: ["Golang", "Dev"]
-categories: ["demo1"]
+tags: ["Golang"]
+categories: ["Golang"]
 
 lightgallery: true
 ---
