@@ -9,7 +9,7 @@ resources:
 - name: "featured-image"
   src: "go-forrange.png"
 
-tags: ["Golang"]
+tags: ["Golang", "Dev"]
 categories: ["Golang"]
 
 lightgallery: true
