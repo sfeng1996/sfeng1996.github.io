@@ -230,11 +230,11 @@ enableEmoji = true
           # Gravatar Email for preferred avatar in home page
           gravatarEmail = ""
           # URL of avatar shown in home page
-          avatarURL = "/static/images/sfeng.jpg"
+          avatarURL = "/images/sfeng.jpg"
           # title shown in home page (HTML format is supported)
           title = ""
           # subtitle shown in home page
-          subtitle = "A demo of LoveIt theme."
+          subtitle = "Play CloudNative together~"
           # whether to use typeit animation for subtitle
           typeit = true
           # whether to show social links
@@ -243,7 +243,7 @@ enableEmoji = true
           disclaimer = ""
         # Home page posts
         [languages.en.params.home.posts]
-          enable = true
+          enable = false
           # special amount of posts in each home posts page
           paginate = 6
       # Social config in home page
@@ -381,7 +381,7 @@ enableEmoji = true
         pre = "<i class='fas fa-book fa-fw'></i>"
         post = ""
         name = "笔记本"
-        url = "https://note.xiaodejiyi.com"
+        url = "https://www.sfernetes.com/"
         title = ""
         weight = 6
 
@@ -512,7 +512,7 @@ enableEmoji = true
           # Gravatar 邮箱，用于优先在主页显示的头像
           gravatarEmail = ""
           # 主页显示头像的 URL
-          avatarURL = "/static/images/sfeng.jpg"
+          avatarURL = "/images/sfeng.jpg"
           # 主页显示的网站标题 (支持 HTML 格式)
           title = ""
           # 主页显示的网站副标题
@@ -550,7 +550,7 @@ enableEmoji = true
         FreeCodeCamp = ""
         Bitbucket = ""
         Stackoverflow = ""
-        Weibo = "xxxx"
+        Weibo = ""
         Odnoklassniki = ""
         VK = ""
         Flickr = ""
