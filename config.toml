@@ -11,21 +11,21 @@ theme = "LoveIt"
 
 # website title
 # 网站标题
-title = "LoveIt"
+title = "SFeng"
 
 # whether to use robots.txt
 # 是否使用 robots.txt
 enableRobotsTXT = true
 # whether to use git commit log
 # 是否使用 git 信息
-enableGitInfo = true
+enableGitInfo = false
 # whether to use emoji code
 # 是否使用 emoji 代码
 enableEmoji = true
 
 [languages]
   [languages.en]
-    weight = 1
+    weight = 2
     # language code
     languageCode = "en"
     # language name
@@ -248,7 +248,7 @@ enableEmoji = true
           paginate = 6
       # Social config in home page
       [languages.en.params.social]
-        GitHub = "xxxx"
+        GitHub = "sfeng1996"
         Linkedin = ""
         Twitter = "xxxx"
         Instagram = "xxxx"
@@ -316,7 +316,7 @@ enableEmoji = true
           prefix = "https://mastodon.technology/"
 
   [languages.zh-cn]
-    weight = 2
+    weight = 1
     # 网站语言, 仅在这里 CN 大写
     languageCode = "zh-CN"
     # 语言名称
@@ -530,7 +530,7 @@ enableEmoji = true
           paginate = 6
       # 主页的社交信息设置
       [languages.zh-cn.params.social]
-        GitHub = "xxxx"
+        GitHub = "sfeng1996"
         Linkedin = ""
         Twitter = ""
         Instagram = ""
@@ -661,10 +661,10 @@ enableEmoji = true
     author = true
     # site creation time
     # 网站创立年份
-    since = 2019
+    since = 2020
     # ICP info only in China (HTML format is supported)
     # ICP 备案信息，仅在中国使用 (支持 HTML 格式)
-    icp = ""
+    icp = '<a href="https://beian.miit.gov.cn/" target="_blank">皖ICP备2021017041号-1</a>'
     # license info (HTML format is supported)
     # 许可协议信息 (支持 HTML 格式)
     license = 'https://creativecommons.org/licenses/by-nc-sa/4.0/'
@@ -791,7 +791,7 @@ enableEmoji = true
     # Social share links in post page
     # 文章页面的分享信息设置
     [params.page.share]
-      enable = true
+      enable = false
       Twitter = true
       Facebook = true
       Linkedin = false
