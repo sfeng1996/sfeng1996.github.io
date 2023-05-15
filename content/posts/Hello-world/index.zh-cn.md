@@ -20,3 +20,5 @@ LoveIt主题仓库：https://github.com/dillonzq/LoveIt
 
 <!--more-->
 ## content.
+
+![weichat](/images/weichat-logo_500px.png "公众号")
