@@ -1839,4 +1839,4 @@ Name:      kubernetes
 Address 1: 10.0.0.1 kubernetes.default.svc.cluster.local
 ```
 
-![wechat](/images/wechat_sfeng_small.jpg "公众号")
+![wechat](/images/wechat_sfeng_small.jpg "关注微信公众号，可了解更多云原生详情~")
