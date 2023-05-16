@@ -15,8 +15,6 @@ categories: ["Kubernetes-ops"]
 lightgallery: true
 ---
 
-# 如何使用 openebs 做本地存储
-
 ## 简介
 
 **[openebs](https://openebs.io/)** 是一款使用Go语言编写的基于容器的块存储开源软件。OpenEBS 使得在容器中运行关键性任务和需要数据持久化的负载变得更可靠。
