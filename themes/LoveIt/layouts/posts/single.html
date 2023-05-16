@@ -132,8 +132,11 @@
         <div class="content" id="content">
             {{- dict "Content" .Content "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
             <hr>
-            {{- /*custom bottom*/ -}}
-            <center>- {{- T "articleEnd" -}} -</center>
+            <div id="wechat" style="text-align: center;">
+               <a class="fancybox" rel="group">
+                   <img id="wechat_qr" src="{{ .Site.Data.imgURL.wechat }}" height="180" width="180" alt="WeChat Pay"></a>
+               <h5 style="font-weight:50;margin-top:5px;text-align: center;">{{- T "wechatAnnotation" -}}</h5>
+            </div>
 
             {{- /*see also*/ -}}           
             {{ $related := .Site.RegularPages.RelatedIndices . "tags" | first 5 }}
