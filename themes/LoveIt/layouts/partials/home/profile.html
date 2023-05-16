@@ -87,9 +87,18 @@
         </div>
     {{- end -}}
 
+
     {{- with $profile.disclaimer -}}
         <h3 class="home-disclaimer">
             {{- . | safeHTML -}}
         </h3>
     {{- end -}}
+    <p></p>
+    <br></br>
+    <div id="wechat" style="text-align: center;">
+        <a class="fancybox" rel="group">
+            <img id="wechat_qr" src="{{ .Site.Data.imgURL.wechat }}" height="180" width="180" alt="WeChat Pay"></a>
+        <h5 style="font-weight:50;margin-top:5px;margin-bottom:50px;text-align: center;">{{- T "wechatAnnotation" -}}</h5>
+    </div>
 </div>
+
