@@ -223,6 +223,9 @@ other = " 完 "
 [seeAlso]
 other = "相关文章"
 
+[wechatAnnotation]
+other = "关注微信公众号，可了解更多云原生详情~"
+
 [thanksSponsor]
 other = "感谢支持"
 
