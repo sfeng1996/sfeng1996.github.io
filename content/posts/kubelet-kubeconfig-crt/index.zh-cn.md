@@ -15,16 +15,6 @@ categories: ["Kubernetes-ops"]
 lightgallery: true
 ---
 
----
-layout:     post
-title:      "kubelet-client, kubeconfig 证书自签"
-description: "kubelet-client, kubeconfig证书自签"
-date:     2021-12-10
-author: sfeng
-tags: ["kubernetes-ops"]
-URL: "/2021/12/10/kubelet-client-crt/"
----
-
 ## 背景
 
 今天发现线上集群一个node节点kubelet-client证书莫名其妙消失了，导致该节点 NotReady，因为该证书已经没了，导致controller-manager无法自动轮换该证书，所以需要自己签发证书。
