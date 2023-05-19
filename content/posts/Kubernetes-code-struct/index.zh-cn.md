@@ -12,6 +12,9 @@ resources:
 tags: ["Kubernetes-dev"]
 categories: ["Kubernetes-dev"]
 
+lightgallery: true
+---
+
 # Kubernetes 源码结构
 
 ## 简介
