@@ -8,9 +8,9 @@ links:
     weight: 1
     people: 
       - name: SFeng
-        url: https://www.xiaodejiyi.com/
+        url: https://www.sfernetes.com/
         avatar: https://www.gravatar.com/avatar/ae94c8d8ca3d56eb035a3e62c2595150?s=240&d=mp
-        description: just do sth i should do.|
+        description: God helps those who help themselves.|
   friends: 
     name: Friends 
     weight: 2 

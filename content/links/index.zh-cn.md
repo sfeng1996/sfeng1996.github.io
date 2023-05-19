@@ -8,9 +8,9 @@ links:
     weight: 1
     people: 
       - name: 孙峰
-        url: https://www.xiaodejiyi.com/
+        url: https://www.sfernetes.com/
         avatar: https://www.gravatar.com/avatar/ae94c8d8ca3d56eb035a3e62c2595150?s=240&d=mp
-        description: just do sth i should do.
+        description: 天道酬勤.
   friends: 
     name: 朋友 
     weight: 2 
