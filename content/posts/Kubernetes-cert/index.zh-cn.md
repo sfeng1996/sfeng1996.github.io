@@ -7,7 +7,7 @@ draft: false
 author: "孙峰"
 resources:
 - name: "featured-image"
-  src: "k8s-crt.png"
+  src: "k8s-cert.png"
 
 tags: ["Kubernetes-ops"]
 categories: ["Kubernetes-ops"]
