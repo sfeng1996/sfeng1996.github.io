@@ -15,13 +15,15 @@ categories: ["Kubernetes-dev"]
 lightgallery: true
 ---
 
+# Reflector 原理
+
 ## 简介
 
 从这一篇开始，就详细讲解 Client-go 中组件的原理，并通过源码走读的形式来摸清里面的逻辑，按照 Client-go 架构，先从 Reflector 组件开始。
 
-在 Client-go 架构中，Reflector 与 Kube-apiserver 连接，并且可以从 Kube-apiserver List 和 Watch 资源数据。List 可以从 Kube-apiserver 获取全量对应资源数据，Watch 则可以实现与 Kube-apiserver 的长连接，不断监听集群资源的变化，将数据和事件添加到 Deltafifo 中。下面这张图可以看出 Reflector 组件在 Client-go 的作用。
+在 Client-go 架构中，Reflector 与 Kube-apiserver 连接，并且可以从 Kube-apiserver  *`List`* 和  *`Watch`* 资源数据。*`List`* 可以从 Kube-apiserver 获取全量对应资源数据，*`Watch`* 则可以实现与 Kube-apiserver 的长连接，不断监听集群资源的变化，将数据和事件添加到 Deltafifo 中。下面这张图可以看出 Reflector 组件在 Client-go 的作用。
 
-![client-go](client-arch.png "client-go 架构")
+![reflector](client-arch.png "client 架构")
 
 ## Reflector 源码解析
 
@@ -116,7 +118,7 @@ func NewNamedReflector(name string, lw ListerWatcher, expectedType interface{}, 
 }
 ```
 
-需要重点关注 NewNamedReflector 函数入参的 ListerWatcher 和 store，前面结构体定义说到 ListerWatcher 是一个结构，所以需要传入一个实现该接口的实例，store 是 Deltafifo 的一个实例。
+需要重点关注 *`NewNamedReflector`* 函数入参的 *`ListerWatcher`* 和 *`store`*，前面结构体定义说到 *`ListerWatcher`* 是一个结构，所以需要传入一个实现该接口的实例，*`store`* 是 Deltafifo 的一个实例。
 
 初始化完成之后，就是运行 Reflector。
 
@@ -324,7 +326,7 @@ func (r *Reflector) ListAndWatch(stopCh <-chan struct{}) error {
 }
 ```
 
-可以看到上面函数就是 ListerWatch 的逻辑，先 List，然后 Watch。
+可以看到上面函数就是 ListerWatch 的逻辑，先 *`List`*，然后 *`Watch`*。
 
 ### List
 
@@ -342,11 +344,11 @@ func (r *Reflector) syncWith(items []runtime.Object, resourceVersion string) err
 }
 ```
 
-可以看出来，`syncWith`  就是对 `List` 数据存放到 Deltafifio 中。
+可以看出来，`syncWith` 就是对 `List` 数据存放到 Deltafifio 中。
 
 ### Watch
 
-Reflector  Watch 到事件后，调用 `watchHandler`  来对事件进行处理。
+Reflector  Watch 到事件后，调用 `watchHandler` 来对事件进行处理。
 
 ```go
 // k8s.io/client-go/tools/cache/reflector.go:460
@@ -440,13 +442,13 @@ loop:
 }
 ```
 
-可以看出最终都是分别对事件类型进行处理，数据都是流入 Store(Dletafifio）中。
+可以看出最终都是分别对事件类型进行处理，数据都是流入 *`Store(Dletafifio)`* 中。
 
-Reflector 主要就是用 ListerWatcher 接口来获取和监听数据的，所以下面重点分析怎么 实现 ListerWatcher 接口
+Reflector 主要就是用 *`ListerWatcher`* 接口来获取和监听数据的，所以下面重点分析怎么 实现 *`ListerWatcher`* 接口
 
 ### ListerWatcher 的实现
 
-ListerWatcher 接口包含两个方法：List()，Watch()
+ListerWatcher 接口包含两个方法：*`List()`*，*`Watch()`*
 
 ```go
 // k8s.io/client-go/tools/cache/listwatch.go:30
@@ -477,9 +479,9 @@ func (lw *ListWatch) Watch(options metav1.ListOptions) (watch.Interface, error) 
 }
 ```
 
-先猜想一下，List()，Watch() 肯定某种资源类型实现的，这样才能获取当前类型的数据。
+先猜想一下，*`List()`*，*`Watch()`* 肯定某种资源类型实现的，这样才能获取当前类型的数据。
 
-前面讲解 Informer 使用的时候，初始化 Pod Informer 的时候其实内部就实现了 pod 的 ListAndWatch。
+前面讲解 Informer 使用的时候，初始化 Pod Informer 的时候其实内部就实现了 pod 的 *`ListAndWatch`*。
 
 ```go
 // k8s.io/client-go/informers/core/v1/pod.go:58
@@ -512,7 +514,7 @@ func NewFilteredPodInformer(client kubernetes.Interface, namespace string, resyn
 }
 ```
 
-这样看实现一个资源的 ListAndWatch 比较简单，就是通过调用 ClientSet 的 List()，Watch() 即可。
+这样看实现一个资源的 *`ListAndWatch`* 比较简单，就是通过调用 ClientSet 的 *`List()`*，*`Watch()`* 即可。
 
 在 Client-go 项目源码中，内置了所有 K8S 内置资源的 Informer 实现，但是平常开发时不应该直接调用这些单独资源的 Informer，推荐使用 SharedInformer，可以降低 Kube-apiserver 的压力，后面会详解 SharedInformer 的使用和原理。
 
