@@ -20,7 +20,7 @@ lightgallery: true
 
 上一篇文章介绍了 Client-go 中四种客户端的使用及原理，但是使用场景主要就是一次性对数据进行处理，那如果需要监听数据的变化，进而对数据做一些增，删，查，改的操作该怎么办？Informer 实现了这个功能，在 Client-go 架构一文中介绍了 Client-go 组件的原理，下面就介绍一下 Informer 的使用。
 
-现在不考虑 Informer 里面的机制，暂时理解 Informer 实现了对 Kube-apiserver 的 *`list*` 和 *`Watch`*，*`List()`* 从 Kube-apiserver 拉取全量对应资源数据，而 *`Watch()`* 是监听 Kube-Apiserver 对应资源数据的变化，是一个长链接。然后通过 Informer 注册的回调函数来异步处理这些资源变化事件。
+现在不考虑 Informer 里面的机制，暂时理解 Informer 实现了对 Kube-apiserver 的 *`list`* 和 *`Watch`*，*`List()`* 从 Kube-apiserver 拉取全量对应资源数据，而 *`Watch()`* 是监听 Kube-Apiserver 对应资源数据的变化，是一个长链接。然后通过 Informer 注册的回调函数来异步处理这些资源变化事件。
 
 ## 示例
 
