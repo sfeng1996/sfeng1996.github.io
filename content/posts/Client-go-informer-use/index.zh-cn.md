@@ -14,12 +14,13 @@ categories: ["Kubernetes-dev"]
 
 lightgallery: true
 ---
+# Client-go Informer 使用
 
 ## 简介
 
 上一篇文章介绍了 Client-go 中四种客户端的使用及原理，但是使用场景主要就是一次性对数据进行处理，那如果需要监听数据的变化，进而对数据做一些增，删，查，改的操作该怎么办？Informer 实现了这个功能，在 Client-go 架构一文中介绍了 Client-go 组件的原理，下面就介绍一下 Informer 的使用。
 
-现在不考虑 Informer 里面的机制，暂时理解 Informer 实现了对 Kube-apiserver 的 List 和 Watch，List() 从 Kube-apiserver 拉取全量对应资源数据，而 Watch() 是监听 Kube-Apiserver 对应资源数据的变化，是一个长链接。然后通过 Informer 注册的回调函数来异步处理这些资源变化事件。
+现在不考虑 Informer 里面的机制，暂时理解 Informer 实现了对 Kube-apiserver 的 `*List*` 和 `*Watch*`，`*List()*` 从 Kube-apiserver 拉取全量对应资源数据，而 `*Watch()*` 是监听 Kube-Apiserver 对应资源数据的变化，是一个长链接。然后通过 Informer 注册的回调函数来异步处理这些资源变化事件。
 
 ## 示例
 
@@ -147,11 +148,11 @@ update a pod: mysql-65c584658f-9t46m mysql-65c584658f-9t46m
 update a pod: mysql-65c584658f-9t46m mysql-65c584658f-9t46m
 ```
 
-可以发现刚开始启动 informer 会 list 全量数据到 cache 中，所以有两个 add 事件，后面每次 resync 时，indexer 将数据同步到 deltafifo 会认为是更新事件，所有会周期出现更新事件。当删除了 wordpress pod 后，出现了 delete 事件，后期也就只有 mysql 的 update 事件了。
+可以发现刚开始启动 informer 会 *`list`* 全量数据到 cache 中，所以有两个 add 事件，后面每次 *`resync`* 时，indexer 将数据同步到 deltafifo 会认为是更新事件，所有会周期出现更新事件。当删除了 wordpress pod 后，出现了 delete 事件，后期也就只有 mysql 的 update 事件了。
 
 ### 注意
 
-1、在初始化 informer 的时候，一般使用 shanredInformer，这样同一个资源比如(pod) 就会共享这个 informer，不需要重新启动一个新的 informer。如果每个使用者都去初始化一个 informer，每个 informer 都会 list & watch kube-apiserver，这样 kube-apiserver 的压力会非常大。
+1、在初始化 informer 的时候，一般使用 shanredInformer，这样同一个资源比如(pod) 就会共享这个 informer，不需要重新启动一个新的 informer。如果每个使用者都去初始化一个 informer，每个 informer 都会 *`list`* & *`watch`* kube-apiserver，这样 kube-apiserver 的压力会非常大。
 
 2、初始化 informer 会传同步时间，这个同步是指 indexer 会定期将数据重新同步到 deltafifo 中，这样可以保证由于特殊原因处理失败的资源能够重新被处理。
 
