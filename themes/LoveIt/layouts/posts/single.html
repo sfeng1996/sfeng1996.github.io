@@ -151,23 +151,6 @@
                 </div>
             {{ end }}
 
-            {{- /* sponsor */ -}}
-            <div style="text-align:center;margin-bottom:30px;">
-                <h5 style="font-weight:600;margin-bottom:10px;">「&nbsp;{{- T "thanksSponsor" -}}&nbsp;」</h5>
-                <button id="rewardButton"><span>{{- T "tips" -}}</span></button>
-                <div id="QR" style="display: none;">
-                    <div id="wechat" style="display:inline-block">
-                        <a class="fancybox" rel="group">
-                            <img id="wechat_qr" src="{{ .Site.Data.imgURL.weichatPay }}" alt="WeChat Pay"></a>
-                        <h5 style="font-weight:600;margin-top:5px;">{{- T "weichatTip" -}}</h5>
-                    </div>
-                    <div id="alipay" style="display: inline-block">
-                        <a class="fancybox" rel="group">
-                            <img id="alipay_qr" src="{{ .Site.Data.imgURL.alipay }}" alt="Alipay"></a>
-                        <h5 style="font-weight:600;margin-top:5px;">{{- T "aliTip" -}}</h5>
-                    </div>
-                </div>
-            </div>
             {{- /*copyright*/ -}}
             <div id="copyright-container">
                 <ul class="post-copyright">
