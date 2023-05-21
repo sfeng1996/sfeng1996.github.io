@@ -21,7 +21,7 @@ lightgallery: true
 
 在 Client-go 架构中，Reflector 与 Kube-apiserver 连接，并且可以从 Kube-apiserver List 和 Watch 资源数据。List 可以从 Kube-apiserver 获取全量对应资源数据，Watch 则可以实现与 Kube-apiserver 的长连接，不断监听集群资源的变化，将数据和事件添加到 Deltafifo 中。下面这张图可以看出 Reflector 组件在 Client-go 的作用。
 
-![client-go](client-go.png "client-go 架构")
+![client-go](client-go-arch.png "client-go 架构")
 
 ## Reflector 源码解析
 
