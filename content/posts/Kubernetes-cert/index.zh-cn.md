@@ -649,7 +649,7 @@ Kube-controller-manager 用 sa.key 即私钥对该 token 进行签名。当 Pod 
 
 下面是 ServiceAccout 认证流程图：
 
-![k8s-crt](serviceAccount.png "service-account 认证关系图")
+![k8s-crt](serviceAccount.jpg "service-account 认证关系图")
 
 sa.pub 和 sa.key 分别被配置到了 Kube-apiserver 和 Kube-controller-manager 的命令行参数中，如下所示：
 
