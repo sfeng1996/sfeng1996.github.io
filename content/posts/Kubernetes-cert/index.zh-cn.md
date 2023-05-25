@@ -15,9 +15,9 @@ categories: ["Kubernetes-ops"]
 lightgallery: true
 ---
 
-# kubernetes 证书详解
+# Kubernetes 证书详解
 
-## **k8s 证书介绍**
+## **K8S 证书介绍**
 
 在 Kube-apiserver 中提供了很多认证方式，其中最常用的就是 TLS 认证，当然也有 BootstrapToken，BasicAuth 认证等，只要有一个认证通过，那么 Kube-apiserver 即认为认证通过。下面就主要讲解 TLS 认证。
 
@@ -78,7 +78,7 @@ kubernetes/
 
 Kubeadm 安装的集群中我们都是用 3 套 CA 证书来管理和签发其他证书，一套 CA 给 ETCD 使用，一套是给 Kuberntes 内部组件使用，还有一套是给配置聚合层使用的，当然如果你觉得管理 3 套 CA 比较麻烦，您也可以用一套来管理。
 
-## E**tcd 证书**
+## **Etcd 证书**
 
 ```bash
 ca.crt  ca.key  healthcheck-client.crt  healthcheck-client.key  peer.crt  peer.key  server.crt  server.key
@@ -156,7 +156,7 @@ peer.crt  peer.key
 healthcheck-client.crt  healthcheck-client.key
 ```
 
-## **kube-apiserver**
+## **Kube-apiserver**
 
 Kube-apiserver 证书位于 *`/etc/kubernetes/pki`* ，同样我们通过 Kube-apiserver 的 static-pod yaml 文件来一一解释下每个证书的作用。
 
@@ -315,7 +315,7 @@ front-proxy-ca.crt  front-proxy-client.crt  front-proxy-ca.key   front-proxy-cli
 
 上面所说的证书都在 *`/etc/kubernetes/pki`* 目录下，除了 [sa.pub](http://sa.pub) 和 sa.key，这个下文讲解。在 Kubernetes 集群中，Kube-controller-manager 和 Kube-scheduler，Kubelet，Kubectl 都是通过 KubeConfig 来访问 Kube-apiserver，原理上都是证书，下面详细讲解下。
 
-## **kube-controller-mananger**
+## **Kube-controller-mananger**
 
 还是和之前一样，我们通过 kube-controller-mananger 的 yaml 文件配置来看看是如何访问 Kube-apiserver。
 
@@ -414,7 +414,7 @@ HDvs+q640H9biz+OWdewHcQq4MohCWnl8aW5IaeRamfY/sg/1wSW2FmxebA=
 
 从解码可以发现，Kubeconfig 配置的就是 Kubernetes 的 CA 证书，client-certificate-data 和 client-key-data 就是 Kube-controller-manager 用来访问 Kube-apiserver 的客户端证书和秘钥，只不过 Kubeconfig 对内容进行了 base64 编码。这个就是整个 Kube-controller-manager和 Kube-apiserver 证书认证的方式。
 
-## **kube-scheduler**
+## **Kube-scheduler**
 
 Kube-scheduler 也是同样的原理，也是在 yaml 中配置一个 Kubeconfig 来进行访问 Kube-apiserver
 
@@ -444,7 +444,7 @@ users:
 
 同理，解析 certificate-authority-data 也是 Kubernates 的 CA 证书，client-certificate-data 和 client-key-data 就是 Kube-scheduler 用来访问Kube-apiserver 的客户端证书和秘钥
 
-## **kubelet**
+## **Kubelet**
 
 Kubelet 与 Kube-apiserver 一样，即可以作为服务端，又可以作为客户端，所以分类讲解
 
@@ -558,7 +558,7 @@ kubeadm:node-autoapprove-certificate-rotation   ClusterRole/system:certificates.
 > Kube-controller-manager 通过配置 Kubelet 客户端证书续签周期 *`--experimental-cluster-signing-duration=87600h0m0s`*，来开启自动续签 Kubelet 客户端证书
 > 
 
-### kubelet 的服务端证书
+### Kubelet 的服务端证书
 
 Kubelet 同样对外暴露了 HTTPS 服务，其客户端主要是 Kube-apiserver 和一些监控组件，如 metric-server。Kube-apiserver 需要访问 Kubelet 来获取容器的日志和执行命令（*`kubectl logs/exec`*)， 监控组件需要访问 Kubelet 暴露的 cadvisor 接口来获取监控信息。理想情况下，我们需要将 Kubelet 的 CA 证书配置到 Kube-apiserver 和 metric-server 中，以便于校验 Kubelet 的服务端证书，保证安全性。但使用默认的集群设置方法是无法做到这点的，需要做一些额外的工作。
 
