@@ -307,7 +307,7 @@ apiserver-kubelet-client.crt  apiserver-kubelet-client.key
 
 这里简单说明下请求链路，当使用 kubectl 对扩展 API 发起请求时，首先 Kube-apiserver 收到请求对 kubectl 使用的 Kube-config 进行认证、鉴权，通过后将请求转发给 APIAggregator，APIAggregator 可以理解为一层代理，然后 APIAggregator 根据 API 的 GroupVersion 来将请求转发给扩展 apiserver，所以 APIAggregator 与开发者开发的扩展 apiserver 就需要进行 TLS 认证。
 
-理想情况扩展 apiserver 需要自己签发 CA，然后使用该 CA 签发服务端证书，服务端证书由扩展 apiserver 程序使用，CA 通过 APIService 资源来发布告知 Kube-apiserver APIAggregator ，然后 APIAggregator 访问时获取 APIService  的 caBundle 字段来认证扩展 apiserver。*`--requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt`* 来校验，同时扩展 apiserver 也会校验 APIAggregator 的客户端证书，APIAggregator 的客户端证书通过 *`--proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt`*，*`--proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key`* 配置，扩展 apiserver 会通过 kube-system 命名空间下的 extension-apiserver-authentication configmap 获取签发 *`front-proxy-client.crt` 的 CA，即  `--requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt` ，*Kube-apiserver 启动时会将该 CA 信息写入 *`extension-apiserver-authentication`* configmap 中。这样就达到双向 TLS 认证的效果。但是扩展 apiserver 也可以关闭服务端校验，通过 APIservice 的配置 *`insecureSkipTLSVerify: true` ，*这样就只会扩展 apiserver 校验 APIAggregator 了。
+理想情况扩展 apiserver 需要自己签发 CA，然后使用该 CA 签发服务端证书，服务端证书由扩展 apiserver 程序使用，CA 通过 APIService 资源来发布告知 Kube-apiserver APIAggregator ，然后 APIAggregator 访问时获取 APIService  的 caBundle 字段来认证扩展 apiserver。*`--requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt`* 来校验，同时扩展 apiserver 也会校验 APIAggregator 的客户端证书，APIAggregator 的客户端证书通过 *`--proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt`*，*`--proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key`* 配置，扩展 apiserver 会通过 kube-system 命名空间下的 extension-apiserver-authentication configmap 获取签发 *`front-proxy-client.crt`* 的 CA，即  *`--requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt`* ，*`Kube-apiserver 启动时会将该 CA 信息写入 *`extension-apiserver-authentication`* configmap 中。这样就达到双向 TLS 认证的效果。但是扩展 apiserver 也可以关闭服务端校验，通过 APIservice 的配置 *`insecureSkipTLSVerify: true`* ，这样就只会扩展 apiserver 校验 APIAggregator 了。
 
 ```bash
 front-proxy-ca.crt  front-proxy-client.crt  front-proxy-ca.key   front-proxy-client.key
@@ -570,9 +570,9 @@ Kubelet 服务端证书和客户端证书生成逻辑不一样，有以下三种
 - 如果没有提供密钥和证书，则创建自签名的密钥和证书，也会导致每个节点的根证书不一样(如果 kubeadm init/join 没有其他配置，默认都是这种情况)，Kubelet 每次重启都会创建证书和私钥
 - 通过 CSR API 从集群服务器请求服务证书
 
-前面两种情况就会导致每个节点的 Kubelet 的根 CA 可能都不一样，这就导致客户端组件，如 metric-server ，Kube-apiserver 都没办法校验 Kubelet 的服务端证书。为了应对这种情况，metric-server 需要添加 `*--kubelet-insecure-tls*` 来跳过服务端证书的校验，而 Kube-apiserver 默认不校验 Kubelet 服务端证书。
+前面两种情况就会导致每个节点的 Kubelet 的根 CA 可能都不一样，这就导致客户端组件，如 metric-server ，Kube-apiserver 都没办法校验 Kubelet 的服务端证书。为了应对这种情况，metric-server 需要添加 *`--kubelet-insecure-tls`* 来跳过服务端证书的校验，而 Kube-apiserver 默认不校验 Kubelet 服务端证书。
 
-第三种情况是 CSR 签发者统一用集群的根 CA 为各 Kubelet 签发服务端证书，Kube-apiserver 和其他组件就可以通过配置集群根 CA 来实现 HTTPS 的服务端证书校验了。我们可以在 Kubelet 配置文件配置 `*serverTLSBootstrap = true`* 就可以启用这项特性，使用 CSR 来申请服务端证书。这项配置同样也会开启服务端证书的自动轮换功能。不过这个过程并不是全自动的，在 CSR(**CertificateSigningRequest)** 章节中提到，Kubelet 的服务端证书 CSR 请求，即 `*singerName*` 为 `*kubernetes.io/kubelet-serving`* 的 CSR 请求，不会被 Kube-controller-manager 自动批准，也就是说我们需要手动批准这些 CSR，或者使用第三方控制器。
+第三种情况是 CSR 签发者统一用集群的根 CA 为各 Kubelet 签发服务端证书，Kube-apiserver 和其他组件就可以通过配置集群根 CA 来实现 HTTPS 的服务端证书校验了。我们可以在 Kubelet 配置文件配置 *`serverTLSBootstrap = true`* 就可以启用这项特性，使用 CSR 来申请服务端证书。这项配置同样也会开启服务端证书的自动轮换功能。不过这个过程并不是全自动的，在 CSR(**CertificateSigningRequest)** 章节中提到，Kubelet 的服务端证书 CSR 请求，即 *`singerName`* 为 *`kubernetes.io/kubelet-serving`* 的 CSR 请求，不会被 Kube-controller-manager 自动批准，也就是说我们需要手动批准这些 CSR，或者使用第三方控制器。
 
 为什么 Kubernetes 不自动批准 Kubelet 的服务端证书呢？这样不是很方便吗？原因是出于安全考量—— Kubernetes 没有足够的能力来辨别该 CSR 是否应该被批准。
 
