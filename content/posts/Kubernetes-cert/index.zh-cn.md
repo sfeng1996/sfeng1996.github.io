@@ -301,7 +301,7 @@ Kube-apiserver 也会去访问 Kubelet，例如 kubectl 查看 pod 日志，或�
 apiserver-kubelet-client.crt  apiserver-kubelet-client.key
 ```
 
-### 聚合层证书
+### 聚合层证书/Webhook 证书
 
 要扩展 Kube-apiserver 的 API 时，可以采用 Kube-apiserver 聚合功能，具体 Kube-apiserver 聚合原理参考 https://kubernetes.io/zh-cn/docs/tasks/extend-kubernetes/configure-aggregation-layer/，或者自行开发的 Webhook，这两种开发都需要 Kube-apiserver 来调用，所以都会设计 TLS 认证，Webhook 原理见 https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/extensible-admission-controllers/
 
