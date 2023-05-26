@@ -381,7 +381,7 @@ subjects:
 
 上面的鉴权原理，可以下面这张图做个总结
 
-![k8s-crt-auth](k8s-cert-auth.png "K8S 证书鉴权")
+![k8s-crt-auth](k8s-crt-auth.png "K8S 证书鉴权")
 
 每个组件都代表着不同的 K8S 角色与 Kube-apiserver 鉴权。
 
