@@ -55,7 +55,7 @@ Certificate:
         .......
 ```
 
-可以发现 Kubelet 的客户端证书的 *`O`* 是 *`system.nodes`*，*`CN`* 是 *`system:node:master-172-31-97-104` ，*所以在 Kubernetes 中，每个结点的 Kubelet 都被赋予 `*system:node:"结点名称"*` 的 User，且附属于 `*system.nodes*` 的 Group。 
+可以发现 Kubelet 的客户端证书的 *`O`* 是 *`system.nodes`*，*`CN`* 是 *`system:node:master-172-31-97-104`* ，所以在 Kubernetes 中，每个结点的 Kubelet 都被赋予 *`system:node:"结点名称"`* 的 User，且附属于 *`system.nodes`* 的 Group。 
 
 Kubernetes RBAC 鉴权机制就是利用将权限绑定到 User 或者 Group，使得 User、Group 拥有对应权限，下面就看看 Kubernetes 如何 根据证书、ServiceAccount 鉴权的。
 
@@ -381,7 +381,7 @@ subjects:
 
 上面的鉴权原理，可以下面这张图做个总结
 
-![k8s-cert-auth](k8s-cert-auth.png "K8S 证书鉴权")
+![k8s-crt-auth](k8s-cert-auth.png "K8S 证书鉴权")
 
 每个组件都代表着不同的 K8S 角色与 Kube-apiserver 鉴权。
 
