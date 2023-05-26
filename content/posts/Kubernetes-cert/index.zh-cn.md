@@ -72,7 +72,7 @@ kubernetes/
 
 下面我们根据这个 Kubernetes 的组件之间通讯图来一一讲解每个证书的作用。本文基于 [Kubernetes:v1.22.17](https://github.com/kubernetes/kubernetes/tree/release-1.22) 
 
-![k8s-crt](k8s-crt-arch.png "Kubernetes 证书概览")
+![k8s-crt](k8s-cert-arch.png "Kubernetes 证书概览")
 
 ## **CA证书**
 
