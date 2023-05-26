@@ -303,15 +303,17 @@ apiserver-kubelet-client.crt  apiserver-kubelet-client.key
 
 ### 聚合层证书
 
-要扩展 Kube-apiserver 的 API 时，可以采用 Kube-apiserver 聚合功能，具体 Kube-apiserver 聚合原理参考 https://kubernetes.io/zh-cn/docs/tasks/extend-kubernetes/configure-aggregation-layer/
+要扩展 Kube-apiserver 的 API 时，可以采用 Kube-apiserver 聚合功能，具体 Kube-apiserver 聚合原理参考 https://kubernetes.io/zh-cn/docs/tasks/extend-kubernetes/configure-aggregation-layer/，或者自行开发的 Webhook，这两种开发都需要 Kube-apiserver 来调用，所以都会设计 TLS 认证，Webhook 原理见 https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/extensible-admission-controllers/
 
-这里简单说明下请求链路，当使用 kubectl 对扩展 API 发起请求时，首先 Kube-apiserver 收到请求对 kubectl 使用的 Kube-config 进行认证、鉴权，通过后将请求转发给 APIAggregator，APIAggregator 可以理解为一层代理，然后 APIAggregator 根据 API 的 GroupVersion 来将请求转发给扩展 apiserver，所以 APIAggregator 与开发者开发的扩展 apiserver 就需要进行 TLS 认证。
+这里以扩展 apiserver 简单说明下请求链路，当使用 kubectl 对扩展 API 发起请求时，首先 Kube-apiserver 收到请求对 kubectl 使用的 Kube-config 进行认证、鉴权，通过后将请求转发给 APIAggregator，APIAggregator 可以理解为一层代理，然后 APIAggregator 根据 API 的 GroupVersion 来将请求转发给扩展 apiserver，所以 APIAggregator 与开发者开发的扩展 apiserver 就需要进行 TLS 认证。
 
 理想情况扩展 apiserver 需要自己签发 CA，然后使用该 CA 签发服务端证书，服务端证书由扩展 apiserver 程序使用，CA 通过 APIService 资源来发布告知 Kube-apiserver APIAggregator ，然后 APIAggregator 访问时获取 APIService  的 caBundle 字段来认证扩展 apiserver。*`--requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt`* 来校验，同时扩展 apiserver 也会校验 APIAggregator 的客户端证书，APIAggregator 的客户端证书通过 *`--proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt`*，*`--proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key`* 配置，扩展 apiserver 会通过 kube-system 命名空间下的 extension-apiserver-authentication configmap 获取签发 *`front-proxy-client.crt`* 的 CA，即  *`--requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt`* ，*`Kube-apiserver 启动时会将该 CA 信息写入 *`extension-apiserver-authentication`* configmap 中。这样就达到双向 TLS 认证的效果。但是扩展 apiserver 也可以关闭服务端校验，通过 APIservice 的配置 *`insecureSkipTLSVerify: true`* ，这样就只会扩展 apiserver 校验 APIAggregator 了。
 
 ```bash
 front-proxy-ca.crt  front-proxy-client.crt  front-proxy-ca.key   front-proxy-client.key
 ```
+> 包括代理转发到用户 api-server 的请求和调用 Webhook 准入控制插件的请求，Kube-apiserver 都是用 *`--proxy-client-cert-file`* 来认证的
+>
 
 上面所说的证书都在 *`/etc/kubernetes/pki`* 目录下，除了 [sa.pub](http://sa.pub) 和 sa.key，这个下文讲解。在 Kubernetes 集群中，Kube-controller-manager 和 Kube-scheduler，Kubelet，Kubectl 都是通过 KubeConfig 来访问 Kube-apiserver，原理上都是证书，下面详细讲解下。
 
