@@ -303,7 +303,8 @@ apiserver-kubelet-client.crt  apiserver-kubelet-client.key
 
 ### 聚合层证书/Webhook 证书
 
-要扩展 Kube-apiserver 的 API 时，可以采用 Kube-apiserver 聚合功能，具体 Kube-apiserver 聚合原理参考 https://kubernetes.io/zh-cn/docs/tasks/extend-kubernetes/configure-aggregation-layer/，或者自行开发的 Webhook，这两种开发都需要 Kube-apiserver 来调用，所以都会设计 TLS 认证，Webhook 原理见 https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/extensible-admission-controllers/
+要扩展 Kube-apiserver 的 API 时，可以采用 Kube-apiserver 聚合功能，具体 Kube-apiserver 聚合原理参考 https://kubernetes.io/zh-cn/docs/tasks/extend-kubernetes/configure-aggregation-layer/。
+或者自行开发的 Webhook，这两种开发都需要 Kube-apiserver 来调用，所以都会设计 TLS 认证，Webhook 原理见 https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/extensible-admission-controllers/
 
 这里以扩展 apiserver 简单说明下请求链路，当使用 kubectl 对扩展 API 发起请求时，首先 Kube-apiserver 收到请求对 kubectl 使用的 Kube-config 进行认证、鉴权，通过后将请求转发给 APIAggregator，APIAggregator 可以理解为一层代理，然后 APIAggregator 根据 API 的 GroupVersion 来将请求转发给扩展 apiserver，所以 APIAggregator 与开发者开发的扩展 apiserver 就需要进行 TLS 认证。
 
