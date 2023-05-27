@@ -7,7 +7,7 @@ draft: false
 author: "孙峰"
 resources:
 - name: "featured-image"
-  src: "k8s-cdev.jpg"
+  src: "k8s-dev.jpg"
 
 tags: ["Kubernetes-dev"]
 categories: ["Kubernetes-dev"]
@@ -49,7 +49,7 @@ Kubernetes 开发：
 
 下面列出了关于 Kubernetes 开发的技术栈路线图，仅供参考。
 
-![k8s-dev](k8s-dev.jpg "K8S 开发技术栈")
+![k8s-dev](kubernetes-dev.png "K8S 开发技术栈")
 
 ## 总结
 
