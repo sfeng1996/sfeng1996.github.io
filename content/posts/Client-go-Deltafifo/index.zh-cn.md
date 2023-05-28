@@ -33,7 +33,7 @@ Deltafifo: delta first in first out，从字面意思上看是一个先进先出
 
 先通过 Deltafifo 结构体定义来大概看看作用和其字段的作用，在看结构体定义之前，通过下图先看看 Deltafifo 通过什么数据结构来存储数据的
 
-![client-go-deltafifo](Deltafifo.png "deltafifo 存储结构")
+![client-go-deltafifo](deltafifo.png "deltafifo 存储结构")
 
 从上图可以看出，*`queue`* 是一个切片，存放资源对象的 key；*`Items`* 是一个 map，key 为 queue 的元素，value 为一个事件的切片，且切片内的对象是同一个，只是事件类型不同。
 
