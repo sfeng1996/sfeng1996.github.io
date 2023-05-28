@@ -21,9 +21,7 @@ lightgallery: true
 
 Deltafifo: delta first in first out，从字面意思上看是一个先进先出的队列，Delta 表示变化的资源，包含操作资源对象的类型和数据。
 
-下面就详细解释下 Deltafifo 是如何存储数据的，以及实现原理。下面可以看出 Reflector 是 Deltafifo 的生产者。
-
-![client-go](client-arch.png "client-go 架构")
+下面就详细解释下 Deltafifo 是如何存储数据的，以及实现原理。从 Client-go 架构可以看出 Reflector 是 Deltafifo 的生产者。
 
 ## Deltafifo 源码解析
 
