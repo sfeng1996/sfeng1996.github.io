@@ -9,8 +9,8 @@ resources:
 - name: "featured-image"
   src: "enum-home.jpg"
 
-tags: ["Kubernetes-dev"]
-categories: ["Kubernetes-dev"]
+tags: ["Golang"]
+categories: ["Golang"]
 
 lightgallery: true
 ---
