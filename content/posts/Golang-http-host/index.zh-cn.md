@@ -1,8 +1,8 @@
 ---
 weight: 16
 title: "Golang 为 Http 请求设置 Host 不生效"
-date: 2023-06-05T21:57:40+08:00
-lastmod: 2023-06-05T16:45:40+08:00
+date: 2023-06-04T21:57:40+08:00
+lastmod: 2023-06-04T16:45:40+08:00
 draft: false
 author: "孙峰"
 resources:
