@@ -59,7 +59,7 @@ func main() {
 
 运行客户端代码，实际上无法访问，会被拦截，因为 *`Host`* 并没有生效。
 
-但是用 curl 来模拟请求，分别设置 *`Host`* 和不设置 *`Host`* 
+下面用 curl 来模拟请求，分别设置 *`Host`* 和不设置 *`Host`* 
 
 ```bash
 $ curl  http://172.31.132.95:30001/apis/test/v1/
@@ -77,7 +77,7 @@ $ curl -H "Host: test-host.com" http://172.31.132.95:30001/apis/test/v1/
 
 实际上，在 Go 里面 *`http request`* 里有个 *`Host`* 字段专门用于设置 *`Host`*，而不是在 header 里设置，很多人都被 post 或者 curl 给迷惑了。
 
-下面看看代码
+下面看看解决后的代码
 
 ```go
 import (
