@@ -56,7 +56,7 @@ lightgallery: true
 
 然后上面的 **`map`** 的 **`key`** 为用户传入的 **`key`**，**`map`** 的 **`value`** 为双链表的中 **`node`**，即通过 **`key`** 来获取链表中的 **`node`**，**`node`** 里存有用户传的 **`value`**
 
-![Golang-LRU.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/555033fa-d94d-4196-bf7b-1aa76845fce1/Golang-LRU.png)
+![Golang-LRU.png](Golang-LRU.png "LRUCache 数据结构")
 
 ### 代码实现
 
