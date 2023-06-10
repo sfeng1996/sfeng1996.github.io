@@ -153,12 +153,12 @@ func (lc *LRUCache) removeNode(node *DoubleLinkList) {
 func (lc *LRUCache) addNodeToHead(node *DoubleLinkList) {
 	// 将该结点的后继指针指向 head 结点的下一个结点
 	node.next = lc.head.next
-	// 将 head 结点的后继指针指向该结点
-	lc.head.next = node
 	// 将该结点的前驱指针指向 head 结点
 	node.pre = lc.head
 	// 将 head 结点的下一个节点的前驱结点指向该结点
 	lc.head.next.pre = node
+    // 将 head 结点的后继指针指向该结点
+	lc.head.next = node
 }
 ```
 
