@@ -164,9 +164,18 @@ func (lc *LRUCache) addNodeToHead(node *DoubleLinkList) {
 
 ### 测试代码
 
+由于测试需要，实现一个打印 **`LRUCache`** 数据的函数和一个初始化 **`LRUCache`** 的函数
+
 ```go
-// 测试
-func main() {
+func (lc *LRUCache) ListLRUCache() {
+	node := lc.head.next
+	for node != nil {
+		fmt.Printf("key: %s, value: %d\n", node.key, node.value)
+		node = node.next
+	}
+}
+
+func NewLRUCache() *LRUCache {
 	// 实例化一个 LRUCache
 	lc := &LRUCache{
 		// 缓存容量为 5
@@ -185,18 +194,119 @@ func main() {
 	lc.head.next = lc.tail
 	// 将 tail 结点的前驱指针指向 head 结点
 	lc.tail.pre = lc.head
-
-	lc.Put("first", 1)
-	lc.Put("second", 2)
-	lc.Put("three", 3)
-	lc.Put("four", 4)
-	lc.Put("five", 5)
-
-	lc.Put("five", 7)
-
-	fmt.Println(lc.Get("first"))
-	fmt.Println(lc.Get("five"))
 }
+```
+
+下面分别一些场景测试：
+
+**场景一：**
+
+获取 **`key`** 的 **`value`**，是否该 **`key`** 的 **`node`** 会被添加到 **`head`** 下一个结点处
+
+```go
+func main() {
+	// 初始化 LRUCache
+	lc := NewLRUCache()
+	// 填充满 LRUCache
+	lc.Put("key1", 1)
+	lc.Put("key2", 2)
+	lc.Put("key3", 3)
+	lc.Put("key4", 4)
+	lc.Put("key5", 5)
+	// 获取 key2, 看 key2 是否会被添加到 head.next 处
+	fmt.Println(lc.Get("key2"))
+	lc.ListLRUCache()
+}
+
+测试结果: 发现 key2 被添加到 head.next 处了
+key2: 2
+key: key2, value: 2
+key: key5, value: 5
+key: key4, value: 4
+key: key3, value: 3
+key: key1, value: 1
+
+```
+
+**场景二：**
+
+填充满 **`LRUCache`** 后，使用 **`Put`** 更新某个不存在的 **`key`**，看是否会移除最久未使用的 **`key`**。
+
+```go
+func main() {
+	// 初始化 LRUCache
+	lc := NewLRUCache()
+	// 填充满 LRUCache
+	lc.Put("key1", 1)
+	lc.Put("key2", 2)
+	lc.Put("key3", 3)
+	lc.Put("key4", 4)
+	lc.Put("key5", 5)
+	// 在 put 之前先打印 LRUCache 的数据，方便 put 后对比
+	fmt.Println("before put: ")
+	lc.ListLRUCache()
+	// 更新一个缓存中不存在的 key
+	lc.Put("key6", 6)
+	fmt.Println("after put: ")
+	lc.ListLRUCache()
+}
+
+测试结果：可以发现 key6 添加到 head.next 处且最久未用的 key1 被移除了
+
+before put: 
+key: key5, value: 5
+key: key4, value: 4
+key: key3, value: 3
+key: key2, value: 2
+key: key1, value: 1
+
+after put: 
+key: key6, value: 6
+key: key5, value: 5
+key: key4, value: 4
+key: key3, value: 3
+key: key2, value: 2
+```
+
+**场景三：**
+
+填充满 **`LRUCache`** 后，使用 **`Put`** 存在的 **`key`**，看是否会更新且该 **`key`** 的 **`node`** 添加到 [**`head.next`**](http://head.next) 处。
+
+```go
+func main() {
+	// 初始化 LRUCache
+	lc := NewLRUCache()
+	// 填充满 LRUCache
+	lc.Put("key1", 1)
+	lc.Put("key2", 2)
+	lc.Put("key3", 3)
+	lc.Put("key4", 4)
+	lc.Put("key5", 5)
+	// 在 put 之前先打印 LRUCache 的数据，方便 put 后对比
+	fmt.Println("before put: ")
+	lc.ListLRUCache()
+	// 更新一个缓存中存在的 key, 将 key5 的 value 改为 6
+	lc.Put("key5", 6)
+	fmt.Println("after put: ")
+	lc.ListLRUCache()
+}
+
+测试结果：发现 key5 的value 变为 6, 且被添加到 head.next 处
+
+before put: 
+key: key5, value: 5
+key: key4, value: 4
+key: key3, value: 3
+key: key2, value: 2
+key: key1, value: 1
+
+after put: 
+key: key5, value: 6
+key: key4, value: 4
+key: key3, value: 3
+key: key2, value: 2
+key: key1, value: 1
+
 ```
 
 ## 总结
