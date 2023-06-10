@@ -150,6 +150,7 @@ func (lc *LRUCache) removeNode(node *DoubleLinkList) {
 }
 
 // 将该结添加到 head 结点后面，因为 head 结点不存数据
+// 下面的步骤顺序不能随意编排
 func (lc *LRUCache) addNodeToHead(node *DoubleLinkList) {
 	// 将该结点的后继指针指向 head 结点的下一个结点
 	node.next = lc.head.next
