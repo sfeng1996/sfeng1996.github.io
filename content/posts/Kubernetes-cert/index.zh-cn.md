@@ -1,6 +1,6 @@
 ---
 weight: 8
-title: "Kubernetes 证书详解"
+title: "Kubernetes 证书详解(认证)"
 date: 2021-12-24T21:57:40+08:00
 lastmod: 2021-12-24T16:45:40+08:00
 draft: false
@@ -14,8 +14,6 @@ categories: ["Kubernetes-ops"]
 
 lightgallery: true
 ---
-
-# Kubernetes 证书详解
 
 ## **K8S 证书介绍**
 
