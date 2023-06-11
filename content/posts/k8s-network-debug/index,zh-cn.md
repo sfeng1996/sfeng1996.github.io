@@ -14,7 +14,8 @@ categories: ["Kubernetes-ops"]
 
 lightgallery: true
 ---
-# nsenter 调试容器
+
+## 背景
 
 现在大部分的公司业务基本都已经容器化，甚至 K8S 化的情况下，当容器、Pod 运行异常时，无非是看看其日志和一些 K8S event 信息，当容器、Pod 内部出现网络访问失败时，或者其他一些问题时。通常会进入容器、Pod 内部通过一些网络工具来进行调试，那么问题来了。一般容器内是不会安装太多的调试工具，基本都是最小化的操作系统，所以有的时候根本没办法调试。
 
@@ -26,13 +27,13 @@ lightgallery: true
 
 所以，显然第一、第二两种方法不方便且不现实，所以看看第三种方法是如何操作的。
 
-# 容器原理
+## 容器原理
 
 在介绍 `nsenter` 之前，先见到说下容器的原理，当我们用 `docker run` 启动一个容器时，实际上底层做的就是创建一个进程以及对应的 network namespace、mount namespace、uts namespace、ipc namespace、pid namspace、user namespace，然后将这个进程加入到这些到命令空间，同时给划分对应的 cgroup，最后使用 `chroot` 将容器的文件系统切换为根目录。这样就实现了这个进程与 `root namespace` 的多维度隔离，使得进入容器内就像是进入一个新的操作系统。
 
 所以说容器就是一个进程，只不过他都加入到不同的命名空间下了。
 
-# nsenter 原理
+## nsenter 简介
 
 `nsenter` 是一个 Linux 命令行工具，作用是可以进入 Linux 系统下某个进程的命令空间，如 network namespace、mount namespace、uts namespace、ipc namespace、pid namspace、user namespace、cgroup。
 
@@ -40,10 +41,6 @@ lightgallery: true
 
 - 在 `root namespace` 下找到容器的  Pid，也就是这个容器在 `root namespace` 下的进程号
 - 使用 `nsenter` 进入到该 Pid 的 `network namespace` 即可，这样就保证了当前的环境是容器的网络环境，但是文件系统还是在 `root namespace` 下，以及 user、uts 等命名空间都还是在 `root namespace` 下。所以就可以使用 `root namespace` 下的调试命令来进行调试了。
-
-# 实验
-
-上面介绍了 `nsenter` 的原理，下面就实际演示一下。
 
 `nsenter` 位于 `util-linux` 包中，一般常用的 Linux 发行版都已经默认安装。如果你的系统没有安装，可以使用以下命令进行安装：
 
@@ -84,7 +81,7 @@ $ nsenter --help
  -V, --version          display version
 ```
 
-这里演示两个场景，都是在工作中非常常见的。
+上面介绍了 `nsenter` 的原理，下面就实际演示一下，下面演示两个场景，都是在工作中非常常见的。
 
 ## 调试容器网络
 
@@ -226,7 +223,7 @@ $ curl http://www.baidu.com
 
 所以说，当使用 `nsenter` 调试 Pod 网络时，不管 Pod 状态如何，我们直接进入其 `Pause` 容器的 `network namespace` 即可。
 
-# 总结
+## 总结
 
 nsenter 非常便捷地帮助我们调试容器环境下和 K8S 环境下的网络调试，也可以调试其他问题。`nsenter` 使用也非常简单，是一个非常好用的调试工具，很好地解决了容器镜像缺少命令行工具的问题。
 
