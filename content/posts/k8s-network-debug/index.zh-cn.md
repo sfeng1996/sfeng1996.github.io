@@ -7,7 +7,7 @@ draft: false
 author: "孙峰"
 resources:
 - name: "featured-image"
-  src: "tree-home.jpg"
+  src: "pod-debug.jpg"
 
 tags: ["Kubernetes-ops"]
 categories: ["Kubernetes-ops"]
