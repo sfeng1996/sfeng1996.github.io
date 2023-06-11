@@ -895,7 +895,7 @@ enableEmoji = true
       [params.page.comment.utterances]
         enable = true
         # owner/repo
-        repo = "sfeng1996"
+        repo = "sfeng1996/hugo-comment"
         issueTerm = "hugo-comment"
         label = ""
         lightTheme = "github-light"
