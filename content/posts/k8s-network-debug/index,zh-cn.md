@@ -1,7 +1,7 @@
 ---
 weight: 19
 title: "如何使用 nsenter 调试容器网络"
-date: 2023-06-10T21:57:40+08:00
+date: 2023-06-09T21:57:40+08:00
 lastmod: 2023-06-10T16:45:40+08:00
 draft: false
 author: "孙峰"
