@@ -843,7 +843,7 @@ enableEmoji = true
       # Valine comment config (https://github.com/xCss/Valine)
       # Valine 评论系统设置 (https://github.com/xCss/Valine)
       [params.page.comment.valine]
-        enable = true
+        enable = false
         appId = "AkrUA0Rb8tfj1Va787YXLve1-gzGzoHsz"
         appKey = "vign60lYCKnZ1JcitMLPsfBn"
         placeholder = ""
@@ -893,10 +893,10 @@ enableEmoji = true
       # Utterances comment config (https://utteranc.es/)
       # Utterances comment 评论系统设置 (https://utteranc.es/)
       [params.page.comment.utterances]
-        enable = false
+        enable = true
         # owner/repo
-        repo = ""
-        issueTerm = "pathname"
+        repo = "sfeng1996"
+        issueTerm = "hugo-comment"
         label = ""
         lightTheme = "github-light"
         darkTheme = "github-dark"
