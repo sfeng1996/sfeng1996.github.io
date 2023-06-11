@@ -1,6 +1,6 @@
 ---
 weight: 12
-title: "Kubernetes 证书鉴权"
+title: "Kubernetes 证书详解(鉴权)"
 date: 2021-12-26T21:57:40+08:00
 lastmod: 2021-12-26T16:45:40+08:00
 draft: false
