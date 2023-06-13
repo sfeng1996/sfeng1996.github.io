@@ -1,6 +1,6 @@
 ---
 weight: 17
-title: "面试用 Golang 手撸 LRU"
+title: "用 Golang 实现 LRU"
 date: 2023-06-06T21:57:40+08:00
 lastmod: 2023-06-06T16:45:40+08:00
 draft: false
@@ -14,12 +14,6 @@ categories: ["Golang"]
 
 lightgallery: true
 ---
-
-## 背景
-
-上周参加一个云原生 DevOps 开发的面试，第一轮面试问一些技能、项目相关问题，最后留了 20 分要求用 Golang 实现 **`LRU`**。
-
-过程大概用了半个多小时，大概写出来了 80 %，一面勉强过了。写篇文章记录下，加深印象。
 
 ## LRU 是什么
 
