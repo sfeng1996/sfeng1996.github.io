@@ -1,5 +1,5 @@
 ---
-weight: 22
+weight: 23
 title: "Client-go Informer 原理"
 date: 2023-07-02T21:57:40+08:00
 lastmod: 2023-07-02T16:45:40+08:00
