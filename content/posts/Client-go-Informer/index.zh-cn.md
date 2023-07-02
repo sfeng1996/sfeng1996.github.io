@@ -1,7 +1,7 @@
 ---
 weight: 23
 title: "Client-go Informer 原理"
-date: 2023-07-02T21:57:40+08:00
+date: 2023-07-02T14:57:40+08:00
 lastmod: 2023-07-02T16:45:40+08:00
 draft: false
 author: "孙峰"
@@ -14,8 +14,6 @@ categories: ["Kubernetes-dev"]
 
 lightgallery: true
 ---
-
-# SharedInformer 原理
 
 ## 简介
 
