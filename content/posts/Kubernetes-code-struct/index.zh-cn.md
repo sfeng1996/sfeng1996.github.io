@@ -178,14 +178,14 @@ k8s.io/sample-controller
 
 ## API 代码
 
-api 定义代码位于 kubernetes/staging/src/k8s.io/api，kubernetes/staging/src/k8s.io/apis。
+api 定义代码位于 kubernetes/staging/src/k8s.io/api
 
 需要注意 kubernetes 主项目中还有kubernetes/api，kubernetes/pkg/api，kubernetes/pkg/apis 三个目录。
 
 ```bash
-kubernetes/api:      不符合规范、但是还没去处的 api 列表
-kuberntes/pkg/api:   简单的操作函数
-kuberntes/pkg/apis:  deepcopy、版本转换等工具代码
+kubernetes/api:      api 规范定义
+kuberntes/pkg/api:   简单的操作函数, api util 方法
+kuberntes/pkg/apis:  与 kubernetes/staging/src/k8s.io/api 内容类似，也定义了内置 api，但是这个项目只建议被 Kubernetes 引用，如果外部项目引用建议使用 kubernetes/staging/src/k8s.io/api。而且 Kubernetes 内置代码也有很多应用了 kubernetes/staging/src/k8s.io/api 下面的 api，所以后面可能都会迁移至 kubernetes/staging/src/k8s.io/api 项目下。
 ```
 
 ## 总结
