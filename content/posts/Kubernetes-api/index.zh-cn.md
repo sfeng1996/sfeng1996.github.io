@@ -217,47 +217,59 @@ $ kubectl get --raw /
 
 ### API 示例
 
-1、namespaced resources
+**namespaced resources**
 
-所谓的namespaced resources,就是这个resource是从属于某个namespace的, 也就是说它不是cluster-scoped的资源. 比如pod, deployment, service都属于namespaced resource. 那么我们看一下如何请求一个namespaced resources.
+所谓的 namespaced resources , 就是这个 resource 是从属于某个 namespace 的, 也就是说它不是 cluster-scoped 的资源. 比如 pod, deployment, service 都属于 namespaced resource. 那么我们看一下如何请求一个 namespaced resources.
 
+```bash
 http://localhost:8080/api/v1/namespaces/default/pods/test-pod
+```
 
-可以看出, 该restful api的组织形式是:
+可以看出, 该 restful api 的组织形式是:
 
-这里api version如果是v1的话,表示这是一个很稳定的版本了, 以后不会有大的修改,并且当前版本所支持的所有特性以后都会兼容. 而如果版本号是v1alpha1, v1beta1之类的,则不保证其稳定性.
+这里 api version 如果是 v1 的话,表示这是一个很稳定的版本了, 以后不会有大的修改,并且当前版本所支持的所有特性以后都会兼容. 而如果版本号是 v1alpha1, v1beta1 之类的,则不保证其稳定性.
 
-2、non-namespaced resources
+**non-namespaced resources**
 
+```bash
 http://localhost:8080/apis/rbac.authorization.k8s.io/v1/clusterroles/test-clusterrole
+```
 
-这里可以观察到它clusterrole与pod不同, apis表示这是一个非核心api，rbac.authorization.k8s.io指代的是api-group, 另外它没有namespaces字段, 其他与namespaced resources类似.不再赘述.
+这里可以观察到它 clusterrole 与 pod 不同,  apis 表示这是一个非核心 api，rbac.authorization.k8s.io 指代的是 api-group, 另外它没有 namespaces 字段, 其他与 namespaced resources 类似.不再赘述.
 
-3、non-resource url
+**non-resource url**
 
-这类资源和pod, clusterrole都不同. 例如
+这类资源和 pod, clusterrole 都不同. 例如
 
+```bash
 http://localhost:8080/healthz/etcd
+```
 
-这就是用来确认etcd服务是不是健康的.它不属于任何namespace,也不属于任何api版本.
+这就是用来确认 etcd 服务是不是健康的.它不属于任何 namespace ,也不属于任何 api 版本.
 
-4、custom api
+**custom api**
 
 当开发 operator 或者聚合 api 时，都会自定义 API，例如：
 
+```bash
 http://localhost:8080/apis/custom.io/v1/test
+```
 
 [custom.io](http://custom.io) 表示自定义 group
 
 test 为自定义资源
 
-k8s的REST API的设计结构为:
+k8s 的 REST API 的设计结构为:
 
+```bash
 api/apis /  [api-group]   / api-version /  namespaces / namespace-name / resource-kind / resource-name
+```
 
 示例：
 
+```bash
 apis    /   rbac.authorization.k8s.io /  v1   /  namespaces / default      /  roles            /  test-role
+```
 
 ## 总结
 
