@@ -24,7 +24,7 @@ Client-Go 共提供了 4 种与 Kubernetes APIServer 交互的客户端。分别
 - ClientSet：负责操作 Kubernetes 内置的资源对象，例如：Pod、Service等。
 - DynamicClient：动态客户端，可以对任意的 Kubernetes 资源对象进行通用操作，包括 CRD。
 
-![client-go.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3d8971a4-3b48-4ae7-b242-7bea46dd8813/client-go.jpg)
+![client-go.jpg](client-go-use.jpg "client-go 客户端")
 
 ## ****RESTClient****
 
