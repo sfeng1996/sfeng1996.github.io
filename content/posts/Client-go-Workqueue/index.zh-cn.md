@@ -610,12 +610,12 @@ func (r *BucketRateLimiter) When(item interface{}) time.Duration {
 }
 
 func (r *BucketRateLimiter) NumRequeues(item interface{}) int {
-	// 因为是固定频率，所以不要重试
+	// 因为是固定频率，重新入队的次数没有什么作用，直接返回 0 
 	return 0
 }
 
 func (r *BucketRateLimiter) Forget(item interface{}) {
-	// 不需要重试，也就不需要忘记元素
+	// 不需要重新入队的次数，也无需忘记元素
 }
 ```
 
