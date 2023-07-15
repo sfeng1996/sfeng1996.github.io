@@ -206,7 +206,7 @@ func (q *Type) Done(item interface{}) {
 
 上述分析如下图所示：
 
-![workqueue-common1.png](workqueue-common1.png "并发场景")
+![workqueue-common1.png](workqueue-common1.png "非并发场景")
 
 **并发场景：**
 
