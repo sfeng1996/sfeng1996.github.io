@@ -1,8 +1,8 @@
 ---
 weight: 11
 title: "Client-go 客户端 使用"
-date: 2022-05-26T21:57:40+08:00
-lastmod: 2022-05-26T16:45:40+08:00
+date: 2022-05-26T09:57:40+08:00
+lastmod: 2022-05-26T10:45:40+08:00
 draft: false
 author: "孙峰"
 resources:
