@@ -19,7 +19,7 @@ lightgallery: true
 
 ## 简介
 
-上一篇文章梳理了 SharedInformer 的原理，知道事件存到 Indexer 中后，最后会被事件处理器处理。这个处理器可以是开发者自己实现的处理器，在前面章节 Informer 使用中的示例就是我们自己实现了 `OnAdd、OnUpdate、OnDelete` 这三个回调函数，从而实现处理器；
+上一篇文章梳理了 SharedInformer 的原理，知道事件存到 Indexer 中后，最后会被事件处理器处理。这个处理器可以是开发者自己实现的处理器，在前面章节 Informer 使用中的示例就是我们自己实现了 OnAdd、OnUpdate、OnDelete 这三个回调函数，从而实现处理器；
 
 也可以利用 client-go 中的 Workqueue，将事件先写入到 Workqueue 中，然后再从这个 Workqueue 中获取事件再处理。这样的好处可以实现异步处理事件，事件处理的效率也会非常高。像 [sigs.io](http://sigs.io) 组织开发的 Controller-runtime 以及 k8s 内部组件使用 informer 的时候都是利用 Workqueue 来异步处理事件的。
 
