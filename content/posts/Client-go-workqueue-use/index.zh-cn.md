@@ -277,6 +277,6 @@ Pod nginx/nginx-1 does not exists anymore
 
 到这里 Client-go 里面的所有细节都已经讲解结束了，后面则会进入 Operator 部分，如何开发 Operator 以及 Controller-runtime 的原理。
 
-最后将 Client-go 整体架构图最后模块即消费 Workqueue 给补充以下，如下所示：
+最后将 Client-go 整体架构图最后模块即消费 Workqueue 给补充一下，如下所示：
 
 ![Client-go-arch.png](Client-go-arch.png "client-go 架构图")
