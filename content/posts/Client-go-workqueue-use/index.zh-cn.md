@@ -223,11 +223,11 @@ func homeDir() string {
 }
 ```
 
-上面这个示例就是自定义了一个控制器，这个控制器 watch nginx 命名空间下的 pod，然后将元素事件添加到 Workqueue 中，最后从 Workqueue 消费事件来进行处理。
+上面这个示例就是自定义了一个控制器，这个控制器 `watch` nginx 命名空间下的 pod，然后将元素事件添加到 Workqueue 中，最后从 Workqueue 消费事件来进行处理。
 
-然后为了测试效果，将 informer resync 的周期设置为 0，根据前面文章介绍，resync 设置为 0 表示不会将 Indexer 的数据重新同步到 Deltafifo 中。
+然后为了测试效果，将 Informer `resync` 的周期设置为 0，根据前面文章介绍，`resync` 设置为 0 表示不会将 Indexer 的数据重新同步到 Deltafifo 中。
 
-如果设置 resync 的话，则会定期出现 update 事件，因为 resync 的元素都标记为 update 类型了，这样会和我们手动触发 update 事件混乱，影响测试效果。
+如果设置 `resync` 的话，则会定期出现 update 事件，因为 `resync` 的元素都标记为 update 类型了，这样会和我们手动触发 update 事件混乱，影响测试效果。
 
 ### 结果
 
@@ -251,7 +251,7 @@ handler for Pod nginx-1
 
 3、当我们手动删除这个 pod，会触发 delete 事件，那么该对象就会从 indexer 删除，则获取不到对象了
 
-但是可以发现，删除对象时会触发多次 update 事件，这是因为 pod 资源本身被 k8s 内置的一些控制器 watch，所以当删除该 pod 时会触发其余控制器进行一些其他的操作。
+但是可以发现，删除对象时会触发多次 update 事件，这是因为 pod 资源本身被 k8s 内置的一些控制器 `watch`，所以当删除该 pod 时会触发其余控制器进行一些其他的操作。
 
 ```go
 I0720 17:07:22.161942   32371 informer-workqueue.go:303] Starting Pod controller
