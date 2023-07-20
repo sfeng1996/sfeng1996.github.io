@@ -191,9 +191,7 @@ func main() {
 		DeleteFunc: func(obj interface{}) {
 			key, err := cache.DeletionHandlingMetaNamespaceKeyFunc(obj)
 			if err == nil {
-				fmt.Println("deleteI0720 17:07:22.161942   32371 informer-workqueue.go:303] Starting Pod controller
-add pod:  nginx/nginx-1
-handler for Pod nginx-1 pod: ", key)
+				fmt.Println("delete pod: ", key)
 				queue.Add(key)
 			}
 		},
