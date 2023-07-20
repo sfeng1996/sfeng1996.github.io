@@ -15,8 +15,6 @@ categories: ["Kubernetes-dev"]
 lightgallery: true
 ---
 
-# Workqueue 原理
-
 ## 简介
 
 上一篇文章梳理了 SharedInformer 的原理，知道事件存到 Indexer 中后，最后会被事件处理器处理。这个处理器可以是开发者自己实现的处理器，在前面章节 Informer 使用中的示例就是我们自己实现了 OnAdd、OnUpdate、OnDelete 这三个回调函数，从而实现处理器；
