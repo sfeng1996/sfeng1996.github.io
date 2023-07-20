@@ -24,7 +24,7 @@ lightgallery: true
 
 ## 实现
 
-如果自定义一个带 Workqueue 功能的控制器，这个控制器需要 Informer 来协调运行各个子组件，如 Reflector、Deltafifo，然后需要 Workqueue，将事件元素添加到 Workqueue 中，最后还需要 indexer，在最后逻辑处理元素时都是从 indexer 中获取真正的对象。
+如果自定义一个带 Workqueue 功能的控制器，这个控制器需要 Informer 来协调运行各个子组件，如 Reflector、Deltafifo，然后需要 Workqueue，将事件元素添加到 Workqueue 中，最后还需要 indexer，在最后逻辑处理元素时都是从 indexer 中获取真正的对象，而不是从 Kube-apiserver 获取，减小 Kube-apiserver 的压力。
 
 ### 代码
 
