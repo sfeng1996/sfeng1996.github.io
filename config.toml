@@ -896,7 +896,7 @@ enableEmoji = true
         enable = true
         # owner/repo
         repo = "sfeng1996/hugo-comment"
-        issueTerm = "hugo-comment"
+        issueTerm = ""
         label = ""
         lightTheme = "github-light"
         darkTheme = "github-dark"
