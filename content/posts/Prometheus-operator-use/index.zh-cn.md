@@ -9,8 +9,8 @@ resources:
 - name: "featured-image"
   src: "k8s-dev.jpg"
 
-tags: ["Kubernetes-dev"]
-categories: ["Kubernetes-dev"]
+tags: ["Kubernetes-ops"]
+categories: ["Kubernetes-ops"]
 
 lightgallery: true
 ---
