@@ -7,7 +7,7 @@ draft: false
 author: "孙峰"
 resources:
 - name: "featured-image"
-  src: "ks8gpt.jpg"
+  src: "ks8gpt.png"
 
 tags: ["AI 大模型"]
 categories: ["AI 大模型"]
@@ -20,7 +20,7 @@ lightgallery: true
 
 [k8sgpt](https://github.com/k8sgpt-ai/k8sgpt.git) 是一个开源的二进制工具，用于扫描 Kubernetes Cluster，以及用简单的英语诊断和分类问题的工具。结合大模型 AI 能力它将 SRE 经验植入其分析仪，并帮助我们提取最有价值的相关信息，以及基于人工智能进行丰富、完善，以支撑问题的解决。 
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/690e3eaa-dca2-44ca-8aed-cbdb6936409b/Untitled.png)
+![k8sgpt](k8sgpt.png "k8sgpt")
 
 ## K8sgpt 简单原理
 
@@ -50,7 +50,7 @@ $ wget https://github.com/k8sgpt-ai/k8sgpt/releases/download/v0.3.13/k8sgpt_Linu
 
 2、获取 openai api key，https://beta.openai.com/account/api-keys
 
-![k8sgpt](k8sgpt.png "k8sgpt")
+![k8sgpt](openai.png "openai")
 
 3、认证 openai，并输入上述 key
 
