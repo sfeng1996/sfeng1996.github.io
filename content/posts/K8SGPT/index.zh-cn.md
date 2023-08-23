@@ -14,7 +14,6 @@ categories: ["AI 大模型"]
 
 lightgallery: true
 ---
-# 让 K8sgpt 作为 K8S 的 AI 助手
 
 ## 简介
 
