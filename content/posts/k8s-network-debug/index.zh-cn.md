@@ -202,7 +202,7 @@ $ docker inspect 70e8079e82ed |grep Pid
             "PidMode": "",
             "PidsLimit": null,      
 # nsenter 进入 Pause 容器的 network namespace
-$ nsneter -t 14213 -n    
+$ nsenter -t 14213 -n    
 # 查看 pause 容器的网络, 和 Pod 网络一致
 $ ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
