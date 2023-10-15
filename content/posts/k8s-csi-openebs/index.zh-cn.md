@@ -21,9 +21,7 @@ lightgallery: true
 
 在 [Kubernetes CSI (一): Kubernetes 存储原理](https://www.sfernetes.com/kubernetes-csi/) 一文中详细讲解了 Kubernetes CSI 的原理，本篇文章通过原理和源码走读形式讲解 [**OpenEBS**](https://openebs.io/) 原理。
 
-OpenEBS 是一款使用Go语言编写的基于容器的块存储开源软件。OpenEBS 使得在容器中运行关键性任务和需要数据持久化的负载变得更可靠。实现
-
-了 **Kubernetes CSI**，所以可以很方便对接 Kubernetes 存储功能。
+OpenEBS 是一款使用Go语言编写的基于容器的块存储开源软件。OpenEBS 使得在容器中运行关键性任务和需要数据持久化的负载变得更可靠。实现了 **Kubernetes CSI**，所以可以很方便对接 Kubernetes 存储功能。
 
 对于大部分第三方存储厂商，它们都只实现了分布式存储，OpenEBS 可以为 Kubernetes 有状态负载( StatefulSet ) 提供本地存储卷和分布式存储卷。
 
