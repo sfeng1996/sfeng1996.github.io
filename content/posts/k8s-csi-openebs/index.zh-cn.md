@@ -15,6 +15,8 @@ categories: ["Kubernetes-dev"]
 lightgallery: true
 ---
 
+# Kubernetes CSI (二): OpenEBS 原理
+
 ## 简介
 
 在 [Kubernetes CSI (一): Kubernetes 存储原理](https://www.sfernetes.com/kubernetes-csi/) 一文中详细讲解了 Kubernetes CSI 的原理，本篇文章通过原理和源码走读形式讲解 [**OpenEBS**](https://openebs.io/) 原理。
@@ -31,15 +33,13 @@ OpenEBS 是一款使用Go语言编写的基于容器的块存储开源软件。O
 
 本地存储卷很容易理解，在 Kubernetes 中本身就支持 **Hostpath** 类型的存储卷，
 
-使用 HostPath 有一个局限性就是，我们的 Pod 不能随便漂移，需要固定到一个节点上，因为一旦漂移到其他节点上去了宿主机上面就没有对应的数据了，所以我们在使用 HostPath 的时候都会搭配 
+使用 HostPath 有一个局限性就是，我们的 Pod 不能随便漂移，需要固定到一个节点上，因为一旦漂移到其他节点上去了宿主机上面就没有对应的数据了，所以我们在使用 HostPath 的时候都会搭配 nodeSelector 来进行使用。
 
-nodeSelector 来进行使用。
+但是使用 HostPath 明显也有一些好处的，因为 PV 直接使用的是本地磁盘，尤其是 SSD 盘，它的读写性能相比于大多数远程存储来说，要好得多，所以对于一些对磁盘 IO 要求比较高的应
 
-但是使用 HostPath 明显也有一些好处的，因为 PV 直接使用的是本地磁盘，尤其是 SSD 盘，它的读写性能相比于大多数远程存储来说，要好得多，所以对于一些对磁盘 IO 要求比较高的应用，
+用，比如 etcd 就非常实用了。不过呢，相比于正常的 PV 来说，使用了 HostPath 的这些节点一旦宕机数据就可能丢失，所以这就要求使用 HostPath 的应用必须具备数据备份和恢复的能
 
-比如 etcd 就非常实用了。不过呢，相比于正常的 PV 来说，使用了 HostPath 的这些节点一旦宕机数据就可能丢失，所以这就要求使用 HostPath 的应用必须具备数据备份和恢复的能力，允许你把这些数据
-
-定时备份在其他位置。
+力，允许你把这些数据定时备份在其他位置。
 
 所以在 HostPath 的基础上，Kubernetes 依靠 PV、PVC 实现了一个新的特性，这个特性的名字叫作：`Local Persistent Volume`，也就是我们说的 `Local PV`。
 
@@ -81,21 +81,19 @@ spec:
 
 **延迟绑定**就是在 Pod 调度完成之后，再绑定对应的 PVC、PV。对于使用 `Local PV` 的 Pod，必须延迟绑定。
 
-比如现在明确规定，这个 Pod 只能运行在 `node-1` 这个节点上，且该 Pod 申请了一个 PVC。对于没有延迟属性的 StorageClass，那么就会在 Pod 调度到某个节点之前就将该 PVC 绑定到合适的 PV，如果
-
-集群 `node-1，node-2` 都存在 PV 可以和该 PVC 绑定，那么就有可能该 PVC 绑定了 `node-2` 的 PV，就会导致 Pod 调度失败。
+比如现在明确规定，这个 Pod 只能运行在 `node-1` 这个节点上，且该 Pod 申请了一个 PVC。对于没有延迟属性的 StorageClass，那么就会在 Pod 调度到某个节点之前就将该 PVC 绑定到合适的 PV，如果集群 `node-1，node-2` 都存在 PV 可以和该 PVC 绑定，那么就有可能该 PVC 绑定了 `node-2` 的 PV，就会导致 Pod 调度失败。
 
 所以为了避免这种现象，就必须在 PVC 和 PV 绑定之前就将 Pod 调度完成。所以我们在使用 `Local PV` 的时候，就必须**延迟绑定**操作，即延迟到 Pod 调度完成之后再绑定 PVC。
 
 那么怎么才能实现**延迟绑定**？
 
-对于 `Local PV` 类型的 StorageClass 需要配置 `volumeBindingMode=WaitForFirstConsumer` 的属性，就是告诉 Kubernetes 在发现这个 StorageClass 关联的 PVC 与 PV 可以绑定在一起，但不要现在就立刻执
+对于 `Local PV` 类型的 StorageClass 需要配置 `volumeBindingMode=WaitForFirstConsumer` 的属性，就是告诉 Kubernetes 在发现这个 StorageClass 关联的 PVC 与 PV 可以绑定在一起，但不要
 
-行绑定操作（即：设置 PVC 的 VolumeName 字段），而是要等到第一个声明使用该 PVC 的 Pod 出现在调度器之后，调度器再综合考虑所有的调度规则，当然也包括每个 PV 所在的节点位置，来统一决
+现在就立刻执行绑定操作（即：设置 PVC 的 VolumeName 字段），而是要等到第一个声明使用该 PVC 的 Pod 出现在调度器之后，调度器再综合考虑所有的调度规则，当然也包括每个 PV 
 
-定。这个 Pod 声明的 PVC，到底应该跟哪个 PV 进行绑定。通过这个延迟绑定机制，原本实时发生的 PVC 和 PV 的绑定过程，就被延迟到了 Pod 第一次调度的时候在调度器中进行，从而保证了这个绑定结
+所在的节点位置，来统一决定。这个 Pod 声明的 PVC，到底应该跟哪个 PV 进行绑定。通过这个延迟绑定机制，原本实时发生的 PVC 和 PV 的绑定过程，就被延迟到了 Pod 第一次调度的时
 
-果不会影响 Pod 的正常调度。
+候在调度器中进行，从而保证了这个绑定结果不会影响 Pod 的正常调度。
 
 ```yaml
 apiVersion: storage.k8s.io/v1
