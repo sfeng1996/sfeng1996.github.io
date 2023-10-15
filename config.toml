@@ -308,7 +308,7 @@ enableEmoji = true
         Gitea = ""
         XMPP = ""
         Matrix = ""
-        Bilibili = "382859797?spm_id_from=333.1007.0.0"
+        Bilibili = ""
         Email = "SFeng1996@163.com"
         Wechat = "https://www.sfernetes.com/images/wechat_sfeng.jpg"
         RSS = true
@@ -593,7 +593,7 @@ enableEmoji = true
         XMPP = ""
         Matrix = ""
         Wechat = "https://www.sfernetes.com/images/wechat_sfeng.jpg"
-        Bilibili = "382859797?spm_id_from=333.1007.0.0"
+        Bilibili = ""
         Email = "SFeng1996@163.com"
         RSS = true
 
@@ -1057,7 +1057,7 @@ enableEmoji = true
 [author]
   name = "SFeng"
   email = "SFeng1996@163.com"
-  link = "https://space.bilibili.com/382859797?spm_id_from=333.1007.0.0"
+  link = ""
 
 # Sitemap config
 # 网站地图配置
