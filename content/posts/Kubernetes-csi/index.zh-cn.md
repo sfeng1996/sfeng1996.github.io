@@ -346,12 +346,12 @@ Attaching 这个阶段用于块存储，同样会涉及到 Kube-controller-manag
 
 Mounting 这个阶段将宿主机上的存储挂载到容器内，该过程涉及到 Kubelet、CSI 插件的 CSI-Node。
 
-这里会涉及到一个全局目录的概念，全局目录（global mount path）存在的目的：块设备在 Linux 上只能挂载一次，而在 K8s 场景中，一个 PV 可能被挂载到同一个 Node 上的多个 Pod 实例中。若块设备格式化后先挂载至 Node 上的一个临时全局目录，然后再使用 Linux 中的 bind mount 技术把这个全局目录挂载进 Pod 中对应的目录上，就可以满足要求。上述流程图中，全局目录即 `/var/lib/kubelet/pods/[pod uid]/volumes/kubernetes.io~iscsi/[PV name]`, 全局目录在 PVC 和 PV 绑定后 Kubelet 就会在当前节点创建。
+这里会涉及到一个全局目录的概念，全局目录（global mount path）存在的目的：块设备在 Linux 上只能挂载一次，而在 K8s 场景中，一个 PV 可能被挂载到同一个 Node 上的多个 Pod 实例中。若块设备格式化后先挂载至 Node 上的一个临时全局目录，然后再使用 Linux 中的 bind mount 技术把这个全局目录挂载进 Pod 中对应的目录上，就可以满足要求。上述流程图中，全局目录即 `/var/lib/kubelet/plugins/kubernetes.io/csi/pv/csi-blockvolume-pv/globalmount`, 全局目录在 PVC 和 PV 绑定后 Kubelet 就会在当前节点创建。
 
 Mounting 流程如下，流程图可参考上图阶段 8：
 
 - Kubelet 的 Volume Manager 调用 CSI 插件的 CSI-Node 的 `NodeStageVolume` 接口**，**挂载 volume 到全局目录；
-- Kubelet 的 Volume Manager 调用 CSI 插件的 CSI-Node 的 `NodePublishVolume` 接口 bind-mount volume 到 Pod 上；
+- Kubelet 的 Volume Manager 调用 CSI 插件的 CSI-Node 的 `NodePublishVolume` 接口 bind-mount volume 到 Pod 上，这个 Pod 目录是在宿主机上的唯一目录，格式为：`/var/lib/kubelet/pods/{poduid}/volumes/{volume-plugin}/{pv-name}` , 并不是容器内的目录，挂载到容器内是 CRI 做的事。
 
 以上就是 Kubernetes 使用 CSI 的完整流程，如果是删除带有 PVC 的 Pod，那么则是以上过程的逆向操作，即 Umount Volumes —> Dettaching Volumes —> Deleting Volumes，具体细节这里不再赘述。
 
