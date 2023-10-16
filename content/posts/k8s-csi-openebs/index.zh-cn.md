@@ -519,7 +519,7 @@ spec:
 - kube-scheduler watch 到 Pod，并根据一系列算法选择节点；
     - 在这过程中会检查 Pod 的 PVC 是否已经绑定，如果绑定了就根据该 PVC Annotation `volume.kubernetes.io/selected-node` 选择该节点作为最终运行的节点；
     - 如果 PVC 没有绑定，那么 kube-scheduler 就根据调度算法选择合适节点，并设置该 PVC Annotation `volume.kubernetes.io/selected-node = node.name` 。
-- Kubelet 将 PV 的数据目录绑定到 Pod 容器内部。
+- Kubelet 将 PV 的数据目录绑定到 Pod 数据目录(在 /var/lib/kubelet/pods/{poduid}/volumes/{volume-plugin}/{pv-name} ) 。
 
 下图简单描述以上流程：
 
@@ -679,9 +679,195 @@ func (b *backoffStore) StoreVolume(claim *v1.PersistentVolumeClaim, volume *v1.P
 }
 ```
 
-接下来就是 PV Controller 将 PVC 和 PV 进行绑定，Kubelet Local-Volume 将 PV 数据目录挂载到 Pod 容器内部。
+接下来就是 PV Controller 将 PVC 和 PV 进行绑定，Kubelet Local-Volume 将 Local-PV 数据目录挂载到 Pod 目录。
 
-整个 dynamic-localpv-provisoner 组件函数调用关系如下图：
+Kubelet 实现了很多 Volume plugin，有：`awsebs、azure_file、azuredd、cephfs、configmap、csi、downwardapi、emptydir、fc、flexvolume、gcepd、git_repo、hostpath、iscsi、local、nfs、portworx、projected、rbd、secret、vsphere_volume`
+
+通过判断 PV 支持哪个 Volume plugin，然后再去调用对应 Volume plugin 来执行 mount 操作。
+
+```go
+// 该 interface 定义了 VolumePlugin 的方法
+// kubernetes/pkg/volume/plugins.go:124
+type VolumePlugin interface {
+	// Init initializes the plugin.  This will be called exactly once
+	// before any New* calls are made - implementations of plugins may
+	// depend on this.
+	Init(host VolumeHost) error
+
+	// Name returns the plugin's name.  Plugins must use namespaced names
+	// such as "example.com/volume" and contain exactly one '/' character.
+	// The "kubernetes.io" namespace is reserved for plugins which are
+	// bundled with kubernetes.
+	GetPluginName() string
+
+	// GetVolumeName returns the name/ID to uniquely identifying the actual
+	// backing device, directory, path, etc. referenced by the specified volume
+	// spec.
+	// For Attachable volumes, this value must be able to be passed back to
+	// volume Detach methods to identify the device to act on.
+	// If the plugin does not support the given spec, this returns an error.
+	GetVolumeName(spec *Spec) (string, error)
+
+	// 判断该 Volume 属于哪个 Volume plugin
+	CanSupport(spec *Spec) bool
+
+	// RequiresRemount returns true if this plugin requires mount calls to be
+	// reexecuted. Atomically updating volumes, like Downward API, depend on
+	// this to update the contents of the volume.
+	RequiresRemount(spec *Spec) bool
+
+	// NewMounter creates a new volume.Mounter from an API specification.
+	// Ownership of the spec pointer in *not* transferred.
+	// - spec: The v1.Volume spec
+	// - pod: The enclosing pod
+	(spec *Spec, podRef *v1.Pod, opts VolumeOptions) (Mounter, error)
+
+	// NewUnmounter creates a new volume.Unmounter from recoverable state.
+	// - name: The volume name, as per the v1.Volume spec.
+	// - podUID: The UID of the enclosing pod
+	NewUnmounter(name string, podUID types.UID) (Unmounter, error)
+
+	// ConstructVolumeSpec constructs a volume spec based on the given volume name
+	// and volumePath. The spec may have incomplete information due to limited
+	// information from input. This function is used by volume manager to reconstruct
+	// volume spec by reading the volume directories from disk
+	ConstructVolumeSpec(volumeName, volumePath string) (ReconstructedVolume, error)
+
+	// SupportsMountOption returns true if volume plugins supports Mount options
+	// Specifying mount options in a volume plugin that doesn't support
+	// user specified mount options will result in error creating persistent volumes
+	SupportsMountOption() bool
+
+	// SupportsBulkVolumeVerification checks if volume plugin type is capable
+	// of enabling bulk polling of all nodes. This can speed up verification of
+	// attached volumes by quite a bit, but underlying pluging must support it.
+	SupportsBulkVolumeVerification() bool
+
+	// SupportsSELinuxContextMount returns true if volume plugins supports
+	// mount -o context=XYZ for a given volume.
+	SupportsSELinuxContextMount(spec *Spec) (bool, error)
+}
+```
+
+以上 `CanSupport(spec *Spec) bool` 可以知道 Volume 对应的 VolumePlugin。下面看看 Local PV 是如何实现该方法的。
+
+```go
+// kubernetes/pkg/volume/local/local.go:82
+func (plugin *localVolumePlugin) CanSupport(spec *volume.Spec) bool {
+	// 根据 local-pv 的资源定义，知道 local-pv 的 spec.PersistentVolume.Spec.Local 不可能为空。
+	return (spec.PersistentVolume != nil && spec.PersistentVolume.Spec.Local != nil)
+}
+```
+
+然后 Kubelet 根据 volumePlugin 类型调用 `NewMounter()` 来获取一个 mount 对象，进而执行 mount 操作。下面看看 Local PV 的 mounter 是如何挂载的
+
+```go
+// kubernetes/pkg/volume/local/local.go:525
+func (m *localVolumeMounter) SetUpAt(dir string, mounterArgs volume.MounterArgs) error {
+	m.plugin.volumeLocks.LockKey(m.globalPath)
+	defer m.plugin.volumeLocks.UnlockKey(m.globalPath)
+	// globalPath 即为 Local PV 定义的数据目录，不存在即报错
+	if m.globalPath == "" {
+		return fmt.Errorf("LocalVolume volume %q path is empty", m.volName)
+	}
+	// 检查数据目录路径是否合法，不能含有 "../"
+	err := validation.ValidatePathNoBacksteps(m.globalPath)
+	if err != nil {
+		return fmt.Errorf("invalid path: %s %v", m.globalPath, err)
+	}
+	// 检查 Pod 目录是否为挂载点
+	notMnt, err := mount.IsNotMountPoint(m.mounter, dir)
+	klog.V(4).Infof("LocalVolume mount setup: PodDir(%s) VolDir(%s) Mounted(%t) Error(%v), ReadOnly(%t)", dir, m.globalPath, !notMnt, err, m.readOnly)
+	if err != nil && !os.IsNotExist(err) {
+		klog.Errorf("cannot validate mount point: %s %v", dir, err)
+		return err
+	}
+
+	if !notMnt {
+		return nil
+	}
+	// linux mount 支持一个挂载点挂载多个目录，这里防止 pv 目录为多个lu'jing
+	refs, err := m.mounter.GetMountRefs(m.globalPath)
+	if mounterArgs.FsGroup != nil {
+		if err != nil {
+			klog.Errorf("cannot collect mounting information: %s %v", m.globalPath, err)
+			return err
+		}
+
+		// 判断目录是否被其他 pod 使用
+		refs = m.filterPodMounts(refs)
+		if len(refs) > 0 {
+			fsGroupNew := int64(*mounterArgs.FsGroup)
+			_, fsGroupOld, err := m.hostUtil.GetOwner(m.globalPath)
+			if err != nil {
+				return fmt.Errorf("failed to check fsGroup for %s (%v)", m.globalPath, err)
+			}
+			if fsGroupNew != fsGroupOld {
+				m.plugin.recorder.Eventf(m.pod, v1.EventTypeWarning, events.WarnAlreadyMountedVolume, "The requested fsGroup is %d, but the volume %s has GID %d. The volume may not be shareable.", fsGroupNew, m.volName, fsGroupOld)
+			}
+		}
+
+	}
+	// linux 需要创建 pod 目录
+	if runtime.GOOS != "windows" {
+		// skip below MkdirAll for windows since the "bind mount" logic is implemented differently in mount_wiondows.go
+		if err := os.MkdirAll(dir, 0750); err != nil {
+			klog.Errorf("mkdir failed on disk %s (%v)", dir, err)
+			return err
+		}
+	}
+	// Perform a bind mount to the full path to allow duplicate mounts of the same volume.
+	options := []string{"bind"}
+	if m.readOnly {
+		options = append(options, "ro")
+	}
+	mountOptions := util.JoinMountOptions(options, m.mountOptions)
+
+	klog.V(4).Infof("attempting to mount %s", dir)
+	globalPath := util.MakeAbsolutePath(runtime.GOOS, m.globalPath)
+	// 将 dir( pod 目录 ) 挂载到 globalPath( pv 目录 )
+	err = m.mounter.MountSensitiveWithoutSystemd(globalPath, dir, "", mountOptions, nil)
+	if err != nil {
+		klog.Errorf("Mount of volume %s failed: %v", dir, err)
+		notMnt, mntErr := mount.IsNotMountPoint(m.mounter, dir)
+		if mntErr != nil {
+			klog.Errorf("IsNotMountPoint check failed: %v", mntErr)
+			return err
+		}
+		if !notMnt {
+			if mntErr = m.mounter.Unmount(dir); mntErr != nil {
+				klog.Errorf("Failed to unmount: %v", mntErr)
+				return err
+			}
+			notMnt, mntErr = mount.IsNotMountPoint(m.mounter, dir)
+			if mntErr != nil {
+				klog.Errorf("IsNotMountPoint check failed: %v", mntErr)
+				return err
+			}
+			if !notMnt {
+				// This is very odd, we don't expect it.  We'll try again next sync loop.
+				klog.Errorf("%s is still mounted, despite call to unmount().  Will try again next sync loop.", dir)
+				return err
+			}
+		}
+		if rmErr := os.Remove(dir); rmErr != nil {
+			klog.Warningf("failed to remove %s: %v", dir, rmErr)
+		}
+		return err
+	}
+	if !m.readOnly {
+		// Volume owner will be written only once on the first volume mount
+		if len(refs) == 0 {
+			return volume.SetVolumeOwnership(m, dir, mounterArgs.FsGroup, mounterArgs.FSGroupChangePolicy, util.FSGroupCompleteHook(m.plugin, nil))
+		}
+	}
+	return nil
+}
+```
+
+至此 Local PV 定义的数据目录就和 Pod 在宿主机上的唯一目录绑定起来，最后该目录是如何映射到容器内部，那是 CRI 的工作了，后面可以详细聊聊。
+
+下面给出 dynamic-localpv-provisoner 组件函数调用关系如下图：
 
 ![dynamic-localpv-provisoner](dynamic-localpv-provisoner.png)
 
