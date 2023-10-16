@@ -786,7 +786,7 @@ func (m *localVolumeMounter) SetUpAt(dir string, mounterArgs volume.MounterArgs)
 	if !notMnt {
 		return nil
 	}
-	// linux mount 支持一个挂载点挂载多个目录，这里防止 pv 目录为多个lu'jing
+	// linux mount 支持一个挂载点挂载多个目录，这里防止 pv 目录为多个路径
 	refs, err := m.mounter.GetMountRefs(m.globalPath)
 	if mounterArgs.FsGroup != nil {
 		if err != nil {
