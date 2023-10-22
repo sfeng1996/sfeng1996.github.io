@@ -282,7 +282,7 @@ enableEmoji = true
     [params.header.title]
       # URL of the LOGO
       # LOGO 的 URL
-      logo = "/images/icon-27x27.png"
+      logo = "/images/icon-77x77.png"
       # title name
       # 标题名称
       name = "云原生 Space"
