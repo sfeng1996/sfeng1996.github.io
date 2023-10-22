@@ -62,7 +62,7 @@ enableEmoji = true
         identifier = "categories"
         pre = "<i class='fas fa-th-list fa-fw'></i>"
         post = ""
-        name = " 分类
+        name = "分类"
         url = "categories/"
         title = ""
         weight = 3
