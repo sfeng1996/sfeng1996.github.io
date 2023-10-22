@@ -51,7 +51,7 @@ enableEmoji = true
     
     [[languages.zh-cn.menu.main]]
         identifier = "blogs"
-        pre = "<i class='fas fa-blog fa-fw'></i>"
+        pre = "<i class='fas fa-microblog fa-fw'></i>"
         post = ""
         name = "博客"
         url = "categories/"
