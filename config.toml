@@ -106,7 +106,7 @@ enableEmoji = true
     
     [[languages.zh-cn.menu.main]]
         identifier = "resumetemplate"
-        pre = "<i class='fas fa-globe fa-fw'></i>"
+        pre = "<i class='fas fa-star-and-crescent fa-fw'></i>"
         post = ""
         name = "简历模板"
         url = "resumetemplates/"
