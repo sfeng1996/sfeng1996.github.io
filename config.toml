@@ -66,6 +66,15 @@ enableEmoji = true
         url = "cloudnative/"
         title = ""
         weight = 3
+    
+    [[languages.zh-cn.menu.main]]
+        identifier = "interview"
+        pre = "<i class='fas fa-interview fa-fw'></i>"
+        post = ""
+        name = "面经"
+        url = "interview/"
+        title = ""
+        weight = 4
 
     [[languages.zh-cn.menu.main]]
         identifier = "share"
@@ -73,7 +82,7 @@ enableEmoji = true
         post = ""
         name = "分享"
         title = ""
-        weight = 4
+        weight = 5
 
     [[languages.zh-cn.menu.main]]
         identifier = "books"
@@ -82,7 +91,7 @@ enableEmoji = true
         name = "书单"
         url = "booklist/"
         title = ""
-        weight = 5
+        weight = 6
         parent = "share"
 
     [[languages.zh-cn.menu.main]]
@@ -92,7 +101,7 @@ enableEmoji = true
         name = "网站"
         url = "websites/"
         title = ""
-        weight = 5
+        weight = 6
         parent = "share"
 
     [languages.zh-cn.params]
