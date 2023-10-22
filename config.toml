@@ -54,13 +54,13 @@ enableEmoji = true
         pre = "<i class='fas fa-th-list fa-fw'></i>"
         post = ""
         name = "博客"
-        url = "categories/"
+        url = "blogs/"
         title = ""
         weight = 2
 
     [[languages.zh-cn.menu.main]]
         identifier = "cloudnative"
-        pre = "<i class='fas fa-cloudnative fa-fw'></i>"
+        pre = "<i class='fas fa-toggle-on fa-fw'></i>"
         post = ""
         name = "云原生训练营"
         url = "cloudnative/"
@@ -749,7 +749,7 @@ enableEmoji = true
   taxonomyTerm = ["HTML"]
 
 [taxonomies]
-    category = "categories"
+    # category = "categories"
     tag = "tags"
-    memory = "memories"
+    blog = "categories"
     booklist = "booklist"
