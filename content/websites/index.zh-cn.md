@@ -4,7 +4,7 @@ type:           "websites"
 
 links: 
   book: 
-    name: 收集书
+    name: 阅读
     weight: 1
     sites: 
       - name: 亚马逊-kindle
