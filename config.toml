@@ -749,7 +749,6 @@ enableEmoji = true
   taxonomyTerm = ["HTML"]
 
 [taxonomies]
-    # category = "categories"
+    category = "categories"
     tag = "tags"
-    blog = "categories"
     booklist = "booklist"
