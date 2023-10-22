@@ -752,3 +752,4 @@ enableEmoji = true
     category = "categories"
     tag = "tags"
     booklist = "booklist"
+    cloudnative = "cloudnative"
