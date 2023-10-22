@@ -753,3 +753,4 @@ enableEmoji = true
     tag = "tags"
     booklist = "booklist"
     cloudnative = "cloudnative"
+    interview = "interview"
