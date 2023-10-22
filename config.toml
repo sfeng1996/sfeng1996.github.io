@@ -48,24 +48,15 @@ enableEmoji = true
         url = ""
         title = "首页"
         weight = 1
-
-    [[languages.zh-cn.menu.main]]
-        identifier = "blogs"
-        pre = "<i class='fas fa-th-list fa-fw'></i>"
-        post = ""
-        name = "博客"
-        url = "blogs/"
-        title = ""
-        weight = 2    
     
     [[languages.zh-cn.menu.main]]
         identifier = "categories"
         pre = "<i class='fas fa-th-list fa-fw'></i>"
         post = ""
-        name = "分类"
+        name = "博客"
         url = "categories/"
         title = ""
-        weight = 3
+        weight = 2
 
     [[languages.zh-cn.menu.main]]
         identifier = "cloudnative"
@@ -74,7 +65,7 @@ enableEmoji = true
         name = "云原生训练营"
         url = "cloudnative/"
         title = ""
-        weight = 5
+        weight = 3
 
     [[languages.zh-cn.menu.main]]
         identifier = "share"
@@ -82,7 +73,7 @@ enableEmoji = true
         post = ""
         name = "分享"
         title = ""
-        weight = 6
+        weight = 4
 
     [[languages.zh-cn.menu.main]]
         identifier = "books"
@@ -91,7 +82,7 @@ enableEmoji = true
         name = "书单"
         url = "booklist/"
         title = ""
-        weight = 7
+        weight = 5
         parent = "share"
 
     [[languages.zh-cn.menu.main]]
@@ -101,7 +92,7 @@ enableEmoji = true
         name = "网站"
         url = "websites/"
         title = ""
-        weight = 7
+        weight = 5
         parent = "share"
 
     [languages.zh-cn.params]
