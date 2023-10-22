@@ -69,7 +69,7 @@ enableEmoji = true
     
     [[languages.zh-cn.menu.main]]
         identifier = "interview"
-        pre = "<i class='fas fa-street-view fa-fw'></i>"
+        pre = "<i class='fas fa-user-slash fa-fw'></i>"
         post = ""
         name = "面经"
         url = "interview/"
