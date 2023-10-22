@@ -54,7 +54,7 @@ enableEmoji = true
         pre = "<i class='fas fa-th-list fa-fw'></i>"
         post = ""
         name = "博客"
-        url = "blogs/"
+        url = "categories/"
         title = ""
         weight = 2
 
