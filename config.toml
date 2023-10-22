@@ -50,7 +50,7 @@ enableEmoji = true
         weight = 1
     
     [[languages.zh-cn.menu.main]]
-        identifier = "categories"
+        identifier = "blogs"
         pre = "<i class='fas fa-th-list fa-fw'></i>"
         post = ""
         name = "博客"
