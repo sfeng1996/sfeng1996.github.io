@@ -69,10 +69,10 @@ enableEmoji = true
     
     [[languages.zh-cn.menu.main]]
         identifier = "interview"
-        pre = "<i class='fas fa-chart-pie fa-fw'></i>"
+        pre = "<i class='fas fa-share fa-fw'></i>"
         post = ""
         name = "面经"
-        url = "posts/"
+        url = "interview/"
         title = ""
         weight = 4
 
