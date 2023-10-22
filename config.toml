@@ -60,7 +60,7 @@ enableEmoji = true
 
     [[languages.zh-cn.menu.main]]
         identifier = "cloudnative"
-        pre = "<i class='fas fa-cloudscale fa-fw'></i>"
+        pre = "<i class='fas fa-cloud-sun fa-fw'></i>"
         post = ""
         name = "云原生训练营"
         url = "cloudnative/"
