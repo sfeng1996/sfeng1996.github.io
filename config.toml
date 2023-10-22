@@ -272,10 +272,10 @@ enableEmoji = true
     [params.header.title]
       # URL of the LOGO
       # LOGO 的 URL
-      logo = "/images/home.jpg"
+      logo = ""
       # title name
       # 标题名称
-      name = "SFeng"
+      name = "云原生 Space"
       # you can add extra information before the name (HTML format is supported), such as icons
       # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
       pre = "<i class='far fa-kiss-wink-heart fa-fw'></i>"
@@ -284,7 +284,7 @@ enableEmoji = true
       post = ""
       # whether to use typeit animation for title name
       # 是否为标题显示打字机动画
-      typeit = false
+      typeit = true
 
   # Footer config
   # 页面底部信息配置
@@ -301,7 +301,7 @@ enableEmoji = true
     copyright = true
     # whether to show the author
     # 是否显示作者
-    author = true
+    author = false
     # site creation time
     # 网站创立年份
     since = 2020
