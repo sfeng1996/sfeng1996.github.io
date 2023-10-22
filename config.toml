@@ -63,7 +63,7 @@ enableEmoji = true
         pre = "<i class='fas fa-cloud-sun fa-fw'></i>"
         post = ""
         name = "云原生训练营"
-        url = "cloudnative/"
+        url = "tags/"
         title = ""
         weight = 3
     
@@ -72,7 +72,7 @@ enableEmoji = true
         pre = "<i class='fas fa-chart-pie fa-fw'></i>"
         post = ""
         name = "面经"
-        url = "interview/"
+        url = "posts/"
         title = ""
         weight = 4
 
