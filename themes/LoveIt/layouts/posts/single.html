@@ -151,24 +151,6 @@
                 </div>
             {{ end }}
 
-            {{- /*copyright*/ -}}
-            <div id="copyright-container">
-                <ul class="post-copyright">
-                    <li class="post-copyright-author">
-                        <strong>{{- T "articleAuthor" -}}：</strong><a href="{{ $.Site.Author.link | default .Site.Home.RelPermalink }}" target="_blank">{{ T "penname" }}</a>
-                    </li>
-                    <li class="post-copyright-link">
-                        <strong>{{- T "articleLink" -}}：</strong><a href="#" target="_blank" title="{{ .Title }}">{{- .Permalink | safeHTML -}}</a>
-                    </li>
-                    <li class="post-copyright-license">
-                        <strong>{{- T "copyRight" -}}：</strong>
-                        {{- $prestr := printf `<a href="%v" target="_blank" title="CC BY-NC-ND 4.0">%v</a>` .Site.Params.footer.license ( T "license" ) -}}
-                        {{- $laststr := printf `<a href="%v" target="_blank">%v</a>` ($.Site.Author.link | default .Site.Home.RelPermalink) ( T "penname" ) -}}
-                    {{- dict "preCopyRight" $prestr "afterCopyRight" $laststr | T "copyRightMsg" | safeHTML }}
-                    </li>
-                </ul>
-            </div>
-
         </div>
 
 {{- /* 引入文章界面的JS */ -}}
