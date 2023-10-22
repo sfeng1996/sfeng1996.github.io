@@ -201,7 +201,7 @@ other = "删除"
 
 # === partials/footer.html ===
 [penname]
-other = "SFeng"
+other = "云原生 Space"
 
 [license]
 other = "云原生Space 版权所有"

@@ -696,7 +696,7 @@ enableEmoji = true
 # Author config
 # 作者配置
 [author]
-  name = "SFeng"
+  name = "云原生 Space"
   email = "SFeng1996@163.com"
   link = ""
 
