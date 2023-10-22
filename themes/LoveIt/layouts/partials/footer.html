@@ -8,14 +8,6 @@
         </div>
         {{- end -}}
 
-        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
-        </script>
-        <span id="busuanzi_container_site_pv">
-            本站访问量：<span id="busuanzi_value_site_pv"></span>次
-        </span> |
-        <span id="busuanzi_container_site_uv">
-            您是本站第 <span id="busuanzi_value_site_uv"></span> 位访问者
-        </span>
         {{- /* Hugo and LoveIt */ -}}
         {{- if ne .Site.Params.footer.hugo false -}}
         <div class="footer-line">
@@ -54,9 +46,7 @@
 
             {{- /* Author */ -}}
             {{- if ne .Site.Params.footer.author false -}}
-            <span class="author" itemprop="copyrightHolder">&nbsp;<a
-                    href="{{ $.Site.Author.link | default .Site.Home.RelPermalink }}" target="_blank">{{ T
-                    "penname"}}</a></span>
+            <span class="author" itemprop="copyrightHolder">&nbsp;<a href="{{ $.Site.Author.link | default .Site.Home.RelPermalink }}" target="_blank">{{ T "penname"}}</a></span>
             {{- end -}}
 
             {{- /* License */ -}}
