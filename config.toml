@@ -59,11 +59,11 @@ enableEmoji = true
         weight = 2    
     
     [[languages.zh-cn.menu.main]]
-        identifier = "tags"
-        pre = "<i class='fas fa-tags fa-fw'></i>"
+        identifier = "categories"
+        pre = "<i class='fas fa-th-list fa-fw'></i>"
         post = ""
-        name = " 标签"
-        url = "tags/"
+        name = " 分类
+        url = "categories/"
         title = ""
         weight = 3
 
