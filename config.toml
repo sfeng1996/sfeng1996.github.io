@@ -1,3 +1,4 @@
+# 不要设置，会影响"搜索"功能，导致跳转链接是 404
 baseURL = ""
 # [en, zh-cn, fr, pl, ...] determines default content language
 # [en, zh-cn, fr, pl, ...] 设置默认的语言
@@ -141,7 +142,9 @@ enableEmoji = true
         # 搜索结果中高亮部分的 HTML 标签
         highlightTag = "em"
         # 是否在搜索索引中使用基于 baseURL 的绝对路径
+        # 设置为 false，会导致搜索后跳转链接多了 baseUrl
         absoluteURL = true
+        # algolia 链接 https://dashboard.algolia.com/apps/OVAM8PE9BC/explorer/browse/sfeng?page=38&searchMode=search
         [languages.zh-cn.params.search.algolia]
           index = "sfeng"
           appID = "OVAM8PE9BC"

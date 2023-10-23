@@ -1,0 +1,7 @@
+# 更新网站
+
+1、git pull
+# 如果有文章新增、更新、删除等，需要重新生成 aloglia 的 index.json 并上传到 aloglia，这里暂时手动上传
+2、进入 hugo pod 内
+3、hugo
+4、将 public/index.json 上传到 aloglia
