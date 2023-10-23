@@ -5,3 +5,6 @@
 2、进入 hugo pod 内
 3、hugo
 4、将 public/index.json 上传到 aloglia
+# sfeng 是 algolia 索引
+# ./algolia objects import sfeng -F public/index.json
+
