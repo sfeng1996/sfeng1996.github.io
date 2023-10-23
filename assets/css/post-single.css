@@ -1,6 +1,6 @@
 /* see also */
 #related-article p{
-	font-size: 1.4rem
+	font-size: 2.0rem
 }
 
 #related-article ul {
@@ -10,13 +10,13 @@
 
 /* tip */
 #QR {
-	padding-top:20px;
+	padding-top:200px;
 }
 #QR a {
 	border:0
 }
 #QR img {
-	width:180px;
+	width:260px;
 	max-width:100%;
 	display:inline-block;
 	margin:.8em 2em 0 2em
