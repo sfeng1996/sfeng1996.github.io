@@ -15,6 +15,8 @@ categories: ["Kubernetes-ops", "Docker"]
 lightgallery: true
 ---
 
+# 如何压缩镜像体积(增加 Nginx 第三方模块)
+
 ## 简介
 
 一般我们自己构建完 OCI 镜像，体积可能都会超过我们预期，压缩镜像体积对于后期更新、维护就显得非常有必要。我们以 Nginx 编译增加第三方模块为例来讲解如何压缩镜像的体积。
@@ -38,7 +40,7 @@ Docker：`19.03.14`
 以下是 Dockerfile：
 
 ```docker
-# 这里选择 nginx:1.21.3 作为 base 镜像，这样编译过程不会存在依赖包的问题
+# 这里选择已存在 nginx:1.21.3 作为 base 镜像，这样编译过程不会存在依赖包的问题
 FROM nginx:1.21.3 
 # Nginx 版本
 ENV NGINX_VERSION nginx-1.21.3
@@ -294,12 +296,27 @@ nginx-vts      v1.21.3.1          3396e0d19b67        36 minutes ago        568M
 
 ### 编写 .dockerignore
 
-docker 构建镜像会根据 .dockerignore 将构建需要的包发送给 docker-engine，使用 .dockerignore 忽略不必要文件可以精简镜像大小。这个构建包的目录是 docker build 传入的
+我们经常在编写 Dockerfile 会用到的 COPY 指令
 
-```bash
-# 这个 . 就表示将当前目录的构建包发送给 docker-engine
-$ docker build -t nginx-vts:1.21.3.9 -f Dockerfile . 
+```docker
+COPY . /server/dir
 ```
+
+这个指令会把**整个构建上下文**复制到镜像中，并生产新的缓存层。但是我们也可以使用 COPY 详细文件路径，避免拷贝构建上下文的所有文件。
+
+为了不必要的文件如日志、缓存文件、Git 历史记录被加载到构建上下文，我们最好添加 **.dockerignore** 用于忽略非必须文件。这也是精简镜像关键一步，
+
+**.dockerignore** 写法和 **.gitignore** 差不多
+
+```docker
+passphrase.txt
+logs/
+.git
+*.md
+.cache
+```
+
+**.dockerignore** 实际上和 docker build 后面的 **.** 关系非常大，可以查看 **docker build .** 的作用详细了解
 
 ### 及时清理
 
