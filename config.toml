@@ -299,7 +299,7 @@ enableEmoji = true
     [params.header.title]
       # URL of the LOGO
       # LOGO 的 URL
-      logo = ""
+      logo = "/images/home.jpg"
       # title name
       # 标题名称
       name = ">$ cd /home/ "
