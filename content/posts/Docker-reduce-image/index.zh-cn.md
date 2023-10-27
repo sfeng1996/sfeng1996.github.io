@@ -9,8 +9,8 @@ resources:
 - name: "featured-image"
   src: "closure-home.jpg"
 
-tags: ["kubernetes-ops Docker"]
-categories: ["Kubernetes-ops Docker"]
+tags: ["kubernetes-ops", "Docker"]
+categories: ["Kubernetes-ops", "Docker"]
 
 lightgallery: true
 ---
