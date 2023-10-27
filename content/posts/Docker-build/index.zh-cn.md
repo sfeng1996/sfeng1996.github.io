@@ -136,7 +136,7 @@ Dockerfile  nginx-1.21.3.tar.gz  nginx-module-vts-0.2.1.tar.gz
 $ docker build -t nginx:latest -f Dockerfile .
 ```
 
-到这基本解答了第一个问题。
+到这基本解答了文章开头抛出的问题。
 
 ## Build With URL
 
