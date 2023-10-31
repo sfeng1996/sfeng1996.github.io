@@ -215,11 +215,13 @@ blkio  cpu  cpuacct  cpu,cpuacct  cpuset  devices  freezer  hugetlb  memory  net
 
 对于启动的每个容器，都会在 Cgroups **子系统**下建立一个目录，在 Cgroups 中这个目录也被称作**控制组**。然后我们设置这个控制组的参数，通过这个方式，来限制这个容器的内存资源。
 
-还记得，我们之前用 Docker 创建的那个容器吗？在每个 Cgroups 子系统下，对应这个容器就会有一个目录 **docker-5d22ea980dc8……** 这个容器的 ID 号，这个 ID 号前面我们用 ps 看到的进程号。容器中
+还记得，我们之前用 Docker 创建的那个容器吗？在每个 Cgroups 子系统下，对应这个容器就会有一个目录 **docker-5d22ea980dc8……** 这个容器的 ID 号，这个 ID 号前面我们用 ps 看到的进
 
-所有的进程都会储存在这个控制组中 cgroup.procs 这个文件里。
+程号。容器中所有的进程都会储存在这个控制组中 cgroup.procs 这个文件里。
 
-把`（2* 1024 * 1024 * 1024 = 2147483648）`这个值，写入 memory Cgroup 控制组中的 `memory.limit_in_bytes` 里，这样设置后，cgroup.procs 里面所有进程 Memory 使用量之和，最大也不会超过 2GB。
+把`（2* 1024 * 1024 * 1024 = 2147483648）`这个值，写入 memory Cgroup 控制组中的 `memory.limit_in_bytes` 里，这样设置后，cgroup.procs 里面所有进程 Memory 使用量之和，最大也
+
+不会超过 2GB。
 
 ```bash
 # cd /sys/fs/cgroup/memory/system.slice/docker-**5d22ea980dc8**fedd52511e18fdbd26357250719fa0d128349547a50fad7c5de9.scope
@@ -240,9 +242,9 @@ blkio  cpu  cpuacct  cpu,cpuacct  cpuset  devices  freezer  hugetlb  memory  net
 
 默认情况下，Docker 启动一个容器后，会在 `/sys/fs/cgroup` 目录下的各个资源目录下生成以容器 ID 为名字的目录（group），比如：
 
-`/sys/fs/cgroup/cpu/docker/03dd196f415276375f754d51ce29b418b170bd92d88c5e420d6901c32f93dc14` 此时 `cpu.cfs_quota_us` 的内容为 -1，表示默认情况下并没有限制容器的 CPU 使用。在容器被 stopped 
+`/sys/fs/cgroup/cpu/docker/03dd196f415276375f754d51ce29b418b170bd92d88c5e420d6901c32f93dc14` 此时 `cpu.cfs_quota_us` 的内容为 -1，表示默认情况下并没有限制容器的 CPU 使用。在容
 
-后，该目录被删除。
+器被 stopped 后，该目录被删除。
 
 docker 启动容器时可以指定参数对容器的 cgroup 进行设置，基本支持了上面说的 cgroup 所有**子系统。**
 
@@ -285,6 +287,6 @@ Memory:
 
 一句话概括，**容器 = Namespace + Cgroups，**要想学好容器技术，掌握容器原理，首先就得熟练掌握 Linux 的 Namespace、Cgroups 技术。
 
-在容器层面还有”**镜像技术”，**镜像是容器的基础。进入容器看到的文件系统就是镜像，镜像也依赖于一系列的底层技术，比如**文件系统(filesystems)、写时复制(copy-on-write)、联合挂载(union mounts)**
+在容器层面还有”**镜像技术”，**镜像是容器的基础。进入容器看到的文件系统就是镜像，镜像也依赖于一系列的底层技术，比如**文件系统(filesystems)、写时复制(copy-on-write)、联合挂载**
 
-等，下一篇详细讲解。
+**(union mounts)**等，下一篇详细讲解。
