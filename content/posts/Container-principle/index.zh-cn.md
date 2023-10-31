@@ -17,9 +17,7 @@ lightgallery: true
 
 ## 简介
 
-当在任何一个能够运行 CRI (Docker、Containered 等) 的机器上，使用 `docker run <image-id>` 启动一个容器后。从使用者的角度来看，容器和一台独立的机器或者虚拟机几乎没有什么区
-
-别。使得我们在容器里就像操作虚拟机一样将服务运行在容器中，这样你的机器上能够非常多的容器，且容器之间都有独立的运行资源，网络、文件系统等相互隔离。
+当在任何一个能够运行 CRI (Docker、Containered 等) 的机器上，使用 `docker run <image-id>` 启动一个容器后。从使用者的角度来看，容器和一台独立的机器或者虚拟机几乎没有什么区别。使得我们在容器里就像操作虚拟机一样将服务运行在容器中，这样你的机器上能够非常多的容器，且容器之间都有独立的运行资源，网络、文件系统等相互隔离。
 
 但是容器和虚拟机相比，却没有各种复杂的硬件虚拟层，没有独立的 Linux 内核。容器所有的进程调度，内存访问，文件的读写都直接跑在宿主机的内核之上，这是怎么做到的呢？
 
@@ -55,9 +53,7 @@ lrwxrwxrwx. 1 1001 root 0 10月 30 11:33 uts -> uts:[4026535314]
 
 ## Namespace
 
-Linux 内核 **Namespace** 类型有很多，支持 **cgroup/ipc/network/mount/pid/time/user/uts，**下面看看是如何使用这些 Namespace 隔离技术运行一个容
-
-器。
+Linux 内核 **Namespace** 类型有很多，支持 **cgroup/ipc/network/mount/pid/time/user/uts，**下面看看是如何使用这些 Namespace 隔离技术运行一个容器。
 
 ### PID Namespace
 
@@ -94,9 +90,7 @@ Linux 开机时就会启动一个 1 号进程，该进程是所有进程的父�
 
 那么这个 httpd 服务对应的**宿主机 PID** 和**容器 PID** 的关系是什么样的，这两个 PID 对应着都是同一个 httpd 服务的某个进程。
 
-可以通过 `docker inspect <container id> | grep Pid` 查看这个容器对应`宿主机上的 PID`。会发现这个 `"Pid": 126013` 就是在宿主机上使用 `ps -ef |grep httpd` 查到的 httpd 进程一样，只
-
-不过这个 httpd 服务有多个进程，126013 是所有子进程的父进程。
+可以通过 `docker inspect <container id> | grep Pid` 查看这个容器对应`宿主机上的 PID`。会发现这个 `"Pid": 126013` 就是在宿主机上使用 `ps -ef |grep httpd` 查到的 httpd 进程一样，只不过这个 httpd 服务有多个进程，126013 是所有子进程的父进程。
 
 ```bash
 # docker inspect 5d22ea980dc8|grep Pid
@@ -140,15 +134,13 @@ UID        PID  PPID  C STIME TTY          TIME CMD
 
 ### IPC Namespace
 
-**IPC Namespace** 主要是用来隔离进程间通信的。例如 **PID Namespace** 和 **IPC Namespace** 一起使用可以实现同一 **IPC Namespace** 内的进程彼此可以通信，不同 **IPC Namespace** 的进程却不
-
-能通信。
+**IPC Namespace** 主要是用来隔离进程间通信的。例如 **PID Namespace** 和 **IPC Namespace** 一起使用可以实现同一 **IPC Namespace** 内的进程彼此可以通信，不同 **IPC Namespace** 的进程却不能通信。
 
 ### User Namespace
 
-**User Namespace** 主要是用来隔离用户和用户组的。一个比较典型的应用场景就是在主机上以非 root 用户运行的进程可以在一个单独的 **User Namespace** 中映射成 root 用户。使用 
+**User Namespace** 主要是用来隔离用户和用户组的。一个比较典型的应用场景就是在主机上以非 root 用户运行的进程可以在一个单独的 **User Namespace** 中映射成 root 用户。
 
-**User Namespace** 可以实现进程在容器内拥有 root 权限，而在主机上却只是普通用户。
+使用 **User Namespace** 可以实现进程在容器内拥有 root 权限，而在主机上却只是普通用户。
 
 ### UTS Namespace
 
@@ -164,9 +156,7 @@ Time Namespace 用于隔离容器的时间，但是容器并没有隔离时间�
 
 Linux **Cgroups( Control Groups)**  技术可以对执行的进程做各种计算机资源的限制，比如限制 CPU 的使用率，内存使用量，IO流量等。
 
-**Cgroups** 通过对不同的**子系统**限制了不同的资源，每个子系统限制一种资源。每个子系统限制资源的方式都是类似的，就是把相关的一组进程分配到一个**控制组**里，然后通过树结构进行管
-
-理，每个控制组设有自己的控制参数。完整的 **Cgroups** 子系统的介绍，你可以查看 [Linux Programmer's Manual](https://man7.org/linux/man-pages/man7/cgroups.7.html) 中 **Cgroups** 的定义。
+**Cgroups** 通过对不同的**子系统**限制了不同的资源，每个子系统限制一种资源。每个子系统限制资源的方式都是类似的，就是把相关的一组进程分配到一个**控制组**里，然后通过树结构进行管理，每个控制组设有自己的控制参数。完整的 **Cgroups** 子系统的介绍，你可以查看 [Linux Programmer's Manual](https://man7.org/linux/man-pages/man7/cgroups.7.html) 中 **Cgroups** 的定义。
 
 ### (Subsystem)子系统
 
@@ -177,9 +167,7 @@ Linux **Cgroups( Control Groups)**  技术可以对执行的进程做各种计�
 blkio  cpu  cpuacct  cpu,cpuacct  cpuset  devices  freezer  hugetlb  memory  net_cls  net_cls,net_prio  net_prio  perf_event  pids  systemd
 ```
 
-- **blkio 子系统**，是 cgroup v1 中的一个子系统，使用 cgroup v1 blkio 子系统主要是为了减少进程之间共同读写同一块磁盘时相互干扰的问题。cgroup v1 blkio 控制子系统可以限制进程读
-    
-    写的 IOPS 和吞吐量，但它只能对 Direct I/O 的文件读写进行限速，对 Buffered I/O 的文件读写无法限制。
+- **blkio 子系统**，是 cgroup v1 中的一个子系统，使用 cgroup v1 blkio 子系统主要是为了减少进程之间共同读写同一块磁盘时相互干扰的问题。cgroup v1 blkio 控制子系统可以限制进程读写的 IOPS 和吞吐量，但它只能对 Direct I/O 的文件读写进行限速，对 Buffered I/O 的文件读写无法限制。
     
 - **cpu, cpuacct 子系统**，用来限制一个控制组（一组进程，你可以理解为一个容器里所有的进程）可使用的最大 CPU。
 - **cpuset 子系统**， 这个子系统来限制一个控制组里的进程可以在哪几个物理 CPU 上运行。
@@ -197,15 +185,11 @@ blkio  cpu  cpuacct  cpu,cpuacct  cpuset  devices  freezer  hugetlb  memory  net
 
 ### cgroup 组
 
-除了**子系统**之外，还需要了解 group 的概念，在 **Cgroups** 中，资源都是以组为单位控制的，每个组包含一个或多个的子系统。你可以按照任何自定义的标准进行组的划分。划分组之后，你
-
-可以将任意的进程加入、迁移到任意组中并且实时生效（但是对于进程的子进程不影响）。
+除了**子系统**之外，还需要了解 group 的概念，在 **Cgroups** 中，资源都是以组为单位控制的，每个组包含一个或多个的子系统。你可以按照任何自定义的标准进行组的划分。划分组之后，你可以将任意的进程加入、迁移到任意组中并且实时生效（但是对于进程的子进程不影响）。
 
 ### (hierarchy)层级树
 
-一组以树状结构排列的 cgroup 就是 hierarchy(层级树)，结合虚拟文件系统来理解，通过创建、删除、重命名子目录来定义层次结构。子目录能够继承父目录的全部资源（当然了，不能超
-
-过），也可以基于父目录的资源限制进行进一步的资源大小限制。父目录如果调整了资源大小，子目录同样会马上受到影响。
+一组以树状结构排列的 cgroup 就是 hierarchy(层级树)，结合虚拟文件系统来理解，通过创建、删除、重命名子目录来定义层次结构。子目录能够继承父目录的全部资源（当然了，不能超过），也可以基于父目录的资源限制进行进一步的资源大小限制。父目录如果调整了资源大小，子目录同样会马上受到影响。
 
 每个层级树可以关联任意个数的 subsystem，但是每个 subsystem 最多只能被挂在一颗树上。
 
@@ -215,9 +199,7 @@ blkio  cpu  cpuacct  cpu,cpuacct  cpuset  devices  freezer  hugetlb  memory  net
 
 对于启动的每个容器，都会在 Cgroups **子系统**下建立一个目录，在 Cgroups 中这个目录也被称作**控制组**。然后我们设置这个控制组的参数，通过这个方式，来限制这个容器的内存资源。
 
-还记得，我们之前用 Docker 创建的那个容器吗？在每个 Cgroups 子系统下，对应这个容器就会有一个目录 **docker-5d22ea980dc8……** 这个容器的 ID 号，这个 ID 号前面我们用 ps 看到的进
-
-程号。容器中所有的进程都会储存在这个控制组中 cgroup.procs 这个文件里。
+还记得，我们之前用 Docker 创建的那个容器吗？在每个 Cgroups 子系统下，对应这个容器就会有一个目录 **docker-5d22ea980dc8……** 这个容器的 ID 号，这个 ID 号前面我们用 ps 看到的进程号。容器中所有的进程都会储存在这个控制组中 cgroup.procs 这个文件里。
 
 把`（2* 1024 * 1024 * 1024 = 2147483648）`这个值，写入 memory Cgroup 控制组中的 `memory.limit_in_bytes` 里，这样设置后，cgroup.procs 里面所有进程 Memory 使用量之和，最大也
 
@@ -288,5 +270,4 @@ Memory:
 一句话概括，**容器 = Namespace + Cgroups，**要想学好容器技术，掌握容器原理，首先就得熟练掌握 Linux 的 Namespace、Cgroups 技术。
 
 在容器层面还有”**镜像技术”，**镜像是容器的基础。进入容器看到的文件系统就是镜像，镜像也依赖于一系列的底层技术，比如**文件系统(filesystems)、写时复制(copy-on-write)、联合挂载**
-
 **(union mounts)**等，下一篇详细讲解。
