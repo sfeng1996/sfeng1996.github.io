@@ -60,9 +60,7 @@ root          6      0  2 01:39 pts/0    00:00:00 bash
 root         13      6  0 01:39 pts/0    00:00:00 ps -ef
 ```
 
-当我们完成前面的操作，就会发现无论运行 `kill 1` (对应 Linux 中的 `SIGTERM` 信号) 还是 `kill -9 1`(对应 Linux 中的 `SIGKILL` 信号)，都无法让进程终止。那么问题来了，这两个常常用来
-
-终止进程的信号，都对容器中的 1号进程不起作用。
+当我们完成前面的操作，就会发现无论运行 `kill 1` (对应 Linux 中的 `SIGTERM` 信号) 还是 `kill -9 1`(对应 Linux 中的 `SIGKILL` 信号)，都无法让进程终止。那么问题来了，这两个常常用来终止进程的信号，都对容器中的 1号进程不起作用。
 
 **示例二**
 
@@ -174,35 +172,25 @@ $ kill -l
 
 **忽略**
 
-忽略( Ignore ) 就是对这个信号不做任何处理，但是有两个信号例外，对于 `SIGKILL` 和 `SIGSTOP` 这个两个信号，进程是不能忽略的。这是因为它们的主要作用是为 Linux kernel 和超级用户
-
-提供删除任意进程的特权。
+忽略( Ignore ) 就是对这个信号不做任何处理，但是有两个信号例外，对于 `SIGKILL` 和 `SIGSTOP` 这个两个信号，进程是不能忽略的。这是因为它们的主要作用是为 Linux kernel 和超级用户提供删除任意进程的特权。
 
 **捕获**
 
-捕获( Catch )，这个是指让用户进程可以注册自己针对这个信号的 handler。对于捕获，`SIGKILL` 和 `SIGSTOP` 这两个信号也同样例外，这两个信号不能由用户自己的处理代码，只能执行系统
-
-的**缺省行为**。
+捕获( Catch )，这个是指让用户进程可以注册自己针对这个信号的 handler。对于捕获，`SIGKILL` 和 `SIGSTOP` 这两个信号也同样例外，这两个信号不能由用户自己的处理代码，只能执行系统的**缺省行为**。
 
 **缺省行为**
 
-缺省行为( Default )，Linux 为每个信号都定义了一个缺省的行为，你可以在 Linux 系统中运行 `man 7 signal` 来查看每个信号的缺省行为。对于大部分的信号而言，应用程序不需要注册自己
-
-的 handler，使用系统缺省定义行为就可以了。
+缺省行为( Default )，Linux 为每个信号都定义了一个缺省的行为，你可以在 Linux 系统中运行 `man 7 signal` 来查看每个信号的缺省行为。对于大部分的信号而言，应用程序不需要注册自己的 handler，使用系统缺省定义行为就可以了。
 
 常见的 `SIGTERM` 和 `SIGKILL`  信号默认行为都是**终止进程。**针对上面说的三个实例，详细看看这两个信号。
 
 **SIGTERM**
 
-这个信号是 Linux 命令 `kill` 缺省发出的。前面例子里的命令 `kill 1` ，就是通过 `kill` 向 1 号进程发送一个信号，等价于 `kill -15`，在没有别的参数时，这个信号类型就默认为 
-
-`SIGTERM`。`SIGTERM` 这个信号是可以被捕获的，这里的**捕获**指的就是用户进程可以为这个信号注册自己的 handler，而 `SIGTERM` 信号一般是用于进程优雅退出。
+这个信号是 Linux 命令 `kill` 缺省发出的。前面例子里的命令 `kill 1` ，就是通过 `kill` 向 1 号进程发送一个信号，等价于 `kill -15`，在没有别的参数时，这个信号类型就默认为 `SIGTERM`。`SIGTERM` 这个信号是可以被捕获的，这里的**捕获**指的就是用户进程可以为这个信号注册自己的 handler，而 `SIGTERM` 信号一般是用于进程优雅退出。
 
 **SIGKILL**
 
-`SIGKILL (9)`，这个信号是 Linux 里两个特权信号之一。特权信号就是 Linux 为 kernel 和超级用户去删除任意进程所保留的，不能被忽略也不能被捕获。那么进程一旦收到 `SIGKILL`，就要退
-
-出。在前面的例子里，我们运行的命令 `kill -9 1` 里的参数 `-9` ，其实就是指发送编号为 9 的这个 `SIGKILL` 信号给 **1 号进程**。
+`SIGKILL (9)`，这个信号是 Linux 里两个特权信号之一。特权信号就是 Linux 为 kernel 和超级用户去删除任意进程所保留的，不能被忽略也不能被捕获。那么进程一旦收到 `SIGKILL`，就要退出。在前面的例子里，我们运行的命令 `kill -9 1` 里的参数 `-9` ，其实就是指发送编号为 9 的这个 `SIGKILL` 信号给 **1 号进程**。
 
 ### Linux 信号处理原理
 
@@ -232,24 +220,17 @@ static bool sig_task_ignored(struct task_struct *t, int sig, bool force)
 
 **1、unlikely(t->signal->flags & SIGNAL_UNKILLABLE)**
 
-`t->signal->flags & SIGNAL_UNKILLABLE` 表示进程必须是 `SIGNAL_UNKILLABLE` 的。在每个 Namespace 的 init 进程建立的时候，就会打上 `SIGNAL_UNKILLABLE` 这个标签，也就是说只要是 1 号进程，就会有
-
-这个 flag，这个条件也是满足的。
+`t->signal->flags & SIGNAL_UNKILLABLE` 表示进程必须是 `SIGNAL_UNKILLABLE` 的。在每个 Namespace 的 init 进程建立的时候，就会打上 `SIGNAL_UNKILLABLE` 这个标签，也就是说只要是 1 号进程，就会有这个 flag，这个条件也是满足的。
 
 **2、handler == SIG_DFL**
 
-判断信号的 handler 是否是 `SIG_DFL`。对于每个信号，用户进程如果不注册一个自己的 handler，就会有一个系统缺省的 handler，这个缺省的 handler 就叫作 `SIG_DFL`。对于 `SIGKILL`，它
-
-是特权信号，是不允许被捕获的，所以它的 handler 就一直是 `SIG_DFL`。对 `SIGKILL`来说该条件总是满足的。对于 `SIGTERM`，它是可以被捕获的。也就是说如果用户不注册 handler，那么
-
-这个条件对 `SIGTERM` 也是满足的。
+判断信号的 handler 是否是 `SIG_DFL`。对于每个信号，用户进程如果不注册一个自己的 handler，就会有一个系统缺省的 handler，这个缺省的 handler 就叫作 `SIG_DFL`。
+对于 `SIGKILL`，它是特权信号，是不允许被捕获的，所以它的 handler 就一直是 `SIG_DFL`。对 `SIGKILL`来说该条件总是满足的。对于 `SIGTERM`，它是可以被捕获的。也就是说如果用户不注册 handler，那么这个条件对 `SIGTERM` 也是满足的。
 
 **3、!(force && sig_kernel_only(sig))**
 
 `force` 表示如果发出信号的进程与接受信号的进程在同一个 Namespace 中值为 `false`，否则为 `true` 。
-
 `sig_kernel_only(sig)` ****表示信号是否为特权信号，`SIGKILL` 为特权信号，`SIGTERM` 不是。
-
 所以 `!(force && sig_kernel_only(sig))` 这个条件对于 `SIGKILL` 来说是 true，对于 `SIGTERM` 来说是 false。
 
 > Namespace 概念不了解的话，可参考前期文章 [容器原理](https://www.sfernetes.com/container-principle/)
@@ -257,19 +238,15 @@ static bool sig_task_ignored(struct task_struct *t, int sig, bool force)
 
 上述逻辑可参考下图：
 
-![linux-signal.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/0e14c182-5554-4aee-a7fa-e36182e5b4c1/linux-signal.png)
+![linux-signal.png](linux-signal.png)
 
 **示例一解释**
 
-现在再来看第一个示例，示例中容器的 1 号进程是 `sleep`，同时发信号和接受信号都在容器内部，属于同一个 Namespace，同时由于 `sleep` 命令自身没有注册 handler，满足上述三个条
-
-件。导致 `kill -9，kill -15` 被 Linux 内核忽略。
+现在再来看第一个示例，示例中容器的 1 号进程是 `sleep`，同时发信号和接受信号都在容器内部，属于同一个 Namespace，同时由于 `sleep` 命令自身没有注册 handler，满足上述三个条件。导致 `kill -9，kill -15` 被 Linux 内核忽略。
 
 **示例二解释**
 
-对于示例二，由于在宿主机操作容器内的进程，这样就是发出信号的进程和接受信号的进程不属于同一个 Namespace，`force = true` ，对于 `SIGTERM` 信号，它不是特权信号，所以 
-
-`sig_kernel_only(sig)=false` —> `!(force && sig_kernel_only(sig)) = true` —> `kill -15` 忽略。
+对于示例二，由于在宿主机操作容器内的进程，这样就是发出信号的进程和接受信号的进程不属于同一个 Namespace，`force = true` ，对于 `SIGTERM` 信号，它不是特权信号，所以 `sig_kernel_only(sig)=false` —> `!(force && sig_kernel_only(sig)) = true` —> `kill -15` 忽略。
 
 对于 `SIGKILL` 信号来说，它是特权信号，所以 `sig_kernel_only(sig)=true` —> `!(force && sig_kernel_only(sig)) = false` —> `kill -9`执行动作。
 
@@ -279,9 +256,7 @@ static bool sig_task_ignored(struct task_struct *t, int sig, bool force)
 
 **示例四解释**
 
-再看第四个示例，第四个示例容器的 1 号进程是 Golang 程序，然而 Golang 程序默认自带了 handler，kill -9 发出的是 `SIGKILL` 信号，不允许被捕获，满足以上三个条件，导致 `kill -9` 不
-
-生效。
+再看第四个示例，第四个示例容器的 1 号进程是 Golang 程序，然而 Golang 程序默认自带了 handler，kill -9 发出的是 `SIGKILL` 信号，不允许被捕获，满足以上三个条件，导致 `kill -9` 不生效。
 
 `kill -15` 发出的是 `SIGTERM` 信号，该信号允许捕获，所以使用自带的 handler，即不满足条件 2，导致 `kill -15` 可以杀死进程。
 
@@ -399,13 +374,9 @@ RUN chmod +x test.sh
 ENTRYPOINT ["/sbin/tini", "--", "./test.sh"]
 ```
 
-现在 tini 就是 **1 号进程**，它会将收到的系统信号转发给子进程 `test.sh` 。使用 `docker stop <container-id>` 就可以瞬间杀死容器了，docker 发送 `SIGTERM` 信号给容器的 tini，tini 将信号转
+现在 tini 就是 **1 号进程**，它会将收到的系统信号转发给子进程 `test.sh` 。使用 `docker stop <container-id>` 就可以瞬间杀死容器了，docker 发送 `SIGTERM` 信号给容器的 tini，tini 将信号转发给 test.sh，如果 test.sh 对 `SIGTERM` 信号有自定义 handler，那么执行完 handler 退出；
 
-发给 test.sh，如果 test.sh 对 `SIGTERM` 信号有自定义 handler，那么执行完 handler 退出；
-
-如果 test.sh 没有对 `SIGTERM` 信号处理，那么执行默认行为，即直接退出。因为现在的 test.sh 已经不是 1号进程了，仅仅是一个普通进程，所以并不会上面说的**示例二**的现象。所以要实现应
-
-用进程真正的优雅退出，应用程序也得实现 `SIGTERM` 的 handler。
+如果 test.sh 没有对 `SIGTERM` 信号处理，那么执行默认行为，即直接退出。因为现在的 test.sh 已经不是 1号进程了，仅仅是一个普通进程，所以并不会上面说的**示例二**的现象。所以要实现应用进程真正的优雅退出，应用程序也得实现 `SIGTERM` 的 handler。
 
 tini 作为 init 进程，还可以清理容器中的僵尸进程。
 
