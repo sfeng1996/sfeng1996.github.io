@@ -208,7 +208,7 @@ upper/new_file:update file
 
 修改 `merged/in_lower_2.txt`(来源于 lower 层)，`lower/in_lower_2.txt` 不会被修改，同时 upper 层会出现 in_lower_2.txt
 
-这里就是触发了 **OverlayFS** 的**写时复制(copy-up)**机制。
+这里就是触发了 **OverlayFS** 的 **写时复制(copy-up)** 机制。
 
 ```bash
 $ cd merged/
