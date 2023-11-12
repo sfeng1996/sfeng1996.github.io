@@ -150,14 +150,14 @@ committed  diff  link  lower  work
 
 可以发现所有目录基本都有 commited、diff、link、lower、work 这些目录或者文件。这里以 `3d78ae51691aa4f07c00ea6168ec6ca54165ebd9d6006d1a743408c5edca1489` 目录讲解，其他目录可以自行验证。
 
-- **diff：**是一个目录，存放这一层的数据
+- **diff：** 是一个目录，存放这一层的数据
     
     ```bash
     ls 3d78ae51691aa4f07c00ea6168ec6ca54165ebd9d6006d1a743408c5edca1489/diff/
     docker-entrypoint.sh
     ```
     
-- **link：**是一个文件，存放这一层短标识软链接名字。
+- **link：** 是一个文件，存放这一层短标识软链接名字。
     
     ```bash
     # 参照上面的 l 目录下的软链接
@@ -165,7 +165,7 @@ committed  diff  link  lower  work
     3TPMQPOVHZSVPRPH3VW5XLDDIG
     ```
     
-- **lower：**是一个文件，存放父级层的短标识软链接，所以这一层的父级层是 `LGECDEXL2PAD3KGI4G4RDA3QNK、CV76J6PKGXHZDZXREQ6UBAO37M` 两层。
+- **lower：** 是一个文件，存放父级层的短标识软链接，所以这一层的父级层是 `LGECDEXL2PAD3KGI4G4RDA3QNK、CV76J6PKGXHZDZXREQ6UBAO37M` 两层。
     
     ```bash
     $ cat 3d78ae51691aa4f07c00ea6168ec6ca54165ebd9d6006d1a743408c5edca1489/lower 
@@ -174,8 +174,8 @@ committed  diff  link  lower  work
     
     另外如果当前层是最底层，即没有父级层，那么就没有 lower 文件，这里 `02b68c4485091fcf697dbe8a5e99622b862f2f63fb72d1c59920d7ef0ad2e16f` 就是最底层。
     
-- **work：**该目录就是 **OverlayFS** 工作时存放临时文件的目录，完成会将该目录清空
-- **commited：**该目录可忽略
+- **work：** 该目录就是 **OverlayFS** 工作时存放临时文件的目录，完成会将该目录清空
+- **commited：** 该目录可忽略
 
 那么 Docker 是如何将这些目录和镜像的关系是怎么组织在的一起呢？答案是通过元数据关联。元数据分为 image 元数据和 layer 元数据。
 
