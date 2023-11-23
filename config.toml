@@ -78,16 +78,6 @@ enableEmoji = true
           title = ""
           weight = 5
           parent = "share"
-      
-      [[languages.zh-cn.menu.main]]
-          identifier = "resumetemplate"
-          pre = "<i class='fas fa-star-and-crescent fa-fw'></i>"
-          post = ""
-          name = "简历模板"
-          url = "resumetemplates/"
-          title = ""
-          weight = 6
-          parent = "share"
 
     [languages.zh-cn.params]
       # 网站描述
