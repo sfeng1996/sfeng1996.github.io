@@ -52,24 +52,6 @@ enableEmoji = true
           weight = 1
 
       [[languages.zh-cn.menu.main]]
-          identifier = "cloudnative"
-          pre = "<i class='fas fa-cloud-sun fa-fw'></i>"
-          post = ""
-          name = "云原生训练营"
-          url = "tags/"
-          title = ""
-          weight = 2
-      
-      [[languages.zh-cn.menu.main]]
-          identifier = "interview"
-          pre = "<i class='fas fa-user-friends fa-fw'></i>"
-          post = ""
-          name = "面经"
-          url = "interview/"
-          title = ""
-          weight = 3
-
-      [[languages.zh-cn.menu.main]]
           identifier = "share"
           pre = "<i class='fas fa-fan fa-fw'></i>"
           post = ""
