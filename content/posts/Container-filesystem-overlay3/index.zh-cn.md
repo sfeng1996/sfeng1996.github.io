@@ -1,6 +1,6 @@
 ---
 weight: 33
-title: "容器的文件系统(二): 存储挂载原理"
+title: "容器的文件系统(三): 存储挂载原理"
 date: 2023-11-21T08:57:40+08:00
 lastmod: 2023-11-21T08:45:40+08:00
 draft: false
@@ -21,7 +21,7 @@ lightgallery: true
 
 下图简单描述了三个挂载类型的区别：
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/e8f5cebc-6aaa-4d23-8ca9-914590fa7be8/Untitled.png)
+![](1.png)
 
 容器使用 **volume** 和 **bind mount** 都可以将容器内的文件或者目录挂载宿主机上，但是 **volume** 可由 Docker 来管理，**bind mount** 是直接与 Linux 原生文件系统对接。**tmpfs** 与 **volume**、**bind mount** 不同的是 **tmpfs** 是将容器内的文件、目录挂载到内存中，不会将数据存放在文件系统中。下面详细看看这三种挂载类型的使用。
 
@@ -96,7 +96,7 @@ $ docker volume inspect myvol
 
 **volume driver** 允许从应用程序逻辑中抽象底层存储系统。例如，如果服务使用带有 NFS 驱动程序的卷，则可以更新服务以使用不同的驱动程序。即在不更改应用程序逻辑的情况下将数据存储在云中。
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/0a1537bf-37fd-4afb-ab52-bd821c2193a5/Untitled.png)
+![Untitled](2.png)
 
 Docker 支持多种 **volume driver** 来对接不同的存储，下面以 `vieux/sshfs` 为例举例：
 
