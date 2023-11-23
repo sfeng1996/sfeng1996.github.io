@@ -210,9 +210,9 @@ enableEmoji = true
         Gitea = ""
         XMPP = ""
         Matrix = ""
-        Wechat = "https://www.sfernetes.com/images/wechat_sfeng.jpg"
+        Wechat = "https://www.sfernetes.com/images/wechat_cloudspace.jpg"
         Bilibili = ""
-        Email = "SFeng1996@163.com"
+        Email = ""
         RSS = true
 
  [params]
