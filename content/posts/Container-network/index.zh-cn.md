@@ -15,8 +15,6 @@ categories: ["Docker", "Container"]
 lightgallery: true
 ---
 
-# 容器网络原理
-
 ## 容器网络
 
 前文[容器原理](https://www.sfernetes.com/container-principle/)一文说到容器在网络上，容器使用 `Network Namespace` 实现对网络资源的隔离，被隔离的进程只能看到当前 `Namespace` 里的**网络栈。**
@@ -43,7 +41,7 @@ lightgallery: true
 > Linux 即使在同一个主机上创建的两个 `Network Namespace`，相互之间缺省也是不能进行网络通信的。
 > 
 
-![vethpair.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/63f1b82f-9b62-48a9-8add-786be62dce26/vethpair.png)
+![vethpair.png](vethpair.png)
 
 下面通过示例将两个 `Namespace` 通过 **veth pair** 连接起来，并验证连通性。
 
@@ -118,7 +116,7 @@ veth-ns2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 
 **veth pair** 实现了两个网络之间的连通，如果我们需要将 3 个或者多个 `namespace` 接入同一个二层网络时，就不能只使用 **veth pair** 了。在物理网络中，如果需要连接多个主机，我们会使用**网桥**，或者又称为交换机。Linux 也提供了网桥的虚拟实现。
 
-![bridge.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/a6f44156-b8a5-48af-a2c5-3732b064ee8f/bridge.png)
+![bridge.png](bridge.png)
 
 那么下面通过示例演示通过 **Bridge** 来连通三个 `namespace`。
 
@@ -314,7 +312,7 @@ PING www.a.shifen.com (153.3.238.110) 56(84) bytes of data.
 
 下图展示 IP 数据包经过 **SNAT** 规则后，报文的**源 IP** 发生了改变
 
-![snat.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/ad76d4e9-3d08-4a88-87f7-1aafa22b2656/snat.png)
+![snat.png](snat.png)
 
 ### 端口映射
 
@@ -366,7 +364,7 @@ $ curl 172.30.95.72:8001
 
 下图展示 IP 数据包经过 **DNAT** 规则后，**报文的目的 IP 和目的端口**都进行了变化
 
-![dnat.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/012f96fc-8319-4a75-94cb-11928e88d762/dnat.png)
+![dnat.png](dnat.png)
 
 在平时使用容器网络时，无非就是以上几种网络场景：**宿主机上容器间访问，容器内访问外网，外部访问容器内的服务。**
 
@@ -410,7 +408,7 @@ lo        Link encap:Local Loopback
 
 如果不指定网络模式的话，该模式是 Docker 创建容器时**默认**网络模式。原理图如下：
 
-![docker-bridge.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/77a86109-d1bd-4727-870b-26f03ccd8c9e/docker-bridge.png)
+![docker-bridge.png](docker-bridge.png)
 
 当 `Docker` 进程启动时，会在主机上创建一个名为 `docker0` 的虚拟网桥，并且分配一个 IP，该 IP 就是后面容器的**默认网关**。
 
@@ -556,7 +554,7 @@ Commercial support is available at
 
 测试发现访问正常，因为 Docker 也会在宿主机上创建对应的 **DNAT** 规则。
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/bcdc178e-7bb7-4358-b858-c86e6a17012b/Untitled.png)
+![dnat](dnat-jietu.png)
 
 这里的 **DNAT** 规则发现与上面举例的不大一样，这里解释一下
 
@@ -568,7 +566,7 @@ Commercial support is available at
 
 这个模式指定新创建的容器和已经**存在的一个容器**共享一个 `Network Namespace`，而不是和宿主机共享。新创建的容器不会创建自己的网卡，配置自己的 IP，而是和一个指定的容器共享 IP、端口范围等。原理图如下：
 
-![docker-container.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3106f477-4195-4489-a530-4ddcfa60dc35/adc1d45c-3397-4056-98bf-8678989518d1/docker-container.png)
+![docker-container.png](docker-container.png)
 
 这里先创建一个容器，指定 **bridge** 网络模式。
 
