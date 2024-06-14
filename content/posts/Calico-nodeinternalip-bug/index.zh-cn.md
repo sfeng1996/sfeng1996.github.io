@@ -19,11 +19,11 @@ lightgallery: true
 
 在部署完 Calico 之后，会在每个 K8S 节点上运行一个 calico-node 组件，该组件保证 pod 间网络通的建立与维护。每个 calico-node 启动后都会自动发现当前节点上可用的网卡地址，calico 提供了很多种方式来自动发现：
 
-- **Kubernetes Node IP：** 该模式下 calico 会选择 Kubernetes node's `Status.Addresses` 字段第一个 `Internal` 类型的 ip
-- **Source address used to reach an IP or domain name：** calico 将选择给定“可访问” IP 地址或域的IP地址
-- **Including matching interfaces：** calico 根据正则表达式自动选择可用的网卡地址
-- **Excluding matching interfaces：**calico 根据正则表达式排错不满足的网卡地址
-- **Including CIDRs：**calico 选择在配置的 cidr 范围内的网卡地址，适用于一个网卡有多个网段的 IP
+- **Kubernetes Node IP:** 该模式下 calico 会选择 Kubernetes node's `Status.Addresses` 字段第一个 `Internal` 类型的 ip
+- **Source address used to reach an IP or domain name:** calico 将选择给定“可访问” IP 地址或域的IP地址
+- **Including matching interfaces:** calico 根据正则表达式自动选择可用的网卡地址
+- **Excluding matching interfaces:** calico 根据正则表达式排除不满足的网卡地址
+- **Including CIDRs:** calico 选择在配置的 cidr 范围内的网卡地址，适用于一个网卡有多个网段的 IP
 
 以上几种方式具体细节可参考[官网](https://docs.tigera.io/calico/latest/networking/ipam/ip-autodetection#autodetecting-node-ip-address-and-subnet) 。
 
