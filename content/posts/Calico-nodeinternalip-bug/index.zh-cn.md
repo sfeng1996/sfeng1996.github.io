@@ -86,7 +86,7 @@ status:
 
 既然 K8S 节点的 internal ip 是正确的，那问题应该是 calico，通过阅读 calico v3.22.1 源码。
 
-calico 自动获取 ip 的源码在 calico/node/pkg/lifecycle/startup/autodetection/autodetection_methods.go
+calico 自动获取 ip 的源码在 `calico/node/pkg/lifecycle/startup/autodetection/autodetection_methods.go`
 
 ```go
 // autoDetectCIDR auto-detects the IP and Network using the requested
@@ -146,7 +146,7 @@ func AutoDetectCIDR(method string, version int, k8sNode *v1.Node, getInterfaces 
 
 ```
 
-通过上面代码发现 autoDetectUsingK8sInternalIP(version, k8sNode, getInterfaces) 这个函数就是通过 k8s node internal ip 获取节点 ip 接下来看 这个函数的实现
+通过上面代码发现 `autoDetectUsingK8sInternalIP(version, k8sNode, getInterfaces)` 这个函数就是通过 k8s node internal ip 获取节点 ip 接下来看 这个函数的实现
 
 ```go
 // autoDetectUsingK8sInternalIP reads K8s Node InternalIP.
