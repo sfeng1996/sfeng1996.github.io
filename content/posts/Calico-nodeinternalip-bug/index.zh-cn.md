@@ -71,7 +71,7 @@ master-172-29-231-76   (64512)   172.29.231.0/24
 node-172-29-231-161
 ```
 
-为什么会使用 172.29.231.0 这个 IP 呢，理论上 calico 通过 NodeInternalIP 模式会获取  ****Kubernetes node's `Status.Addresses` 字段第一个 `Internal` 类型的 ip，通过命令证实该字段下的 ip 也不是 172.29.231.0，应该是 172.29.231.76 才对。
+为什么会使用 172.29.231.0 这个 IP 呢，理论上 calico 通过 NodeInternalIP 模式会获取  Kubernetes node's `Status.Addresses` 字段第一个 `Internal` 类型的 ip，通过命令证实该字段下的 ip 也不是 172.29.231.0，应该是 172.29.231.76 才对。
 
 ```yaml
 status:
