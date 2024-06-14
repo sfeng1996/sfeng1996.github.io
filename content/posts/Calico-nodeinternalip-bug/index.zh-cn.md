@@ -15,13 +15,13 @@ categories: ["Kubernetes-dev"]
 lightgallery: true
 ---
 
-## 简介
+# 简介
 
 在部署完 Calico 之后，会在每个 K8S 节点上运行一个 calico-node 组件，该组件保证 pod 间网络通的建立与维护。每个 calico-node 启动后都会自动发现当前节点上可用的网卡地址，calico 提供了很多种方式来自动发现：
 
-- **Kubernetes Node IP：**该模式下 calico 会选择 ****Kubernetes node's `Status.Addresses` 字段第一个 `Internal` 类型的 ip
-- **Source address used to reach an IP or domain name：**calico 将选择给定“可访问” IP 地址或域的IP地址
-- **Including matching interfaces：**calico 根据正则表达式自动选择可用的网卡地址
+- **Kubernetes Node IP：** 该模式下 calico 会选择 Kubernetes node's `Status.Addresses` 字段第一个 `Internal` 类型的 ip
+- **Source address used to reach an IP or domain name：** calico 将选择给定“可访问” IP 地址或域的IP地址
+- **Including matching interfaces：** calico 根据正则表达式自动选择可用的网卡地址
 - **Excluding matching interfaces：**calico 根据正则表达式排错不满足的网卡地址
 - **Including CIDRs：**calico 选择在配置的 cidr 范围内的网卡地址，适用于一个网卡有多个网段的 IP
 
@@ -29,7 +29,7 @@ lightgallery: true
 
 Calico 在 V3.22 支持了 **Kubernetes Node IP** 模式，但是在 V3.22.4 之前的小版本都存在 bug，下面就详细讲解该 bug 现象以及原理。
 
-## 现象
+# 现象
 
 使用 **Kubernetes Node IP** 模式部署 calico V3.22.1，会发现有部分 calico-node 启动失败
 
@@ -82,7 +82,7 @@ status:
     type: Hostname
 ```
 
-## bug 分析
+# bug 分析
 
 既然 K8S 节点的 internal ip 是正确的，那问题应该是 calico，通过阅读 calico v3.22.1 源码。
 
@@ -219,6 +219,6 @@ func autoDetectUsingK8sInternalIP(version int, k8sNode *v1.Node, getInterfaces f
 
 V3.22.4 版本的这块逻辑只是稍微修改，并且给出了对应注释来解释之前的 bug 原因。
 
-## 解决
+# 解决
 
 既然知道了 bug 的原因，只需要升级 calico 到 V3.22.4 及以上即可修复该问题。
