@@ -86,7 +86,7 @@ jobs:
           npm install -g atomic-algolia
           atomic-algolia
         env:
-          ALGOLIA_APP_ID: sfeng
-          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
-          ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
+          ALGOLIA_APP_ID: 4FKSVAQZVN
+          ALGOLIA_ADMIN_KEY: b0d76dbdcb2d20120d50847264fd9f72
+          ALGOLIA_INDEX_NAME: sfeng
           ALGOLIA_INDEX_FILE: "./public/index.json"
