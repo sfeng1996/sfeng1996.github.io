@@ -118,7 +118,7 @@ enableEmoji = true
         absoluteURL = true
         # algolia 链接 https://dashboard.algolia.com/apps/OVAM8PE9BC/explorer/browse/sfeng?page=38&searchMode=search
         [languages.zh-cn.params.search.algolia]
-          index = "sfeng"
+          index = "index"
           appID = "4FKSVAQZVN"
           searchKey = "b0d76dbdcb2d20120d50847264fd9f72"
       # 主页信息设置

@@ -71,7 +71,7 @@ jobs:
         env:
           ALGOLIA_APP_ID: 4FKSVAQZVN
           ALGOLIA_ADMIN_KEY: b0d76dbdcb2d20120d50847264fd9f72
-          ALGOLIA_INDEX_NAME: sfeng
+          ALGOLIA_INDEX_NAME: index
           ALGOLIA_INDEX_FILE: "./public/index.json"            
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
