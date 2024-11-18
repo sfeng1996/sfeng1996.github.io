@@ -120,7 +120,7 @@ enableEmoji = true
         [languages.zh-cn.params.search.algolia]
           index = "sfeng"
           appID = "4FKSVAQZVN"
-          searchKey = "fac3a371b63f3c2b5b6800302adbadc8"
+          searchKey = "b0d76dbdcb2d20120d50847264fd9f72"
       # 主页信息设置
       [languages.zh-cn.params.home]
         # RSS 文章数目
