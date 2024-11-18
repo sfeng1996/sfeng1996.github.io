@@ -59,7 +59,20 @@ jobs:
           hugo \
             --gc \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"          
+            --baseURL "${{ steps.pages.outputs.base_url }}/"    
+            - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install automic-algolia
+        run: |
+          npm install -g atomic-algolia
+          atomic-algolia
+        env:
+          ALGOLIA_APP_ID: 4FKSVAQZVN
+          ALGOLIA_ADMIN_KEY: b0d76dbdcb2d20120d50847264fd9f72
+          ALGOLIA_INDEX_NAME: sfeng
+          ALGOLIA_INDEX_FILE: "./public/index.json"            
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -76,17 +89,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-  
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - name: Install automic-algolia
-        run: |
-          npm install -g atomic-algolia
-          atomic-algolia
-        env:
-          ALGOLIA_APP_ID: 4FKSVAQZVN
-          ALGOLIA_ADMIN_KEY: b0d76dbdcb2d20120d50847264fd9f72
-          ALGOLIA_INDEX_NAME: sfeng
-          ALGOLIA_INDEX_FILE: "./public/index.json"
