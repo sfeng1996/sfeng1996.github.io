@@ -60,7 +60,7 @@ jobs:
             --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"    
-            - name: Use Node.js
+      - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
