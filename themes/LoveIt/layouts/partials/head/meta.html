@@ -15,3 +15,15 @@
 {{- with .Site.Params.app.tileColor -}}
     <meta name="msapplication-TileColor" content="{{ . }}">
 {{- end -}}
+
+<!-- {{- /* jquery local test */ -}}
+{{ if eq .Hugo.Environment "development" }}
+	{{- /* custom jquery */ -}}
+	{{- $fingerprint := .Scratch.Get "fingerprint" -}}
+	{{- $source := ( resources.Get "js/jquery.min.js" ) -}}
+	{{- dict "Source" $source "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
+	{{- range (.Scratch.Get "this").script -}}
+	    {{- partial "plugin/script.html" . -}}
+	{{- end -}}
+	{{- .Scratch.Delete "this" -}}
+{{ end }} -->
