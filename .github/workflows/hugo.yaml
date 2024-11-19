@@ -66,6 +66,7 @@ jobs:
           node-version: '12.x'
       - name: Install automic-algolia
         run: |
+          cat ./public/index.json
           npm install -g atomic-algolia
           atomic-algolia
         env:
