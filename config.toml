@@ -91,7 +91,7 @@ enableEmoji = true
         # 是否隐藏网站图标资源链接
         noFavicon = false
         # 更现代的 SVG 网站图标, 可替代旧的 .png 和 .ico 文件
-        svgFavicon = "/loveit-extend/images/icon.png"
+        svgFavicon = "/images/icon.png"
         # Android 浏览器主题色
         themeColor = "#ffffff"
         # Safari 图标颜色
@@ -131,7 +131,7 @@ enableEmoji = true
           # Gravatar 邮箱，用于优先在主页显示的头像
           gravatarEmail = ""
           # 主页显示头像的 URL
-          avatarURL = "/loveit-extend/images/home.jpg"
+          avatarURL = "/images/home.jpg"
           # 主页显示的网站标题 (支持 HTML 格式)
           title = ""
           # 主页显示的网站副标题
@@ -233,7 +233,7 @@ enableEmoji = true
   dateFormat = "2006-01-02"
   # website images for Open Graph and Twitter Cards
   # 网站图片, 用于 Open Graph 和 Twitter Cards
-  images = ["/loveit-extend/images/home.png"]
+  images = ["/images/home.png"]
 
   # 添加不蒜子计数
   [params.busuanzi]
@@ -568,7 +568,7 @@ enableEmoji = true
       # 出版者信息
       [params.page.seo.publisher]
         name = "xxxx"
-        logoUrl = "/LoveIt-extend/images/avatar.png"
+        logoUrl = "/images/avatar.png"
 
   # TypeIt config
   # TypeIt 配置
