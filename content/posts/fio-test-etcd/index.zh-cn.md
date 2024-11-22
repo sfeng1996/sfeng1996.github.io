@@ -10,7 +10,7 @@ resources:
   src: "k8s-dev.jpg"
 
 tags: ["etcd"]
-categories: ["etcd, Kubernetes-Ops"]
+categories: ["etcd"]
 
 lightgallery: true
 ---
