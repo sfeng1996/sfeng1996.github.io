@@ -281,9 +281,7 @@ repeat_interval: 1h
 ![image.png](4.png)
 
 > 1、Alertmanager 具有去重功能，也就是相同的告警在进入 Alertmanager group 后，会进入去重阶段，防止同一组内出现相同的告警
-
 2、`group_wait` 只会作用该组的第一次告警前
-
 3、`group_interval、repeat_interval` 都是基于最后一次告警的发送时间进行时间计算的
 >
 
