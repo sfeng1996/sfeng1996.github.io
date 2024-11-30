@@ -20,15 +20,15 @@ lightgallery: true
 [上一篇](https://www.sfernetes.com/kubernetes-cert/)  系统分析了 Kubernetes 集群中每个证书的作用和证书认证的原理。对于 Kube-apiserver，Kubelet 来说，它们都能提供 HTTPS 服务，Kube-apiserver、Kubelet 对于一个请求，既要认证也要鉴权。在 Kube-apiserver 中，鉴权也有多种方式：
 
 - Node
-- ABAC
-- RBAC
-- Webhook
+  - ABAC
+  - RBAC
+  - Webhook
 
 在 TLS + RBAC 模式下，访问 Kube-apiserver 有三种方式：
 
 - 证书 + RBAC(就是上一篇说到的那些证书)
-- Node + RBAC( Kubelet 访问 Kube-apiserver 时)
-- ServiceAccount + RBAC( Kubernetes 集群内 Pod 访问 Kube-apiserver ）
+  - Node + RBAC( Kubelet 访问 Kube-apiserver 时)
+  - ServiceAccount + RBAC( Kubernetes 集群内 Pod 访问 Kube-apiserver ）
 
 关于 RBAC 的内容不熟悉的可以参考[官网](https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/)
 
