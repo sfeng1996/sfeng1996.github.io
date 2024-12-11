@@ -102,25 +102,27 @@ $ fio --name=etcd-mixed-load \
     --time_based \
     --numjobs=20 \
     --iodepth=8 \
-    --fsync_on_close=1
+    --fsync_on_close=1 \
+    --filename /data/test.txt
 ```
 
 **参数说明**
 
-| **参数** | **描述** |
-| --- | --- |
-| `--name=etcd-mixed-load` | 测试任务名称，方便记录日志和结果。 |
-| `--ioengine=libaio` | 使用异步 I/O 引擎 |
-| `--direct=1` | 关闭文件系统缓存，直接访问磁盘，模拟真实负载。由于 etcd 读大多数走缓存，所以这里关闭缓存模拟读请求最大性能 |
-| `--rw=randrw` | 随机读写混合，模拟 etcd 的读写模式。 |
-| `--rwmixread=80` | 读写比例设为 70:30，符合 etcd “读多写少”的典型特性。 |
-| `--bs=4k` | I/O 块大小为 4KB，模拟 etcd 典型 I/O 块大小。 |
-| `--size=500MB` | 测试文件总大小为 500MB，etcd 存储数据量并不大，模拟中等 kubernetes 集群数据量 |
-| `--runtime=60` | 测试持续时间为 60 秒，充分反映磁盘性能。 |
-| `--time_based` | 使用时间控制测试，而不是完成全部数据量后结束。 |
-| `--numjobs=16` | 模拟 16 个线程，反映 etcd 在集群中的多并发操作 |
-| `--iodepth=8` | 表示一个线程可以同时提交的 I/O 请求量 |
-| `--fsync_on_close=1` | 在写操作完成后强制刷新到磁盘，模拟 etcd WAL 写入的持久化要求。 |
+| **参数**                      | **描述**                                                   |
+|-----------------------------|----------------------------------------------------------|
+| `--name=etcd-mixed-load`    | 测试任务名称，方便记录日志和结果。                                        |
+| `--ioengine=libaio`         | 使用异步 I/O 引擎                                              |
+| `--direct=1`                | 关闭文件系统缓存，直接访问磁盘，模拟真实负载。由于 etcd 读大多数走缓存，所以这里关闭缓存模拟读请求最大性能 |
+| `--rw=randrw`               | 随机读写混合，模拟 etcd 的读写模式。                                    |
+| `--rwmixread=80`            | 读写比例设为 70:30，符合 etcd “读多写少”的典型特性。                        |
+| `--bs=4k`                   | I/O 块大小为 4KB，模拟 etcd 典型 I/O 块大小。                         |
+| `--size=500MB`              | 测试文件总大小为 500MB，etcd 存储数据量并不大，模拟中等 kubernetes 集群数据量       |
+| `--runtime=60`              | 测试持续时间为 60 秒，充分反映磁盘性能。                                   |
+| `--time_based`              | 使用时间控制测试，而不是完成全部数据量后结束。                                  |
+| `--numjobs=16`              | 模拟 16 个线程，反映 etcd 在集群中的多并发操作                             |
+| `--iodepth=8`               | 表示一个线程可以同时提交的 I/O 请求量                                    |
+| `--fsync_on_close=1`        | 在写操作完成后强制刷新到磁盘，模拟 etcd WAL 写入的持久化要求。                     |
+| `--filename /data/test.txt` | 测试磁盘对应的目录路径                                              |
 
 fio 使用 `--numjobs、--iodepth` 结合模拟 etcd 客户端数量和请求量。$真实并发请求总量 ≈ numjobs × iodepth$
 
