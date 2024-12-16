@@ -6,8 +6,8 @@ lastmod: 2024-11-19T02:45:40+08:00
 draft: false
 author: "孙峰"
 resources:
-- name: "featured-image"
-  src: "k8s-dev.jpg"
+  - name: "featured-image"
+    src: "k8s-dev.jpg"
 
 tags: ["etcd"]
 categories: ["etcd"]
