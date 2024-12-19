@@ -17,6 +17,8 @@ lightgallery: true
 
 上一篇 <<[K8S HPA 内置指标使用详解及原理](https://sfeng1996.github.io/k8s-hpa/)>> 详细讲解了 HPA 的原理以及使用过程。本篇从源码角度分析 HPA 的工作原理。
 
+## 周期性计算 metric
+
 Kube-controller-manager 中 HorizontalPodAutoscaler 是一个 controller，通过 Watch/List HPA 资源对象，对该 HPA 关联的工作负载进行 Pod 扩缩容。
 
 针对于每个 HPA 对象， HorizontalPodAutoscaler 会周期性去获取指标 metric 并计算副本数，判断是否需要扩缩容，这个周期默认是 15s，可以通过调整 Kube-controller-manager 的 `--horizontal-pod-autoscaler-sync-period` 参数设置，这块是在 Kube-controller-manager 启动 HorizontalPodAutoscaler  controller 时初始化 Workqueue 传入自定义队列限速器。
