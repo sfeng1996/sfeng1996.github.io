@@ -15,7 +15,7 @@ categories: ["Kubernetes-Dev"]
 lightgallery: true
 ---
 
-上一篇 <<[**K8S HPA 内置指标使用详解及原理](https://www.notion.so/K8S-HPA-15f0ba5df25f80828821d8ef4022e1cd?pvs=21)>>** 详细讲解了 HPA 的原理以及使用过程。本篇从源码角度分析 HPA 的工作原理。
+上一篇 <<[K8S HPA 内置指标使用详解及原理](https://sfeng1996.github.io/k8s-hpa/)>> 详细讲解了 HPA 的原理以及使用过程。本篇从源码角度分析 HPA 的工作原理。
 
 Kube-controller-manager 中 HorizontalPodAutoscaler 是一个 controller，通过 Watch/List HPA 资源对象，对该 HPA 关联的工作负载进行 Pod 扩缩容。
 
