@@ -81,11 +81,11 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 169.254.1.1 dev eth0 lladdr ee:ee:ee:ee:ee:ee used 0/0/0 probes 1 STALE
 ```
 
-可以发现网关 169.254.1.1 的 MAC 地址是 `ee:ee:ee:ee:ee:ee`，那么这个 MAC 地址是哪个网关的呢？
+可以发现网关 `169.254.1.1` 的 MAC 地址是 `ee:ee:ee:ee:ee:ee`，那么这个 MAC 地址是哪个网关的呢？
 
-无论是容器网络还是 K8S 网络，都是基于 Linux veth-pair 技术实现 Network namespace 间通信，所以在 pod-a 和主机节点上使用一对 veth-pair 连接。
+无论是容器网络还是 K8S 网络，都是基于 **Linux veth-pair** 技术实现 Network namespace 间通信，所以在 pod-a 和主机节点上使用一对 **veth-pair** 连接。
 
-在 pod 内 eth0@xxxx 是 veth-pair 的一端，pod-a 内的网卡名是 `eth0@if331`
+在 pod 内 `eth0@xxxx` 是 veth-pair 的一端，pod-a 内的网卡名是 `eth0@if331`
 
 ```bash
 / # ip addr show dev eth0
@@ -95,7 +95,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
        valid_lft forever preferred_lft forever
 ```
 
-另一端则在物理主机节点上，在物理节点上有很多个以 `calicoxxxxx@xx` 命令的网卡，这些都是每个 pod veth-pair 的一端。每 pair 的接口均有相同的 inteface index，pod-a 是 331，所以直接在节点上查看：
+另一端则在物理主机节点上，在物理节点上有很多个以 `calicoxxxxx@xx` 命令的网卡，这些都是每个 pod veth-pair 的一端。每 pair 的接口均有相同的 **inteface index**，pod-a 是 331，所以直接在节点上查看：
 
 ```bash
 $ ip link show | egrep '^331:' -A 1
@@ -103,7 +103,7 @@ $ ip link show | egrep '^331:' -A 1
     link/ether ee:ee:ee:ee:ee:ee brd ff:ff:ff:ff:ff:ff link-netnsid 32
 ```
 
-即 `cali14e7d81007d` 和 pod-a 中的 `eth0` 是一个 veth-pair，也就说明 pod-a eth0 与 主机的 `cali14e7d81007d` 在一个广播域，所以 pod-a 向网关 169.254.1.1 发起的 ARP 请求会被 `cali14e7d81007d` 接收，但是 `cali14e7d81007d`  上也没有配置 169.254.1.1 地址，为什么可以回复 ARP 请求？这里涉及到一个 Linux proxy_arp 知识：
+即 `cali14e7d81007d` 和 pod-a 中的 `eth0` 是一个 veth-pair，也就说明 pod-a eth0 与 主机的 `cali14e7d81007d` 在一个广播域，所以 pod-a 向网关 169.254.1.1 发起的 ARP 请求会被 `cali14e7d81007d` 接收，但是 `cali14e7d81007d`  上也没有配置 `169.254.1.1` 地址，为什么可以回复 ARP 请求？这里涉及到一个 **Linux proxy_arp** 知识：
 
 > 将 `/proc/sys/net/ipv4/conf/<interface-dev>/proxy_arp` 置为1，该网卡就会看起来像一个网关，会响应所有的ARP请求，并将自己的MAC地址告诉客户端。
 >
@@ -127,7 +127,7 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 100.79.126.201  0.0.0.0         255.255.255.255 UH        0 0          0 calieabe7761b00
 ```
 
-可以发现发往 100.79.126.201( pod-b ip ) 的报文直接通过 calieabe7761b00 网卡出去，calieabe7761b00 网卡也就是 pod-b veth-pair 在主机上的一端，
+可以发现发往 100.79.126.201( pod-b ip ) 的报文直接通过 `calieabe7761b00` 网卡出去，`calieabe7761b00` 网卡也就是 pod-b veth-pair 在主机上的一端，
 
 进而报文通过 pod-b veth-pair 进入 pod-b 内。
 
