@@ -9,8 +9,8 @@ resources:
 - name: "featured-image"
   src: "k8s-dev.jpg"
 
-tags: ["Kubernetes-dev, Calico"]
-categories: ["Kubernetes-dev, _Calico_"]
+tags: ["Kubernetes-dev", "Calico"]
+categories: ["Kubernetes-dev", "Calico"]
 
 lightgallery: true
 ---
