@@ -165,4 +165,4 @@ listening on cali14e7d81007d, link-type EN10MB (Ethernet), capture size 262144 b
 
 同节点的 Pod 之间通信实际上还是利用的 Linux veth-pair 技术以及网络路由，并没有使用到 Calico 的核心网络模式，例如 IPIP、VXLAN、BGP。
 
-下一篇介绍跨界点的 Pod 通信，即会使用 Calico 的网络模式。
+下一篇介绍跨节点的 Pod 通信，即会使用 Calico 的网络模式。
