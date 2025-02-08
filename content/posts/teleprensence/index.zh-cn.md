@@ -15,8 +15,6 @@ categories: ["Kubernetes-dev"]
 lightgallery: true
 ---
 
-使用
-
 ## 背景
 
 当服务部署在 K8S 集群中，服务以 Pod 形式运行在集群内，其 `IP：Port` 都是虚拟网络实现，只能在集群内访问。所以开发人员没办法本地连接环境实现联调。
