@@ -81,11 +81,11 @@ spec:
 
 **restartPolicy** 的值有三个：
 
-**Always：**只要 container 退出就重启，即使它的退出码为 0（即成功退出）
+**Always**：只要 container 退出就重启，即使它的退出码为 0（即成功退出）
 
-**OnFailure：**如果 container 的退出码不是 0（即失败退出），就重启
+**OnFailure**：如果 container 的退出码不是 0（即失败退出），就重启
 
-**Never：**container 退出后永不重启
+**Never**：container 退出后永不重启
 
 默认值为 **Always**
 
@@ -117,20 +117,20 @@ spec:
 
 上面例子发现探针配置中有几个配置参数，可以使用这些字段精确地控制启动、存活和就绪检测的行为：：
 
-- **initialDelaySeconds：**容器启动后要等待多少秒后才启动启动、存活和就绪探针。 如果定义了启动探针，则存活探针和就绪探针的延迟将在启动探针已成功之后才开始计算。 如果 `periodSeconds` 的值大于 `initialDelaySeconds`，则 `initialDelaySeconds` 将被忽略。默认是 0 秒，最小值是 0。
-- **periodSeconds：**执行探测的时间间隔（单位是秒）。默认是 10 秒。最小值是 1。
-- **timeoutSeconds：**探测的超时后等待多少秒。默认值是 1 秒。最小值是 1。
-- **successThreshold：**探针在失败后，被视为成功的最小连续成功数。默认值是 1。 存活和启动探测的这个值必须是 1。最小值是 1。
-- **failureThreshold：**探针连续失败了 `failureThreshold` 次之后， Kubernetes 认为总体上检查已失败：容器状态未就绪、不健康、不活跃。 对于启动探针或存活探针而言，如果至少有 `failureThreshold` 个探针已失败， Kubernetes 会将容器视为不健康并为这个特定的容器触发重启操作。 Kubelet 遵循该容器的 `terminationGracePeriodSeconds` 设置。 对于失败的就绪探针，Kubelet 继续运行检查失败的容器，并继续运行更多探针； 因为检查失败，Kubelet 将 Pod 的 `Ready` [状况](https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/pod-lifecycle/#pod-conditions)设置为 `false`。
-- **terminationGracePeriodSeconds：**为 Kubelet 配置从为失败的容器触发终止操作到强制容器运行时停止该容器之前等待的宽限时长。 默认值是继承 Pod 级别的 `terminationGracePeriodSeconds` 值（如果不设置则为 30 秒），最小值为 1。 更多细节请参见[探针级别 `terminationGracePeriodSeconds`](https://kubernetes.io/zh-cn/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#probe-level-terminationgraceperiodseconds)。
+- **initialDelaySeconds**：容器启动后要等待多少秒后才启动启动、存活和就绪探针。 如果定义了启动探针，则存活探针和就绪探针的延迟将在启动探针已成功之后才开始计算。 如果 `periodSeconds` 的值大于 `initialDelaySeconds`，则 `initialDelaySeconds` 将被忽略。默认是 0 秒，最小值是 0。
+- **periodSeconds**：执行探测的时间间隔（单位是秒）。默认是 10 秒。最小值是 1。
+- **timeoutSeconds**：探测的超时后等待多少秒。默认值是 1 秒。最小值是 1。
+- **successThreshold**：探针在失败后，被视为成功的最小连续成功数。默认值是 1。 存活和启动探测的这个值必须是 1。最小值是 1。
+- **failureThreshold**：探针连续失败了 `failureThreshold` 次之后， Kubernetes 认为总体上检查已失败：容器状态未就绪、不健康、不活跃。 对于启动探针或存活探针而言，如果至少有 `failureThreshold` 个探针已失败， Kubernetes 会将容器视为不健康并为这个特定的容器触发重启操作。 Kubelet 遵循该容器的 `terminationGracePeriodSeconds` 设置。 对于失败的就绪探针，Kubelet 继续运行检查失败的容器，并继续运行更多探针； 因为检查失败，Kubelet 将 Pod 的 `Ready` [状况](https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/pod-lifecycle/#pod-conditions)设置为 `false`。
+- **terminationGracePeriodSeconds**：为 Kubelet 配置从为失败的容器触发终止操作到强制容器运行时停止该容器之前等待的宽限时长。 默认值是继承 Pod 级别的 `terminationGracePeriodSeconds` 值（如果不设置则为 30 秒），最小值为 1。 更多细节请参见[探针级别 `terminationGracePeriodSeconds`](https://kubernetes.io/zh-cn/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#probe-level-terminationgraceperiodseconds)。
 
 ### 探针结果
 
 三种类型的探针每次探测都将获得以下三种结果之一：
 
-- **`Success`（成功）**容器通过了诊断。
-- **`Failure`（失败）**容器未通过诊断。
-- **`Unknown`（未知）**诊断失败，因此不会采取任何行动。
+- `Success`（成功）容器通过了诊断。
+- `Failure`（失败）容器未通过诊断。
+- `Unknown`（未知）诊断失败，因此不会采取任何行动。
 
 ## livenessProbe
 
@@ -148,9 +148,12 @@ spec:
 
 通过使用 **ReadinessProbe**，Kubernetes 能够等待应用程序完全启动，然后才允许服务将流量发送到新副本。
 
+就绪探针在容器的整个生命期内持续运行。
+
 ## startupProbe
 
 启动探针，判断容器是否已启动。如果提供了启动探测探针，则禁用所有其他探测探针( **readinessProbe，livenessProbe** )，直到它成功为止。如果启动探测失败，Kubelet 将杀死容器，容器将服从其重启策略。如果容器没有提供启动探测，则默认状态为成功。
+这类探针仅在启动时执行，不像存活探针和就绪探针那样周期性地运行。
 
 那什么时候需要使用到启动探针呢？
 
