@@ -140,7 +140,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 大致概括一下整个过程：
 
-- **发送端**：在 Node-1 Pod-a 中发起 ping Pod-b ，`ICMP` 报文经过 **veth-pair** 后交由 tunl0 设备处理。 tunl0 设备是一个 IPIP 类型的设备，负责 IPIP封包解包。 因此，在发送端，tunl 将原始 IP 报文封装成 IPIP 报文，然后从物理网卡 bond0 发送。
+- **发送端**：在 Node-1 Pod-a 中发起 ping Pod-b ，`ICMP` 报文经过 **veth-pair** 后交由 tunl0 设备处理。 tunl0 设备是一个 IPIP 类型的设备，负责 IPIP封包解包。 因此，在发送端，tunl0 将原始 IP 报文封装成 IPIP 报文，然后从物理网卡 bond0 发送。
 - **接收端**：Node2 收到 IPIP 报文，发现是一个 IPIP 类型报文，交由 tunl0 进行解包。根据解包后得到的原始报文中的目的 IP，将原始报文经由 **veth-pair** 网桥发送给 Pod-b。
 
 ![ipip-1.png](ipip-1.png)
