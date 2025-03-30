@@ -155,7 +155,7 @@ $ tcpdump -nnn -i bond0 -w ipip.pcap
 
 ![ip-pacap1.png](ip-pacap1.png)
 
-其中外层 IP 即为物理节点网卡的 IP 地址；内层 MAC 即为 vxlan.calico 的 MAC 地址，内层 IP 为 pod IP 地址
+其中外层 IP 即为物理节点网卡的 IP 地址；内层 IP 为 pod IP 地址
 
 ![ip-pacap2.png](ip-pacap1.png)
 
