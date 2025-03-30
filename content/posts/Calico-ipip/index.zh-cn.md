@@ -40,7 +40,7 @@ IPIP 报文格式如下：
 - **外层 IP 头**：在外层新增 IP 头，源地址是当前节点物理网卡 IP，目的地址是对端节点物理网卡 IP
 - **内层 IP 头**：即 Pod IP
 
-![image.png](attachment:8f738462-07d4-4692-9af6-c1c9eb833158:image.png)
+![ipip-2.png](ipip-2.png)
 
 ## 实验分析
 
