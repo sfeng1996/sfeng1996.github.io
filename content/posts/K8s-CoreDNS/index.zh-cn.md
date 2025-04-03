@@ -322,7 +322,7 @@ spec:
 
 ### 使用 NodeLocalDNS
 
-`NodeLocal DNSCache` 是一套 DNS 本地缓存解决方案。**NodeLocal DNSCache 通过在集群节点上运行一个 DaemonSet 来提高集群 DNS 性能和可靠性，**下次详细介绍下使用和原理。
+`NodeLocal DNSCache` 是一套 DNS 本地缓存解决方案。**NodeLocal DNSCache 通过在集群节点上运行一个 DaemonSet 来提高集群 DNS 性能和可靠性**, 下次详细介绍下使用和原理。
 
 ## K8S DNS 策略
 
