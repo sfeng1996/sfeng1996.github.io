@@ -17,7 +17,7 @@ lightgallery: true
 
 在使用 K8S 过程中，Pod 之间通过 Pod ip 访问，那么 Pod 重启后肯定没法通信了，因为 Pod 每次重启后，ip 会自动更新。那么也可以给 Pod 创建一个 SVC，通过 SVC **ClusterIP** 去访问，显然这种做法也需要在创建 SVC 的时候去固定 **ClusterIP**，这种做法也不是太优雅。既然使用 ip 地址通信不可取，就可以通过使用**域名**进行 Pod 间通信，对于无状态的 Pod，可以通过 SVC Domain 去访问，那么对于有状态的 Pod，大部分通过 **Headless** SVC Domain 访问。
 
-        使用域名就需要一个 DNS，用来解析 K8S 里面各个域名，这里介绍 K8S 中默认使用的 [CoreDNS](https://coredns.io/)
+使用域名就需要一个 DNS，用来解析 K8S 里面各个域名，这里介绍 K8S 中默认使用的 [CoreDNS](https://coredns.io/)
 
 ## 系统环境
 
