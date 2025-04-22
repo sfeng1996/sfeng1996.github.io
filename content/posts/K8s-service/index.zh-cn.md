@@ -78,7 +78,7 @@ status:
   loadBalancer: {}
 ```
 
-当 Service、Endpoints 创建好之后，K8S 中的每个节点上的 Kube-proxy 组件会去 Watch/List 该对象，然后在节点上创建响应的 Iptables/IPVS 规则。那么这些 Iptables/IPVS 规则就是将流量根据策略转发至上游 Pod。
+当 Service、Endpoints 创建好之后，K8S 中的每个节点上的 Kube-proxy 组件会去 Watch/List 该对象，然后在节点上创建相应的 Iptables/IPVS 规则。那么这些 Iptables/IPVS 规则就是将流量根据策略转发至上游 Pod。
 
 所以这里涉及 Service、Endpoint、Pod 这三个对象，整体流程如下：
 
