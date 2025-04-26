@@ -37,7 +37,7 @@ Kubernetes 提供的 `StatefulSet` 资源，正是专门为有状态服务设计
 
 ### 顺序创建 Pod
 
-StatefulSet 默认以严格的顺序创建其 Pod，因为有些服务 Pod 之间启动具有先后顺序，例如 Mysql 从节点需要在主节点启动完成之后再启动。我们可以通过配置 podManagementPolicy 来管理启动策略。可以是 OrderedReady 或 Parallel。
+`StatefulSet` 默认以严格的顺序创建其 Pod，因为有些服务 Pod 之间启动具有先后顺序，例如 Mysql 从节点需要在主节点启动完成之后再启动。我们可以通过配置 `podManagementPolicy` 来管理启动策略。可以是 `OrderedReady` 或 `Parallel`。
 
 - **OrderedReady**：表示按顺序启动和终止 Pod，保证有序性和稳定性；
 - **Parallel**：表示可以并行启动和终止 Pod，适用于无依赖关系的应用场景。
@@ -145,7 +145,7 @@ spec:
           ......
 ```
 
-> StatefulSet 中 ServiceName 字段必须和 Service 中 Name 一致，StatefulSet Controller 就是通过 ServiceName 字段去查找对应的 Service
+> StatefulSet 中 `serviceName` 字段必须和 Service 中 `name` 一致，StatefulSet Controller 就是通过 `serviceName` 字段去查找对应的 Service
 >
 
 这样三个 Mysql Pod 实例对应的 DNS 域名为：
@@ -181,11 +181,11 @@ Name:      mysql-2.mysql
 Address 1: 10.244.2.75 mysql-2.mysql.default.svc.cluster.local
 ```
 
-![imag1.png](image1.png)
+![image1.png](image1.png)
 
 ### 稳定的存储
 
-Mysql 这种有状态服务，每个实例对应的存储肯定是不同的，而且 Pod 重启后还能够重新挂载到之前的存储上。为了实现这种稳定存储功能，StatefulSet 中 volumeClaimTemplates 字段定义了 Pod 的存储配置定义。
+Mysql 这种有状态服务，每个实例对应的存储肯定是不同的，而且 Pod 重启后还能够重新挂载到之前的存储上。为了实现这种稳定存储功能，StatefulSet 中 `volumeClaimTemplates` 字段定义了 Pod 的存储配置定义。
 
 ```yaml
 apiVersion: v1
@@ -238,7 +238,7 @@ spec:
             storage: 1Gi
 ```
 
-`volumeClaimTemplates` 属性会自动给每一个 Pod 创建一个 PVC 对象，然后会在集群中绑定适合的 PV 资源。`volumeClaimTemplates` 其实这里就是一个 PVC 的模板，而且 PVC Name 是有规则的，按照 <volumeClaimTemplatesName.podName> ，以上 Yaml 会创建三个 PVC，如下：
+`volumeClaimTemplates` 属性会自动给每一个 Pod 创建一个 PVC 对象，然后会在集群中绑定适合的 PV 资源。`volumeClaimTemplates` 其实这里就是一个 PVC 的模板，而且 PVC Name 是有规则的，按照 `<volumeClaimTemplatesName.podName>` ，以上 Yaml 会创建三个 PVC，如下：
 
 ```bash
 $ kubectl get pvc -l app=mysql
@@ -249,7 +249,7 @@ mysql-data.mysql-1   Bound     pvc-15c79307-b507-11e6-932f-42010a800002   1Gi   
 
 由于 PVC name 是固定的，即使 Pod 重启后也会挂载到之前的 PVC 上。
 
-![image2.png](image2.png)
+![imag2.png](image2.png)
 
 ### 更新策略
 
