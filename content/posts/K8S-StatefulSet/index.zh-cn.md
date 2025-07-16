@@ -158,7 +158,7 @@ mysql-2.mysql.default.svc.cluster.local
 
 进入某个客户端 Pod 去访问这些域名，可以发现解析后始终是对应的 Pod 的 IP 地址。
 
-```yaml
+```bash
 $ / # nslookup  mysql-0.mysql
 Server:    10.96.0.10
 Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
@@ -315,28 +315,44 @@ Kubernetes 通过 StatefulSet 的可选字段 `.spec.persistentVolumeClaimRetent
 
 ```yaml
 # 默认行为：全部保留 PVC
+apiVersion: v1
+kind: StatefulSet
+metadata:
+  name: mysql
 spec:
-	persistentVolumeClaimRetentionPolicy:
-	  whenDeleted: Retain
-	  whenScaled: Retain
-
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+---
 # 删除 StatefulSet 时清理 PVC，缩容时保留
+apiVersion: v1
+kind: StatefulSet
+metadata:
+  name: mysql
 spec:
-	persistentVolumeClaimRetentionPolicy:
-	  whenDeleted: Delete
-	  whenScaled: Retain
-
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
+    whenScaled: Retain
+---
 # 删除 StatefulSet 和缩容时均清理 PVC
+apiVersion: v1
+kind: StatefulSet
+metadata:
+  name: mysql
 spec:
-	persistentVolumeClaimRetentionPolicy:
-	  whenDeleted: Delete
-	  whenScaled: Delete
-
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
+    whenScaled: Delete
+---
 # 删除 StatefulSet 时保留 PVC，缩容时清理多余 PVC
+apiVersion: v1
+kind: StatefulSet
+metadata:
+  name: mysql
 spec:
-	persistentVolumeClaimRetentionPolicy:
-	  whenDeleted: Retain
-	  whenScaled: Delete
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Delete
 ```
 
 **背后机制**

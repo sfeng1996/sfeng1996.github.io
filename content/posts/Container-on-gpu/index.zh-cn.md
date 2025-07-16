@@ -358,4 +358,5 @@ OCI 容器标准定义了容器的三个 hook，分别在对应阶段操作容�
 
 本片文章系统地分析了容器使用 GPU 的原理，以及创建 GPU 容器的全流程。本篇文章主要以 docker 为容器运行时举例说明，对于 containerd、cri-o 等其他容器运行时，可能存在技术实现区别，但是整体原理基本差不多，可参考 [nvidia 官网](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/1.16.0/arch-overview.html)了解细节。
 
-除了英伟达实现了 GPU 容器，其他加速卡厂商基本都有类似实现，例如华为 NPU、燧原 GCU，但也有的厂商并没有实现类似替代 `runc` 的运行时。但是需要结合厂商指定镜像来创建容器，例如寒武纪 MLU。
+除了英伟达实现了 GPU 容器，其他加速卡厂商基本都有类似实现，例如华为 NPU、燧原 GCU，但也有的厂商并没有实现类似替代 `runc` 的运行时。但是需要结合厂商指定镜像来创建容器，例如寒武纪 MLU、 天数、 海光。
+比如天数就没有提供自己的 container-toolkit，只在 device plugin 中通过 Device 指定要挂载哪些设备, 这样容器启动时也会把这些设备挂载到容器中。不过由于没有挂载驱动进去，因此需要容器内自带驱动才行。
