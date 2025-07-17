@@ -91,7 +91,7 @@ enableEmoji = true
         # 是否隐藏网站图标资源链接
         noFavicon = false
         # 更现代的 SVG 网站图标, 可替代旧的 .png 和 .ico 文件
-        svgFavicon = "/images/icon-77x77.png"
+        svgFavicon = "/images/android-chrome-192x192.png"
         # Android 浏览器主题色
         themeColor = "#ffffff"
         # Safari 图标颜色
@@ -131,7 +131,7 @@ enableEmoji = true
           # Gravatar 邮箱，用于优先在主页显示的头像
           gravatarEmail = ""
           # 主页显示头像的 URL
-          avatarURL = "/images/home.jpg"
+          avatarURL = "/images/android-chrome-192x192.png"
           # 主页显示的网站标题 (支持 HTML 格式)
           title = ""
           # 主页显示的网站副标题
@@ -695,7 +695,7 @@ enableEmoji = true
 # Author config
 # 作者配置
 [author]
-  name = "云原生 Space"
+  name = "智能云原生"
   email = "SFeng1996@163.com"
   link = ""
 
