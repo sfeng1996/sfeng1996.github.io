@@ -201,10 +201,10 @@ other = "删除"
 
 # === partials/footer.html ===
 [penname]
-other = "云原生 Space"
+other = "智能云原生"
 
 [license]
-other = "云原生Space 版权所有"
+other = "智能云原生ace 版权所有"
 
 [worktime]
 other = "运行 time 天"
@@ -224,7 +224,7 @@ other = " 完 "
 other = "相关文章"
 
 [wechatAnnotation]
-other = "关注微信公众号，可了解更多云原生详情~"
+other = "关注微信公众号，可了解更多 AI 以及 AI_Infra 详情~"
 
 [thanksSponsor]
 other = "感谢支持"
