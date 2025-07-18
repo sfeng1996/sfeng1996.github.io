@@ -7,7 +7,7 @@ draft: false
 author: "孙峰"
 resources:
 - name: "featured-image"
-  src: "llm.png"
+  src: "ai.png"
 
 tags: ["AI 大模型"]
 categories: ["AI 大模型"]
